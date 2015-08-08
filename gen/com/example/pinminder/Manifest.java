@@ -9,6 +9,6 @@ package com.example.pinminder;
 
 public final class Manifest {
     public static final class permission {
-        public static final String MAPS_RECEIVE="com.uni.unitonwanttoapp.locationapi.maps.permission.MAPS_RECEIVE";
+        public static final String MAPS_RECEIVE="com.example.pinminder.locationapi.maps.permission.MAPS_RECEIVE";
     }
 }

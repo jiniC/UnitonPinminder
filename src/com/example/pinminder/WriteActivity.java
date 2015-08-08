@@ -52,6 +52,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Color;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -61,24 +63,25 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class WriteActivity extends SampleActivityBase
 		implements OnClickListener, GoogleApiClient.OnConnectionFailedListener {
 
-	private Button saveBtn;
+	private ImageButton cancelBtn, regionBtn, cat1, cat2, cat3, cat4, cat5, alarmBtn, memoBtn;
+	Button deleteBtn, okBtn;
 	private EditText todoEt, memoEt;
-	private CheckBox alarmCb;
-	private ToggleButton t1, t2, t3, t4, t5;
+	RelativeLayout r;
 
 	private String zone, todo, location, memo, category;
 	private float lat, lon;
-	private int check, noti;
+	private int check, noti = 0;
 
 	private int id;
-	SQLiteDatabase sqlDB;
-	myDBHelper myHelper;
+	private int memoid = 0;
 
 	/**
 	 * GoogleApiClient wraps our service connection to Google Play Services and
@@ -130,30 +133,20 @@ public class WriteActivity extends SampleActivityBase
 				BOUNDS_GREATER_SYDNEY, null);
 		mAutocompleteView.setAdapter(mAdapter);
 
-		t1 = (ToggleButton) findViewById(R.id.toggleButton1);
-		t2 = (ToggleButton) findViewById(R.id.toggleButton2);
-		t3 = (ToggleButton) findViewById(R.id.toggleButton3);
-		t4 = (ToggleButton) findViewById(R.id.toggleButton4);
-		t5 = (ToggleButton) findViewById(R.id.toggleButton5);
+		cat1 = (ImageButton) findViewById(R.id.cat1);
+		cat2 = (ImageButton) findViewById(R.id.cat2);
+		cat3 = (ImageButton) findViewById(R.id.cat3);
+		cat4 = (ImageButton) findViewById(R.id.cat4);
+		cat5 = (ImageButton) findViewById(R.id.cat5);
 
-		t1.setOnClickListener(this);
-		t2.setOnClickListener(this);
-		t3.setOnClickListener(this);
-		t4.setOnClickListener(this);
-		t5.setOnClickListener(this);
+		cat1.setOnClickListener(this);
+		cat2.setOnClickListener(this);
+		cat3.setOnClickListener(this);
+		cat4.setOnClickListener(this);
+		cat5.setOnClickListener(this);
 
-		myHelper = new myDBHelper(this);
-		sqlDB = myHelper.getReadableDatabase();
-		Cursor cursor; // db의 결과를 받을 수 있는 클래스(cursor)
-        cursor = sqlDB.rawQuery("select * from idTBL;", null);
-
-        while (cursor.moveToNext()) {
-           id = cursor.getInt(0); // 그룹 이름
-        }
-        cursor.close();
-        
-		saveBtn = (Button) findViewById(R.id.saveBtn);
-		saveBtn.setOnClickListener(new OnClickListener() {
+		okBtn = (Button) findViewById(R.id.okBtn);
+		okBtn.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
@@ -161,41 +154,78 @@ public class WriteActivity extends SampleActivityBase
 
 				todo = todoEt.getText().toString();
 				memo = memoEt.getText().toString();
-				if (t1.isChecked())
-					category = t1.getTextOn().toString();
-				else if (t2.isChecked())
-					category = t2.getTextOn().toString();
-				else if (t3.isChecked())
-					category = t3.getTextOn().toString();
-				else if (t4.isChecked())
-					category = t4.getTextOn().toString();
-				else if (t5.isChecked())
-					category = t5.getTextOn().toString();
-				if (alarmCb.isChecked())
-					noti = 1;
-				else
-					noti = 0;
 
 				MyDB my = new MyDB(getApplicationContext());
 				// Dream d = new Dream(1, "test", "test2", 123.123,
 				// 123.123,"test3", "test4", "test5", 1,0);
 				Dream d = new Dream(0, zone, todo, lat, lon, location, memo, category, 0, noti);
 				my.addDream(d);
-				Toast.makeText(getApplicationContext(),id+" "+ zone + " " + " " + todo + " " + lat + " " + lon + " " + " "
-						+ location + " " + memo + " " + check + " " + noti + " " + category, Toast.LENGTH_LONG).show();
-				
-				/*sqlDB = myHelper.getWritableDatabase();
-				sqlDB.execSQL("insert into idTBL VALUES ('"+id+"');");
-				sqlDB.close();
-				*/
+				Toast.makeText(getApplicationContext(), id + " " + zone + " " + " " + todo + " " + lat + " " + lon + " "
+						+ " " + location + " " + memo + " " + check + " " + noti + " " + category, Toast.LENGTH_LONG)
+						.show();
+
+				finish();
+
+			}
+		});
+
+		deleteBtn = (Button) findViewById(R.id.deleteBtn);
+		// private ImageButton
+		// cancelBtn,regionBtn,cat1,cat2,cat3,cat4,cat5,alarmBtn,deleteBtn,okBtn,memoBtn;
+
+		memoEt = (EditText) findViewById(R.id.memoEt);
+		regionBtn = (ImageButton) findViewById(R.id.regionBtn);
+		alarmBtn = (ImageButton) findViewById(R.id.alarmBtn);
+		alarmBtn.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				if (noti == 0) {
+					alarmBtn.setImageResource(R.drawable.check_none_select05);
+					noti = 1;
+				} else {
+					alarmBtn.setImageResource(R.drawable.check_none_select04);
+					noti = 0;
+				}
+
+			}
+		});
+		cancelBtn = (ImageButton) findViewById(R.id.cancelBtn);
+		cancelBtn.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				finish();
+			}
+		});
+		memoBtn = (ImageButton) findViewById(R.id.memoBtn);
+		r = (RelativeLayout) findViewById(R.id.r);
+		memoBtn.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if (memoid == 0) {
+					r.setBackgroundColor(Color.WHITE);
+					memoEt.setEnabled(false);
+
+					memoBtn.setImageResource(R.drawable.icon_02);
+					memoid = 1;
+				} else {
+					r.setBackgroundColor(Color.rgb(88, 128, 193));
+					memoEt.setEnabled(true);
+
+					memoBtn.setImageResource(R.drawable.icon_01);
+					memoid = 0;
+				}
 			}
 		});
 
 		todoEt = (EditText) findViewById(R.id.todoEt);
 		memoEt = (EditText) findViewById(R.id.memoEt);
-		alarmCb = (CheckBox) findViewById(R.id.alarmCb);
-		
-		
+
 	}
 
 	/**
@@ -393,70 +423,48 @@ public class WriteActivity extends SampleActivityBase
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
-		case R.id.toggleButton1:
-			t1.setChecked(true);
-			t2.setChecked(false);
-			t3.setChecked(false);
-			t4.setChecked(false);
-			t5.setChecked(false);
+		case R.id.cat1:
+			category = "음식";
+			cat1.setImageResource(R.drawable.writeicon1);
+			cat2.setImageResource(R.drawable.inactive2);
+			cat3.setImageResource(R.drawable.inactive3);
+			cat4.setImageResource(R.drawable.inactive4);
+			cat5.setImageResource(R.drawable.inactive5);
 			break;
-		case R.id.toggleButton2:
-			if (t1.isChecked() || t3.isChecked() || t4.isChecked() || t5.isChecked()) {
-				t1.setChecked(false);
-				t2.setChecked(true);
-				t3.setChecked(false);
-				t4.setChecked(false);
-				t5.setChecked(false);
-			}
+		case R.id.cat2:
+			category = "관람";
+			cat1.setImageResource(R.drawable.inactive1);
+			cat2.setImageResource(R.drawable.writeicon2);
+			cat3.setImageResource(R.drawable.inactive3);
+			cat4.setImageResource(R.drawable.inactive4);
+			cat5.setImageResource(R.drawable.inactive5);
 			break;
-		case R.id.toggleButton3:
-			if (t1.isChecked() || t2.isChecked() || t4.isChecked() || t5.isChecked()) {
-				t1.setChecked(false);
-				t2.setChecked(false);
-				t3.setChecked(true);
-				t4.setChecked(false);
-				t5.setChecked(false);
-			}
+		case R.id.cat3:
+			category = "활동";
+			cat1.setImageResource(R.drawable.inactive1);
+			cat2.setImageResource(R.drawable.inactive2);
+			cat3.setImageResource(R.drawable.writeicon3);
+			cat4.setImageResource(R.drawable.inactive4);
+			cat5.setImageResource(R.drawable.inactive5);
 			break;
-		case R.id.toggleButton4:
-			if (t1.isChecked() || t2.isChecked() || t3.isChecked() || t5.isChecked()) {
-				t1.setChecked(false);
-				t2.setChecked(false);
-				t3.setChecked(false);
-				t4.setChecked(true);
-				t5.setChecked(false);
-			}
+		case R.id.cat4:
+			category = "할 것";
+			cat1.setImageResource(R.drawable.inactive1);
+			cat2.setImageResource(R.drawable.inactive2);
+			cat3.setImageResource(R.drawable.inactive3);
+			cat4.setImageResource(R.drawable.writeicon4);
+			cat5.setImageResource(R.drawable.inactive5);
 			break;
-		case R.id.toggleButton5:
-			if (t1.isChecked() || t2.isChecked() || t3.isChecked() || t4.isChecked()) {
-				t1.setChecked(false);
-				t2.setChecked(false);
-				t3.setChecked(false);
-				t4.setChecked(false);
-				t5.setChecked(true);
-			}
+		case R.id.cat5:
+			category = "기타";
+			cat1.setImageResource(R.drawable.inactive1);
+			cat2.setImageResource(R.drawable.inactive2);
+			cat3.setImageResource(R.drawable.inactive3);
+			cat4.setImageResource(R.drawable.inactive4);
+			cat5.setImageResource(R.drawable.writeicon5);
 			break;
 		}
 
-	}
-
-	public class myDBHelper extends SQLiteOpenHelper {
-		public myDBHelper(Context context) {
-			super(context, "idDB", null, 1);
-		}
-
-		@Override
-		public void onCreate(SQLiteDatabase db) {
-			// TODO Auto-generated method stub
-			db.execSQL("create table idTBL (id INTEGER);");
-		}
-
-		@Override
-		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-			// TODO Auto-generated method stub
-			db.execSQL("drop table if exists idTBL;"); // 이미 그룹테이블이 있으면 지운다.
-			onCreate(db); // 새로운 테이블을 만듦
-		}
 	}
 
 }

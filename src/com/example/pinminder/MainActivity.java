@@ -41,14 +41,14 @@ public class MainActivity extends Activity {
 			}
 		});
 		
-		/*addFtn.setOnClickListener(new OnClickListener() {
+		addFtn.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(MainActivity.this,WriteActivity.class);
 				startActivity(i);
 			}
-		});*/
+		});
 		pushBtn.setOnClickListener(new OnClickListener() {
 			
 			@Override
