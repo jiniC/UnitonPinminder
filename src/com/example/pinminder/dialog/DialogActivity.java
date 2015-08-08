@@ -3,35 +3,26 @@ package com.example.pinminder.dialog;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.GridView;
-import android.widget.Toast;
+import android.view.View.OnClickListener;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.example.pinminder.R;
 
-public class DialogActivity extends Activity {
-    GridView grid;
-    String[] web = {
-            "Google",
-            "Github",
-            "Instagram",
-            "Facebook"
- 
-    } ;
-    int[] imageId = {
-            R.drawable.ic_launcher,
-            R.drawable.ic_launcher,
-            R.drawable.ic_launcher,
-            R.drawable.ic_launcher
- 
-    };
+public class DialogActivity extends Activity implements OnClickListener{
+    
+	private ImageButton regionBtn, cat1, cat2, cat3, cat4, cat5, alarmBtn, memoBtn;
+	private String category;
+	Button okBtn,cancelBtn;
  
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+    	requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_view);
  
-        CustomGrid adapter = new CustomGrid(DialogActivity.this, web, imageId);
+        /*CustomGrid adapter = new CustomGrid(DialogActivity.this, web, imageId);
         	grid=(GridView)findViewById(R.id.grid);
                 grid.setAdapter(adapter);
                 grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -43,6 +34,91 @@ public class DialogActivity extends Activity {
  
                     }
                 });
+                */
+        
+        
+        cat1 = (ImageButton) findViewById(R.id.cate1);
+		cat2 = (ImageButton) findViewById(R.id.cate2);
+		cat3 = (ImageButton) findViewById(R.id.cate3);
+		cat4 = (ImageButton) findViewById(R.id.cate4);
+		cat5 = (ImageButton) findViewById(R.id.cate5);
+
+		cat1.setOnClickListener(this);
+		cat2.setOnClickListener(this);
+		cat3.setOnClickListener(this);
+		cat4.setOnClickListener(this);
+		cat5.setOnClickListener(this);
+		
+		okBtn = (Button) findViewById(R.id.okBtn);
+		okBtn.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+
+
+				finish();
+
+			}
+		});
+
+		cancelBtn = (Button) findViewById(R.id.deleteBtn);
+		cancelBtn.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				finish();
+			}
+		});
  
     }
+    
+    @Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		switch (v.getId()) {
+		case R.id.cat1:
+			category = "음식";
+			cat1.setImageResource(R.drawable.writeicon1);
+			cat2.setImageResource(R.drawable.inactive2);
+			cat3.setImageResource(R.drawable.inactive3);
+			cat4.setImageResource(R.drawable.inactive4);
+			cat5.setImageResource(R.drawable.inactive5);
+			break;
+		case R.id.cat2:
+			category = "관람";
+			cat1.setImageResource(R.drawable.inactive1);
+			cat2.setImageResource(R.drawable.writeicon2);
+			cat3.setImageResource(R.drawable.inactive3);
+			cat4.setImageResource(R.drawable.inactive4);
+			cat5.setImageResource(R.drawable.inactive5);
+			break;
+		case R.id.cat3:
+			category = "활동";
+			cat1.setImageResource(R.drawable.inactive1);
+			cat2.setImageResource(R.drawable.inactive2);
+			cat3.setImageResource(R.drawable.writeicon3);
+			cat4.setImageResource(R.drawable.inactive4);
+			cat5.setImageResource(R.drawable.inactive5);
+			break;
+		case R.id.cat4:
+			category = "할 것";
+			cat1.setImageResource(R.drawable.inactive1);
+			cat2.setImageResource(R.drawable.inactive2);
+			cat3.setImageResource(R.drawable.inactive3);
+			cat4.setImageResource(R.drawable.writeicon4);
+			cat5.setImageResource(R.drawable.inactive5);
+			break;
+		case R.id.cat5:
+			category = "기타";
+			cat1.setImageResource(R.drawable.inactive1);
+			cat2.setImageResource(R.drawable.inactive2);
+			cat3.setImageResource(R.drawable.inactive3);
+			cat4.setImageResource(R.drawable.inactive4);
+			cat5.setImageResource(R.drawable.writeicon5);
+			break;
+		}
+
+	}
 }
