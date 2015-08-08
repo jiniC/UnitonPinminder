@@ -198,54 +198,47 @@
                 android:background="#dddddd" />
 
             <RelativeLayout
-                android:id="@+id/r"
-                android:layout_width="wrap_content"
-                android:layout_height="550px"
-                android:background="#5880c1" >
+                android:id="@+id/relativeLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="203px"
+                android:layout_marginLeft="93px"
+                android:layout_marginRight="103px" >
 
-                <RelativeLayout
-                    android:id="@+id/relativeLayout1"
+                <ImageButton
+                    android:id="@+id/memoBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="#00000000"
+                    android:src="@drawable/icon_01" />
+
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_marginTop="-2dp"
-                    android:layout_height="230px"
-                    android:background="@drawable/drop_down_blue" >
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="메모" />
+            </RelativeLayout>
 
-                    <ImageButton
-                        android:id="@+id/memoBtn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="20dp"
-                        android:layout_marginLeft="93px"
-                        android:layout_marginRight="103px"
-                        android:background="#00000000"
-                        android:src="@drawable/icon_01" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="93px"
-                        android:layout_marginRight="103px"
-                        android:text="메모" />
-                </RelativeLayout>
+            <LinearLayout
+                android:id="@+id/r"
+                android:layout_width="match_parent"
+                android:layout_height="400px"
+                android:background="#5880c1" >
 
                 <EditText
                     android:id="@+id/memoEt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_margin="10dp"
-                    android:layout_below="@+id/relativeLayout1"
+                    android:layout_margin="15dp"
+                    android:layout_gravity="center"
                     android:background="#00000000"
-                    android:ems="10" >
-
-                    <requestFocus />
+                    android:ems="10"
+                    android:maxLines="3"
+                    android:textColor="#ffffff" >
                 </EditText>
-            </RelativeLayout>
+            </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"

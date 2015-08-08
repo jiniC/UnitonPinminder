@@ -638,7 +638,7 @@ containing a value of this type.
         public static final int loc_seekbar=0x7f070020;
         public static final int map=0x7f07002c;
         public static final int match_parent=0x7f070010;
-        public static final int memoBtn=0x7f070035;
+        public static final int memoBtn=0x7f070034;
         public static final int memoEt=0x7f070036;
         public static final int monochrome=0x7f070018;
         public static final int none=0x7f070003;
@@ -648,9 +648,9 @@ containing a value of this type.
         public static final int production=0x7f07000a;
         public static final int pushButton=0x7f070026;
         public static final int push_btn=0x7f07001b;
-        public static final int r=0x7f070033;
+        public static final int r=0x7f070035;
         public static final int regionBtn=0x7f07002a;
-        public static final int relativeLayout1=0x7f070034;
+        public static final int relativeLayout1=0x7f070033;
         public static final int sandbox=0x7f07000b;
         public static final int satellite=0x7f070006;
         public static final int selectionDetails=0x7f07000f;
