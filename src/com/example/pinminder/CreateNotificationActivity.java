@@ -27,7 +27,6 @@ public class CreateNotificationActivity extends Activity {
 		}
 	});
     
-    
   }
 
   public void createNotification() {

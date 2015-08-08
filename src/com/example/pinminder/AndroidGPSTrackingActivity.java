@@ -52,19 +52,14 @@ public class AndroidGPSTrackingActivity extends Activity {
                     
                     /*
                       locationA.setLatitude(35.249793);
-
                     locationA.setLongitude(128.901906);
-
                     locationB.setLatitude(35.228545);
-
                     locationB.setLongitude(128.889352);
                     */
 
                     double distance = locationA.distanceTo(locationB);
                     
                     String meter = Double.toString(distance);
-                  
-                    
 
                     // \n is for new line
                     Toast.makeText(getApplicationContext(),"Lat :" + latitude +"/"+locationB.getLatitude()+ "lon : "+ longitude + "/"+locationB.getLongitude()+"    °Å¸® : " + meter + " M" , Toast.LENGTH_LONG).show();
