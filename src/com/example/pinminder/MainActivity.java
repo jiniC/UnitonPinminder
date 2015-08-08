@@ -2,6 +2,7 @@ package com.example.pinminder;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
@@ -21,13 +22,17 @@ import com.example.pinminder.model.PushEvent;
 public class MainActivity extends Activity {
 
 	private SQLiteDatabase database; 
-	
+	public static int splash = 0;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		startActivity(new Intent(this, SplashActivity.class));
+		if(splash == 0){
+			
+			startActivity(new Intent(this, SplashActivity.class));
+			splash++;
+		}
 		
 		Button filterBtn = (Button)findViewById(R.id.filterButton);
 		Button addFtn = (Button)findViewById(R.id.addButton);
@@ -73,14 +78,21 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(MainActivity.this,AndroidGPSTrackingActivity.class);
-				startActivity(i);
+				
+				SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+		        String s = pref.getString("tuto", "");
+		        
+		        
+		        if(s.isEmpty()){
+		        	
+		        	Intent i = new Intent(MainActivity.this,ViewPagerActivity.class);
+		        	startActivity(i);
+		        }
 			}
 		});
 		
 		  
-        Intent i = new Intent(MainActivity.this,PushEvent.class);
-        startService(i);
+		serviceStart();
 		
 		MyDB my = new MyDB(this);
 		Dream d = new Dream(1, "test", "test2", 123.123, 123.123,
@@ -92,6 +104,11 @@ public class MainActivity extends Activity {
 				toast.show();*/
 		
 		
+	}
+	
+	public void serviceStart(){
+		Intent i = new Intent(MainActivity.this,PushEvent.class);
+        startService(i);
 	}
 
 	@Override
@@ -125,4 +142,12 @@ public class MainActivity extends Activity {
             return super.onOptionsItemSelected(item);
         }
     }
+    
+ // 값 불러오기
+    private void getPreferences(){
+        
+    }
+    
+    
+    
 }

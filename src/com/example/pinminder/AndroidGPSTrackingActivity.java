@@ -21,7 +21,6 @@ public class AndroidGPSTrackingActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_android_gpstracking);
 
-		
         btnShowLocation = (Button) findViewById(R.id.btnShowLocation);
 
         // Show location button click event
