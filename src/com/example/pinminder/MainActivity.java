@@ -15,6 +15,7 @@ import com.example.pinminder.db.MyDB;
 import com.example.pinminder.dialog.DeleteActivity;
 import com.example.pinminder.dialog.DialogActivity;
 import com.example.pinminder.dto.Dream;
+import com.example.pinminder.list.SwipeActivity;
 import com.example.pinminder.model.PushEvent;
 
 public class MainActivity extends Activity {
@@ -32,6 +33,17 @@ public class MainActivity extends Activity {
 		Button addFtn = (Button)findViewById(R.id.addButton);
 		Button pushBtn = (Button)findViewById(R.id.pushButton);
 		Button gpsBtn = (Button)findViewById(R.id.gpsButton);
+		Button shh = (Button) findViewById(R.id.button1);
+		
+		shh.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent i = new Intent(MainActivity.this,SwipeActivity.class);
+				startActivity(i);
+			}
+		});
 		filterBtn.setOnClickListener(new OnClickListener() {
 			
 			@Override

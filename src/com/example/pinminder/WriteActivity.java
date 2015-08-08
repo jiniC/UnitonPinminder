@@ -161,9 +161,9 @@ public class WriteActivity extends SampleActivityBase
 				// 123.123,"test3", "test4", "test5", 1,0);
 				Dream d = new Dream(0, zone, todo, lat, lon, location, memo, category, 0, noti);
 				my.addDream(d);
-				Toast.makeText(getApplicationContext(), id + " " + zone + " " + " " + todo + " " + lat + " " + lon + " "
-						+ " " + location + " " + memo + " " + check + " " + noti + " " + category, Toast.LENGTH_LONG)
-						.show();
+				//Toast.makeText(getApplicationContext(), id + " " + zone + " " + " " + todo + " " + lat + " " + lon + " "
+				//		+ " " + location + " " + memo + " " + check + " " + noti + " " + category, Toast.LENGTH_LONG)
+				//		.show();
 
 				finish();
 
@@ -426,6 +426,10 @@ public class WriteActivity extends SampleActivityBase
 		switch (v.getId()) {
 		case R.id.cat1:
 			category = "À½½Ä";
+			//Marker mark = map
+			//		.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(location)).setIcon(R.drawable.mapicon1);
+			
+
 			cat1.setImageResource(R.drawable.writeicon1);
 			cat2.setImageResource(R.drawable.inactive2);
 			cat3.setImageResource(R.drawable.inactive3);
