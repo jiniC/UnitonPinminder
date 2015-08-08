@@ -16,7 +16,6 @@ import com.example.pinminder.db.MyDB;
 import com.example.pinminder.dialog.DeleteActivity;
 import com.example.pinminder.dialog.DialogActivity;
 import com.example.pinminder.dto.Dream;
-import com.example.pinminder.list.SwipeActivity;
 import com.example.pinminder.model.PushEvent;
 
 public class MainActivity extends Activity {
@@ -45,7 +44,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				Intent i = new Intent(MainActivity.this,SwipeActivity.class);
+				Intent i = new Intent(MainActivity.this,FilterAcitivy.class);
 				startActivity(i);
 			}
 		});

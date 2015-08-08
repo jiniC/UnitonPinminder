@@ -7,8 +7,12 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.pinminder.R;
+
+
+
 
 public class DialogActivity extends Activity implements OnClickListener{
     
@@ -33,8 +37,8 @@ public class DialogActivity extends Activity implements OnClickListener{
                         Toast.makeText(DialogActivity.this, "You Clicked at " +web[+ position], Toast.LENGTH_SHORT).show();
  
                     }
-                });
-                */
+                });*/
+                
         
         
         cat1 = (ImageButton) findViewById(R.id.cate1);
@@ -42,6 +46,8 @@ public class DialogActivity extends Activity implements OnClickListener{
 		cat3 = (ImageButton) findViewById(R.id.cate3);
 		cat4 = (ImageButton) findViewById(R.id.cate4);
 		cat5 = (ImageButton) findViewById(R.id.cate5);
+		
+		cat5.setVisibility(View.GONE);
 
 		cat1.setOnClickListener(this);
 		cat2.setOnClickListener(this);
@@ -55,7 +61,7 @@ public class DialogActivity extends Activity implements OnClickListener{
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-
+				
 
 				finish();
 
@@ -78,46 +84,50 @@ public class DialogActivity extends Activity implements OnClickListener{
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
-		case R.id.cat1:
+		case R.id.cate1:
 			category = "음식";
 			cat1.setImageResource(R.drawable.writeicon1);
 			cat2.setImageResource(R.drawable.inactive2);
 			cat3.setImageResource(R.drawable.inactive3);
 			cat4.setImageResource(R.drawable.inactive4);
 			cat5.setImageResource(R.drawable.inactive5);
+			Toast.makeText(DialogActivity.this,  category , Toast.LENGTH_SHORT).show();
 			break;
-		case R.id.cat2:
+		case R.id.cate2:
 			category = "관람";
 			cat1.setImageResource(R.drawable.inactive1);
 			cat2.setImageResource(R.drawable.writeicon2);
 			cat3.setImageResource(R.drawable.inactive3);
 			cat4.setImageResource(R.drawable.inactive4);
 			cat5.setImageResource(R.drawable.inactive5);
+			Toast.makeText(DialogActivity.this, category , Toast.LENGTH_SHORT).show();
 			break;
-		case R.id.cat3:
+		case R.id.cate3:
 			category = "활동";
 			cat1.setImageResource(R.drawable.inactive1);
 			cat2.setImageResource(R.drawable.inactive2);
 			cat3.setImageResource(R.drawable.writeicon3);
 			cat4.setImageResource(R.drawable.inactive4);
 			cat5.setImageResource(R.drawable.inactive5);
+			Toast.makeText(DialogActivity.this, category , Toast.LENGTH_SHORT).show();
 			break;
-		case R.id.cat4:
+		case R.id.cate4:
 			category = "할 것";
 			cat1.setImageResource(R.drawable.inactive1);
 			cat2.setImageResource(R.drawable.inactive2);
 			cat3.setImageResource(R.drawable.inactive3);
 			cat4.setImageResource(R.drawable.writeicon4);
 			cat5.setImageResource(R.drawable.inactive5);
+			Toast.makeText(DialogActivity.this, category , Toast.LENGTH_SHORT).show();
 			break;
-		case R.id.cat5:
+		/*case R.id.cat5:
 			category = "기타";
 			cat1.setImageResource(R.drawable.inactive1);
 			cat2.setImageResource(R.drawable.inactive2);
 			cat3.setImageResource(R.drawable.inactive3);
 			cat4.setImageResource(R.drawable.inactive4);
 			cat5.setImageResource(R.drawable.writeicon5);
-			break;
+			break;*/
 		}
 
 	}
