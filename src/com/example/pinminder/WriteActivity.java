@@ -64,6 +64,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -74,7 +75,7 @@ public class WriteActivity extends SampleActivityBase
 	private ImageButton cancelBtn, regionBtn, cat1, cat2, cat3, cat4, cat5, alarmBtn, memoBtn;
 	Button deleteBtn, okBtn;
 	private EditText todoEt, memoEt;
-	RelativeLayout r;
+	LinearLayout r;
 
 	private String zone, todo, location, memo, category;
 	private float lat, lon;
@@ -160,9 +161,9 @@ public class WriteActivity extends SampleActivityBase
 				// 123.123,"test3", "test4", "test5", 1,0);
 				Dream d = new Dream(0, zone, todo, lat, lon, location, memo, category, 0, noti);
 				my.addDream(d);
-				Toast.makeText(getApplicationContext(), id + " " + zone + " " + " " + todo + " " + lat + " " + lon + " "
-						+ " " + location + " " + memo + " " + check + " " + noti + " " + category, Toast.LENGTH_LONG)
-						.show();
+				//Toast.makeText(getApplicationContext(), id + " " + zone + " " + " " + todo + " " + lat + " " + lon + " "
+				//		+ " " + location + " " + memo + " " + check + " " + noti + " " + category, Toast.LENGTH_LONG)
+				//		.show();
 
 				finish();
 
@@ -197,11 +198,11 @@ public class WriteActivity extends SampleActivityBase
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				finish();
+				todoEt.setText("");
 			}
 		});
 		memoBtn = (ImageButton) findViewById(R.id.memoBtn);
-		r = (RelativeLayout) findViewById(R.id.r);
+		r = (LinearLayout) findViewById(R.id.r);
 		memoBtn.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -425,6 +426,10 @@ public class WriteActivity extends SampleActivityBase
 		switch (v.getId()) {
 		case R.id.cat1:
 			category = "À½½Ä";
+			//Marker mark = map
+			//		.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(location)).setIcon(R.drawable.mapicon1);
+			
+
 			cat1.setImageResource(R.drawable.writeicon1);
 			cat2.setImageResource(R.drawable.inactive2);
 			cat3.setImageResource(R.drawable.inactive3);
