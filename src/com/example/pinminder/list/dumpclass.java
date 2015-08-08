@@ -2,11 +2,13 @@ package com.example.pinminder.list;
 
 
 public class dumpclass {
-	public String sampletext;
+	public String todo;
+	public String category;
 	
 	
-	public dumpclass(String data){
-		this.sampletext	=	data;
+	public dumpclass(String todo,String category){
+		this.todo	=	todo;
+		this.category = category;
 	}
 
 }

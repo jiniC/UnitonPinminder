@@ -4,9 +4,14 @@ import java.util.ArrayList;
 
 import com.example.pinminder.R;
 import com.example.pinminder.WriteActivity;
+import com.example.pinminder.db.MyDB;
+import com.example.pinminder.dto.Dream;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,6 +36,11 @@ public class SwipeActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_swipe);
+		
+		final ActionBar actionBar = getActionBar();
+		actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#0090e9")));
+		
+		
 		cmn_list_view = (ListView) findViewById(R.id.cmn_list_view);
 		listdata = new ArrayList<dumpclass>();
 		InitializeValues();
@@ -41,30 +51,44 @@ public class SwipeActivity extends Activity {
 																// list item
 
 		cmn_list_view.setOnTouchListener(touchListener);
-		
+
 		plusBtn = (ImageButton) findViewById(R.id.todolist_addbtn);
 		plusBtn.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				Intent i = new Intent(SwipeActivity.this,WriteActivity.class);
+				Intent i = new Intent(SwipeActivity.this, WriteActivity.class);
 				startActivity(i);
 			}
 		});
+		
+		
 
 	}
 
 	private void InitializeValues() {
 		// TODO Auto-generated method stub
-		listdata.add(new dumpclass("one"));
-		listdata.add(new dumpclass("two"));
-		listdata.add(new dumpclass("three"));
-		listdata.add(new dumpclass("four"));
-		listdata.add(new dumpclass("five"));
-		listdata.add(new dumpclass("six"));
-		listdata.add(new dumpclass("seven"));
-		listdata.add(new dumpclass("Eight"));
+		/*
+		 * listdata.add(new dumpclass("one")); 
+		 * listdata.add(newdumpclass("two")); 
+		 * listdata.add(new dumpclass("three"));
+		 * listdata.add(new dumpclass("four")); listdata.add(new
+		 * dumpclass("five")); listdata.add(new dumpclass("six"));
+		 * listdata.add(new dumpclass("seven")); listdata.add(new
+		 * dumpclass("Eight"));
+		 */
+		//MyDB db = new MyDB(getApplicationContext());
+		listdata.add(new dumpclass("대린서점가서 8월호 쎄씨 잡지 재고 확인","활동"));
+		listdata.add(new dumpclass("맛집 찾아 가기","음식"));
+		
+		
+		/*
+		for (int i = 0; i < db.getAllDreams().size(); i++) {
+			
+			listdata.add(new dumpclass(db.getDream(i).getTodo().toString(),db.getDream(i).getCategory().toString()));
+			
+		}*/
 		listAdapter = new ListAdapter(this, listdata);
 		cmn_list_view.setAdapter(listAdapter);
 	}
@@ -111,8 +135,6 @@ public class SwipeActivity extends Activity {
 			// TODO Auto-generated method stub
 			
 		}
-
-
 
 	};
 
