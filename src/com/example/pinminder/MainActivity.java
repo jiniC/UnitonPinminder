@@ -12,6 +12,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import com.example.pinminder.db.MyDB;
+import com.example.pinminder.dialog.DeleteActivity;
+import com.example.pinminder.dialog.DialogActivity;
 import com.example.pinminder.dto.Dream;
 import com.example.pinminder.model.PushEvent;
 
@@ -23,6 +25,8 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		startActivity(new Intent(this, SplashActivity.class));
 		
 		Button filterBtn = (Button)findViewById(R.id.filterButton);
 		Button addFtn = (Button)findViewById(R.id.addButton);
@@ -95,9 +99,14 @@ public class MainActivity extends Activity {
         // Take appropriate action for each action item click
         switch (item.getItemId()) {
         case R.id.action_search:
+        	Intent i2 = new Intent(MainActivity.this,DeleteActivity.class);
+        	startActivity(i2);
             // search action
             return true;
         case R.id.action_location_found:
+        	
+        	Intent i = new Intent(MainActivity.this,DialogActivity.class);
+        	startActivity(i);
             // location found
             return true;
         default:
