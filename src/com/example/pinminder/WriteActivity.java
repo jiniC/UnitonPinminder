@@ -29,6 +29,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.example.pinminder.activities.SampleActivityBase;
+import com.example.pinminder.db.MyDB;
+import com.example.pinminder.dialog.DeleteActivity;
+import com.example.pinminder.dialog.DialogActivity;
+import com.example.pinminder.dto.Dream;
+import com.example.pinminder.write.PlaceAutocompleteAdapter;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -43,31 +49,25 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.example.pinminder.activities.SampleActivityBase;
-import com.example.pinminder.db.MyDB;
-import com.example.pinminder.dto.Dream;
-import com.example.pinminder.write.PlaceAutocompleteAdapter;
 
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+import android.app.ActionBar;
+import android.content.Intent;
 import android.graphics.Color;
-import android.opengl.Visibility;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 public class WriteActivity extends SampleActivityBase
 		implements OnClickListener, GoogleApiClient.OnConnectionFailedListener {
@@ -115,6 +115,10 @@ public class WriteActivity extends SampleActivityBase
 				.addApi(Places.GEO_DATA_API).build();
 
 		setContentView(R.layout.activity_write);
+		
+		final ActionBar actionBar = getActionBar();
+		actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#0090e9")));
+		
 
 		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
 		map.moveCamera(CameraUpdateFactory.newLatLngZoom(SEOUL, 10));
@@ -427,8 +431,8 @@ public class WriteActivity extends SampleActivityBase
 		case R.id.cat1:
 			category = "À½½Ä";
 			//Marker mark = map
-			//		.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(location)).setIcon(R.drawable.mapicon1);
-			
+			//		.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(location)).setIcon(R.drawable.mapicon1.);
+			//
 
 			cat1.setImageResource(R.drawable.writeicon1);
 			cat2.setImageResource(R.drawable.inactive2);
@@ -471,5 +475,35 @@ public class WriteActivity extends SampleActivityBase
 		}
 
 	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.write, menu);
+ 
+        return super.onCreateOptionsMenu(menu);
+	}
+
+	/**
+     * On selecting action bar icons
+     * */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Take appropriate action for each action item click
+        switch (item.getItemId()) {
+        case R.id.back:
+        	finish();
+            // search action
+            return true;
+        case R.id.action_location_found:
+        	Intent i = new Intent(WriteActivity.this,DialogActivity.class);
+        	startActivity(i);
+            // location found
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+    }
 
 }
