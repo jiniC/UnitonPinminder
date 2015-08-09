@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" 
-    android:background="#03C3F4"
+    android:background="#5FC4D9"
     android:weightSum="100"
     android:gravity="center_horizontal"
     android:orientation="vertical"
