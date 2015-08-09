@@ -2,20 +2,29 @@ package com.example.pinminder.list;
 
 import java.util.ArrayList;
 
+import com.example.pinminder.MainActivity;
 import com.example.pinminder.R;
+import com.example.pinminder.SplashActivity;
+import com.example.pinminder.ViewPagerActivity;
 import com.example.pinminder.WriteActivity;
 import com.example.pinminder.db.MyDB;
+import com.example.pinminder.dialog.DeleteActivity;
+import com.example.pinminder.dialog.DialogActivity;
 import com.example.pinminder.dto.Dream;
+import com.example.pinminder.model.PushEvent;
 
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -31,12 +40,28 @@ public class SwipeActivity extends Activity {
 	private ListAdapter listAdapter;
 	private ArrayList<dumpclass> listdata;
 	private ImageButton plusBtn;
+	
+	public static int splash = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_swipe);
 		
+		
+		if(splash == 0){
+			
+			startActivity(new Intent(this, SplashActivity.class));
+			splash++;
+		}
+		
+		
+		
+		serviceStart();
+		
+		
+		
+        
 		final ActionBar actionBar = getActionBar();
 		actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#0090e9")));
 		
@@ -93,12 +118,43 @@ public class SwipeActivity extends Activity {
 		cmn_list_view.setAdapter(listAdapter);
 	}
 
+	public void serviceStart(){
+		Intent i = new Intent(SwipeActivity.this,PushEvent.class);
+        startService(i);
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.swipe, menu);
-		return true;
+		MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+ 
+        return super.onCreateOptionsMenu(menu);
 	}
+
+	/**
+     * On selecting action bar icons
+     * */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Take appropriate action for each action item click
+        switch (item.getItemId()) {
+        case R.id.action_search:
+        	Intent i2 = new Intent(SwipeActivity.this,DeleteActivity.class);
+        	startActivity(i2);
+            // search action
+            return true;
+        case R.id.action_location_found:
+        	
+        	Intent i = new Intent(SwipeActivity.this,DialogActivity.class);
+        	startActivity(i);
+            // location found
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+    }
+    
 
 	ListViewSwipeGesture.TouchCallbacks swipeListener = new ListViewSwipeGesture.TouchCallbacks() {
 
