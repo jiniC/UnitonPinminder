@@ -1,6 +1,7 @@
 package com.example.pinminder.list;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.example.pinminder.R;
 
@@ -14,11 +15,11 @@ import android.widget.TextView;
 
 public class ListAdapter extends BaseAdapter {
 	private Activity activity;
-	private ArrayList<dumpclass> data;
+	private List<com.example.pinminder.dto.Dream> data;
 
-	public ListAdapter(Activity a, ArrayList<dumpclass> basicList) {
+	public ListAdapter(Activity a, List<com.example.pinminder.dto.Dream> list) {
 		activity = a;
-		data = basicList;
+		data = list;
 	}
 
 	@Override
@@ -52,16 +53,16 @@ public class ListAdapter extends BaseAdapter {
 		} else
 			holder = (ViewHolder) convertView.getTag();
 
-		holder.text.setText(data.get(position).todo);
-		if((data.get(position).category).equals("음식"))
+		holder.text.setText(data.get(position).getTodo());
+		if((data.get(position).getCategory()).equals("음식"))
 			holder.image.setImageResource(R.drawable.listicon1);
-		else if((data.get(position).category).equals("관람"))
+		else if((data.get(position).getCategory()).equals("관람"))
 			holder.image.setImageResource(R.drawable.listicon2);
-		else if((data.get(position).category).equals("활동"))
+		else if((data.get(position).getCategory()).equals("활동"))
 			holder.image.setImageResource(R.drawable.listicon3);
-		else if((data.get(position).category).equals("할 것"))
+		else if((data.get(position).getCategory()).equals("할 것"))
 			holder.image.setImageResource(R.drawable.listicon4);
-		else if((data.get(position).category).equals("기타"))
+		else if((data.get(position).getCategory()).equals("기타"))
 			holder.image.setImageResource(R.drawable.listicon5);
 
 		return convertView;

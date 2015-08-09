@@ -1,12 +1,12 @@
 package com.example.pinminder.list;
 
 
-public class dumpclass {
+public class Dream {
 	public String todo;
 	public String category;
 	
 	
-	public dumpclass(String todo,String category){
+	public Dream(String todo,String category){
 		this.todo	=	todo;
 		this.category = category;
 	}

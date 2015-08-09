@@ -1,6 +1,7 @@
 package com.example.pinminder.list;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.example.pinminder.MainActivity;
 import com.example.pinminder.R;
@@ -38,7 +39,7 @@ public class SwipeActivity extends Activity {
 
 	private ListView cmn_list_view;
 	private ListAdapter listAdapter;
-	private ArrayList<dumpclass> listdata;
+	private List<Dream> listdata;
 	private ImageButton plusBtn;
 	
 	public static int splash = 0;
@@ -55,19 +56,15 @@ public class SwipeActivity extends Activity {
 			splash++;
 		}
 		
-		
-		
 		serviceStart();
-		
-		
-		
         
 		final ActionBar actionBar = getActionBar();
-		actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#0090e9")));
+		actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#5fc4d9")));
+		actionBar.setIcon(R.drawable.icon);
 		
 		
 		cmn_list_view = (ListView) findViewById(R.id.cmn_list_view);
-		listdata = new ArrayList<dumpclass>();
+		listdata = new ArrayList<Dream>();
 		InitializeValues();
 		final ListViewSwipeGesture touchListener = new ListViewSwipeGesture(cmn_list_view, swipeListener, this);
 		touchListener.SwipeType = ListViewSwipeGesture.Double; // Set two
@@ -94,6 +91,13 @@ public class SwipeActivity extends Activity {
 
 	private void InitializeValues() {
 		// TODO Auto-generated method stub
+		
+		MyDB db = new MyDB(getApplicationContext());
+		
+         
+/*         for (Dream dream : listdata) {
+         }
+*/        	 
 		/*
 		 * listdata.add(new dumpclass("one")); 
 		 * listdata.add(newdumpclass("two")); 
@@ -103,9 +107,9 @@ public class SwipeActivity extends Activity {
 		 * listdata.add(new dumpclass("seven")); listdata.add(new
 		 * dumpclass("Eight"));
 		 */
-		//MyDB db = new MyDB(getApplicationContext());
-		listdata.add(new dumpclass("대린서점가서 8월호 쎄씨 잡지 재고 확인","활동"));
-		listdata.add(new dumpclass("맛집 찾아 가기","음식"));
+		
+		
+//		listdata.add(new dumpclass("맛집 찾아 가기","음식"));
 		
 		
 		/*
@@ -114,7 +118,7 @@ public class SwipeActivity extends Activity {
 			listdata.add(new dumpclass(db.getDream(i).getTodo().toString(),db.getDream(i).getCategory().toString()));
 			
 		}*/
-		listAdapter = new ListAdapter(this, listdata);
+		listAdapter = new ListAdapter(this, db.getAllDreams());
 		cmn_list_view.setAdapter(listAdapter);
 	}
 
@@ -122,6 +126,7 @@ public class SwipeActivity extends Activity {
 		Intent i = new Intent(SwipeActivity.this,PushEvent.class);
         startService(i);
 	}
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

@@ -229,13 +229,15 @@ public class PushEvent extends Service {
 		  PendingIntent.FLAG_UPDATE_CURRENT);
 		  
 		  Notification.Builder mBuilder = new Notification.Builder(this);
-		  mBuilder.setSmallIcon(R.drawable.ic_launcher);
+		  mBuilder.setSmallIcon(R.drawable.ic_launcher2);
 		  mBuilder.setTicker("Notification.Builder");
-		  mBuilder.setWhen(System.currentTimeMillis()); mBuilder.setNumber(10);
+		  mBuilder.setWhen(System.currentTimeMillis());
+		  mBuilder.setNumber(1);
 		  mBuilder.setContentTitle("Don't Forget It");
 		  mBuilder.setContentText(memo);
 		  mBuilder.setDefaults(Notification.DEFAULT_SOUND |
-		  Notification.DEFAULT_VIBRATE); mBuilder.setContentIntent(pendingIntent);
+		  Notification.DEFAULT_VIBRATE); 
+		  mBuilder.setContentIntent(pendingIntent);
 		  mBuilder.setAutoCancel(true);
 		  
 		  mBuilder.setPriority(NotificationCompat.PRIORITY_MAX);

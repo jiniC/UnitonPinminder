@@ -29,28 +29,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.example.pinminder.activities.SampleActivityBase;
-import com.example.pinminder.db.MyDB;
-import com.example.pinminder.dialog.DeleteActivity;
-import com.example.pinminder.dialog.DialogActivity;
-import com.example.pinminder.dto.Dream;
-import com.example.pinminder.write.PlaceAutocompleteAdapter;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.PlaceBuffer;
-import com.google.android.gms.location.places.Places;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-
 import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -68,6 +48,26 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.example.pinminder.activities.SampleActivityBase;
+import com.example.pinminder.db.MyDB;
+import com.example.pinminder.dialog.DialogActivity;
+import com.example.pinminder.dto.Dream;
+import com.example.pinminder.write.PlaceAutocompleteAdapter;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.PlaceBuffer;
+import com.google.android.gms.location.places.Places;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 public class WriteActivity extends SampleActivityBase
 		implements OnClickListener, GoogleApiClient.OnConnectionFailedListener {
@@ -117,7 +117,8 @@ public class WriteActivity extends SampleActivityBase
 		setContentView(R.layout.activity_write);
 		
 		final ActionBar actionBar = getActionBar();
-		actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#0090e9")));
+		actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#5fc4d9")));
+		actionBar.setIcon(R.drawable.icon);
 		
 
 		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
@@ -168,8 +169,7 @@ public class WriteActivity extends SampleActivityBase
 				//Toast.makeText(getApplicationContext(), id + " " + zone + " " + " " + todo + " " + lat + " " + lon + " "
 				//		+ " " + location + " " + memo + " " + check + " " + noti + " " + category, Toast.LENGTH_LONG)
 				//		.show();
-
-				finish();
+				
 
 			}
 		});
@@ -231,6 +231,17 @@ public class WriteActivity extends SampleActivityBase
 		todoEt = (EditText) findViewById(R.id.todoEt);
 		memoEt = (EditText) findViewById(R.id.memoEt);
 
+	}
+	
+	public void reload() {
+
+	    Intent intent = getIntent();
+	    overridePendingTransition(0, 0);
+	    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+	    finish();
+
+	    overridePendingTransition(0, 0);
+	    startActivity(intent);
 	}
 
 	/**
