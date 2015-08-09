@@ -120,7 +120,6 @@ public class WriteActivity extends SampleActivityBase
 		actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#5fc4d9")));
 		actionBar.setIcon(R.drawable.icon);
 		
-
 		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
 		map.moveCamera(CameraUpdateFactory.newLatLngZoom(SEOUL, 10));
 
@@ -442,7 +441,7 @@ public class WriteActivity extends SampleActivityBase
 		case R.id.cat1:
 			category = "À½½Ä";
 			//Marker mark = map
-			//		.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(location)).setIcon(R.drawable.mapicon1.);
+			//		.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(location)).set
 			//
 
 			cat1.setImageResource(R.drawable.writeicon1);
