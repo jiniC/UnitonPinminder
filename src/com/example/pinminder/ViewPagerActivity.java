@@ -1,4 +1,6 @@
 package com.example.pinminder;
+import com.example.pinminder.list.SwipeActivity;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -101,7 +103,7 @@ public class ViewPagerActivity extends Activity {
 					@Override
 					public void onClick(View v) {
 						// TODO Auto-generated method stub
-						Intent i = new Intent(getApplicationContext(),MainActivity.class); 
+						Intent i = new Intent(getApplicationContext(),SwipeActivity.class); 
 						startActivity(i);
 						
 					}

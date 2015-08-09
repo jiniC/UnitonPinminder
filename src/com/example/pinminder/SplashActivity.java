@@ -1,7 +1,10 @@
 package com.example.pinminder;
 
+import com.example.pinminder.list.SwipeActivity;
+
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -23,6 +26,8 @@ public class SplashActivity extends Activity {
         		R.drawable.loading_2
         };
         
+        
+        
         iv = (ImageView)findViewById(R.id.splash_icon);
         final Handler handler = new Handler();
         
@@ -34,8 +39,18 @@ public class SplashActivity extends Activity {
                 i++;
                 if(i == imageArray.length)
                 {
+                	SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+                    String s = pref.getString("tuto", "");
+                    
+                    
+                    if(s.isEmpty()){
+                    	
+                    	Intent i = new Intent(SplashActivity.this,ViewPagerActivity.class);
+                    	startActivity(i);
+                    }
                 	finish();    // 액티비티 종료
                 	i--;
+                	
                 }
                 handler.postDelayed(this, 500);
             }
