@@ -26,6 +26,9 @@ public class SplashActivity extends Activity {
         		R.drawable.loading_2
         };
         
+        Intent i = new Intent(SplashActivity.this,ViewPagerActivity.class);
+    	startActivity(i);
+        
         
         
         iv = (ImageView)findViewById(R.id.splash_icon);
@@ -43,11 +46,10 @@ public class SplashActivity extends Activity {
                     String s = pref.getString("tuto", "");
                     
                     
-                    if(s.isEmpty()){
+//                    if(s.isEmpty()){
                     	
-                    	Intent i = new Intent(SplashActivity.this,ViewPagerActivity.class);
-                    	startActivity(i);
-                    }
+                    	
+//                    }
                 	finish();    // 액티비티 종료
                 	i--;
                 	

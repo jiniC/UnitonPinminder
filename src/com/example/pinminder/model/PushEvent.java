@@ -21,6 +21,7 @@ import com.example.pinminder.MainActivity;
 import com.example.pinminder.R;
 import com.example.pinminder.db.MyDB;
 import com.example.pinminder.dto.Dream;
+import com.example.pinminder.list.SwipeActivity;
 
 public class PushEvent extends Service {
 	private static final String TAG = "BOOMBOOMTESTGPS";
@@ -65,10 +66,10 @@ public class PushEvent extends Service {
 					
 					Location locationB = new Location("point B");
 					
-					locationB.setLatitude(37.496193);
-	               locationB.setLongitude(127.039287);
-//					locationB.setLatitude(tempLat);
-//					locationB.setLongitude(tempLon);
+//					locationB.setLatitude(37.496193);
+//	               locationB.setLongitude(127.039287);
+					locationB.setLatitude(tempLat);
+					locationB.setLongitude(tempLon);
 					
 	               Log.i(TAG, "lat :" + latitude);
 	               Log.i(TAG, "lon :" + longitude);
@@ -82,7 +83,7 @@ public class PushEvent extends Service {
 					
 					if(meter < 100){
 						//Toast.makeText(getApplicationContext(), String.valueOf(meter), Toast.LENGTH_LONG).show();
-						createNotification(dream.getMemo());
+						createNotification(dream.getTodo(),meter);
 					}
 	           }
 					
@@ -193,10 +194,10 @@ public class PushEvent extends Service {
 				
 				Location locationB = new Location("point B");
 				
-				locationB.setLatitude(37.496193);
-               locationB.setLongitude(127.039287);
-//				locationB.setLatitude(tempLat);
-//				locationB.setLongitude(tempLon);
+//				locationB.setLatitude(37.496193);
+//               locationB.setLongitude(127.039287);
+				locationB.setLatitude(tempLat);
+				locationB.setLongitude(tempLon);
 				
                Log.i(TAG, "lat :" + latitude);
                Log.i(TAG, "lon :" + longitude);
@@ -222,10 +223,10 @@ public class PushEvent extends Service {
        return meter;
 	}
 	
-	public void createNotification(String memo) {
+	public void createNotification(String memo,int distance) {
 		  NotificationManager nm = (NotificationManager)
 		  getSystemService(Context.NOTIFICATION_SERVICE); PendingIntent pendingIntent =
-		  PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class),
+		  PendingIntent.getActivity(this, 0, new Intent(this, SwipeActivity.class),
 		  PendingIntent.FLAG_UPDATE_CURRENT);
 		  
 		  Notification.Builder mBuilder = new Notification.Builder(this);

@@ -105,6 +105,7 @@ public class ViewPagerActivity extends Activity {
 						// TODO Auto-generated method stub
 						Intent i = new Intent(getApplicationContext(),SwipeActivity.class); 
 						startActivity(i);
+						finish();
 						
 					}
 				});

@@ -41,7 +41,7 @@ public class SwipeActivity extends Activity {
 	private ListAdapter listAdapter;
 	private List<Dream> listdata;
 	private ImageButton plusBtn;
-	
+	MyDB db;
 	public static int splash = 0;
 
 	@Override
@@ -66,13 +66,13 @@ public class SwipeActivity extends Activity {
 		cmn_list_view = (ListView) findViewById(R.id.cmn_list_view);
 		listdata = new ArrayList<Dream>();
 		InitializeValues();
-		final ListViewSwipeGesture touchListener = new ListViewSwipeGesture(cmn_list_view, swipeListener, this);
+	/*	final ListViewSwipeGesture touchListener = new ListViewSwipeGesture(cmn_list_view, swipeListener, this);
 		touchListener.SwipeType = ListViewSwipeGesture.Double; // Set two
 																// options at
 																// background of
 																// list item
 
-		cmn_list_view.setOnTouchListener(touchListener);
+		cmn_list_view.setOnTouchListener(touchListener);*/
 
 		plusBtn = (ImageButton) findViewById(R.id.todolist_addbtn);
 		plusBtn.setOnClickListener(new OnClickListener() {
@@ -92,9 +92,9 @@ public class SwipeActivity extends Activity {
 	private void InitializeValues() {
 		// TODO Auto-generated method stub
 		
-		MyDB db = new MyDB(getApplicationContext());
+		db = new MyDB(getApplicationContext());
 		
-         
+        
 /*         for (Dream dream : listdata) {
          }
 */        	 
@@ -126,14 +126,24 @@ public class SwipeActivity extends Activity {
 		Intent i = new Intent(SwipeActivity.this,PushEvent.class);
         startService(i);
 	}
-
+	
+	@Override
+	public void onRestart() {
+		super.onRestart();
+		Toast.makeText(getApplicationContext(), "¿ÁΩ√¿€", Toast.LENGTH_SHORT).show();
+//		notifyAll();
+		db = new MyDB(getApplicationContext());
+		listAdapter.notifyDataSetChanged();
+	}
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main, menu);
- 
+        listAdapter = new ListAdapter(this, db.getAllDreams());
+		cmn_list_view.setAdapter(listAdapter);
         return super.onCreateOptionsMenu(menu);
 	}
 
@@ -160,7 +170,7 @@ public class SwipeActivity extends Activity {
         }
     }
     
-
+/*
 	ListViewSwipeGesture.TouchCallbacks swipeListener = new ListViewSwipeGesture.TouchCallbacks() {
 
 		@Override
@@ -197,6 +207,6 @@ public class SwipeActivity extends Activity {
 			
 		}
 
-	};
+	};*/
 
 }
