@@ -285,7 +285,12 @@ public class WriteActivity extends SampleActivityBase
 
 			// Format details of the place for display and show it in a
 			location = place.getAddress().toString();
-			zone = "서울시";
+			try{
+	            zone = location.substring(11, 14);
+	         }
+	         catch(Exception e){
+	            zone = "대한민국";
+	         }
 
 			String latLng = place.getLatLng().toString();
 			String[] split = latLng.split(",");
