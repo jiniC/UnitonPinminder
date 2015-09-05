@@ -127,6 +127,8 @@ public class WriteActivity extends SampleActivityBase
 
 		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
 		map.moveCamera(CameraUpdateFactory.newLatLngZoom(SEOUL, 10));
+		map.animateCamera(CameraUpdateFactory.zoomTo(10), 1000, null);
+
 
 		// Retrieve the AutoCompleteTextView that will display Place
 		// suggestions.
@@ -229,18 +231,26 @@ public class WriteActivity extends SampleActivityBase
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				if (memoid == 0) {
-					r.setBackgroundColor(Color.WHITE);
+					r.setBackgroundResource(R.drawable.white_section);
 					memoEt.setEnabled(false);
 
 					memoBtn.setImageResource(R.drawable.icon_02);
 					memoid = 1;
 				} else {
-					r.setBackgroundColor(Color.rgb(88, 128, 193));
+					r.setBackgroundResource(R.drawable.blue_section);
 					memoEt.setEnabled(true);
 
 					memoBtn.setImageResource(R.drawable.icon_01);
 					memoid = 0;
 				}
+			}
+		});
+		regionBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				mAutocompleteView.setText("");
 			}
 		});
 
@@ -300,12 +310,12 @@ public class WriteActivity extends SampleActivityBase
 			location = place.getAddress().toString();
 			try{
 				String[] split = location.split(" ");
-	            zone = split[0].toString();
+	            zone = split[2].toString();
+	            Log.i(zone,"hyunhye1");
 	         }
 	         catch(Exception e){
 	            zone = "¥Î«—πŒ±π";
 	         }
-			
 			Log.i(zone,"hyunhye");
 			
 			String latLng = place.getLatLng().toString();
@@ -600,7 +610,5 @@ public class WriteActivity extends SampleActivityBase
 			return super.onOptionsItemSelected(item);
 		}
 	}
-
-
 
 }
