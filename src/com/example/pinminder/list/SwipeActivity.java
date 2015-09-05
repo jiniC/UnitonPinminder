@@ -66,13 +66,13 @@ public class SwipeActivity extends Activity {
 		cmn_list_view = (ListView) findViewById(R.id.cmn_list_view);
 		listdata = new ArrayList<Dream>();
 		InitializeValues();
-	/*	final ListViewSwipeGesture touchListener = new ListViewSwipeGesture(cmn_list_view, swipeListener, this);
+		final ListViewSwipeGesture touchListener = new ListViewSwipeGesture(cmn_list_view, swipeListener, this);
 		touchListener.SwipeType = ListViewSwipeGesture.Double; // Set two
 																// options at
 																// background of
 																// list item
 
-		cmn_list_view.setOnTouchListener(touchListener);*/
+		cmn_list_view.setOnTouchListener(touchListener);
 
 		plusBtn = (ImageButton) findViewById(R.id.todolist_addbtn);
 		plusBtn.setOnClickListener(new OnClickListener() {
@@ -170,8 +170,7 @@ public class SwipeActivity extends Activity {
         }
     }
     
-/*
-	ListViewSwipeGesture.TouchCallbacks swipeListener = new ListViewSwipeGesture.TouchCallbacks() {
+    ListViewSwipeGesture.TouchCallbacks swipeListener = new ListViewSwipeGesture.TouchCallbacks() {
 
 		@Override
 		public void FullSwipeListView(int position) {
@@ -204,9 +203,9 @@ public class SwipeActivity extends Activity {
 		@Override
 		public void OnClickListView(int position) {
 			// TODO Auto-generated method stub
-			
+			startActivity(new Intent(getApplicationContext(), TestActivity.class));
 		}
 
-	};*/
+	};
 
 }
