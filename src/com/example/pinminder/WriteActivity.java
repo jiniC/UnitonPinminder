@@ -43,6 +43,7 @@ import com.google.android.gms.location.places.PlaceBuffer;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -73,7 +74,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class WriteActivity extends SampleActivityBase
-		implements OnClickListener, OnTouchListener, GoogleApiClient.OnConnectionFailedListener {
+		implements OnClickListener, OnMapClickListener,GoogleApiClient.OnConnectionFailedListener {
 
 	private ImageButton cancelBtn, regionBtn, cat1, cat2, cat3, cat4, cat5, alarmBtn, memoBtn;
 	Button deleteBtn, okBtn;
@@ -167,27 +168,38 @@ public class WriteActivity extends SampleActivityBase
 		cat4.setOnClickListener(this);
 		cat5.setOnClickListener(this);
 		
-		// 터치리스너
-		okBtn.setOnTouchListener(this);
-		deleteBtn.setOnTouchListener(this);
+		// 맵 클릭리스너
+		map.setOnMapClickListener(this);
 
 		okBtn.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-
+				// 버튼 색 바꾸기
+				okBtn.setBackgroundColor(Color.parseColor("#ededed"));
 				todo = todoEt.getText().toString();
 				memo = memoEt.getText().toString();
 
 				MyDB my = new MyDB(getApplicationContext());
 				Dream d = new Dream(0, zone, todo, lat, lon, location, memo, category, 0, noti);
 				my.addDream(d);
+				
 				finish();
 
 			}
 		});
 
+		deleteBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				deleteBtn.setBackgroundColor(Color.parseColor("#ededed"));
+				finish();
+			}
+		});
+		
 		alarmBtn.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -246,6 +258,7 @@ public class WriteActivity extends SampleActivityBase
 	private AdapterView.OnItemClickListener mAutocompleteClickListener = new AdapterView.OnItemClickListener() {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			map.clear();
 			/*
 			 * Retrieve the place ID of the selected item from the Adapter. The
 			 * adapter stores each Place suggestion in a PlaceAutocomplete
@@ -286,7 +299,8 @@ public class WriteActivity extends SampleActivityBase
 			// Format details of the place for display and show it in a
 			location = place.getAddress().toString();
 			try{
-	            zone = location.substring(11, 14);
+				String[] split = location.split(" ");
+	            zone = split[0].toString();
 	         }
 	         catch(Exception e){
 	            zone = "대한민국";
@@ -431,6 +445,7 @@ public class WriteActivity extends SampleActivityBase
 		switch (v.getId()) {
 		case R.id.cat1:
 			try {
+				map.clear();
 				mark.remove();
 			} catch (Exception e) {
 				Toast.makeText(getApplicationContext(), "지역을 설정해주세요.", Toast.LENGTH_LONG).show();
@@ -447,6 +462,7 @@ public class WriteActivity extends SampleActivityBase
 			break;
 		case R.id.cat2:
 			try {
+				map.clear();
 				mark.remove();
 			} catch (Exception e) {
 				Toast.makeText(getApplicationContext(), "지역을 설정해주세요.", Toast.LENGTH_LONG).show();
@@ -464,6 +480,7 @@ public class WriteActivity extends SampleActivityBase
 
 		case R.id.cat3:
 			try {
+				map.clear();
 				mark.remove();
 			} catch (Exception e) {
 				Toast.makeText(getApplicationContext(), "지역을 설정해주세요.", Toast.LENGTH_LONG).show();
@@ -480,6 +497,7 @@ public class WriteActivity extends SampleActivityBase
 			break;
 		case R.id.cat4:
 			try {
+				map.clear();
 				mark.remove();
 			} catch (Exception e) {
 				Toast.makeText(getApplicationContext(), "지역을 설정해주세요.", Toast.LENGTH_LONG).show();
@@ -496,6 +514,7 @@ public class WriteActivity extends SampleActivityBase
 			break;
 		case R.id.cat5:
 			try {
+				map.clear();
 				mark.remove();
 			} catch (Exception e) {
 				Toast.makeText(getApplicationContext(), "지역을 설정해주세요.", Toast.LENGTH_LONG).show();
@@ -515,26 +534,48 @@ public class WriteActivity extends SampleActivityBase
 	}
 
 	@Override
-	public boolean onTouch(View v, MotionEvent event) {
-		// TODO Auto-generated method stub
-		switch (v.getId()) {
-		case R.id.okBtn:
-			okBtn.setBackgroundColor(Color.parseColor("#ededed"));
-			return true;
-		case R.id.deleteBtn:
-			deleteBtn.setBackgroundColor(Color.parseColor("#ededed"));
-			return true;
-		}
-		return false;
-	}
-
-	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.write, menu);
 
 		return super.onCreateOptionsMenu(menu);
+	}
+	
+	@Override
+	public void onMapClick(LatLng point) {
+		// TODO Auto-generated method stub
+		map.clear();
+		lat = point.latitude;
+		lon = point.longitude;
+		//map.addMarker(new MarkerOptions().position(point).title(point.toString()));
+		
+		BitmapDescriptor b;
+		if(category.equals("음식")){
+			b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon1);
+			mark = map.addMarker(new MarkerOptions().position(point).title(point.toString()).icon(b));
+		}
+		else if(category.equals("관람")){
+			b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon2);
+			mark = map.addMarker(new MarkerOptions().position(point).title(point.toString()).icon(b));
+		}
+		else if(category.equals("활동")){
+			b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon3);
+			mark = map.addMarker(new MarkerOptions().position(point).title(point.toString()).icon(b));
+		}
+		else if(category.equals("할 것")){
+			b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon4);
+			mark = map.addMarker(new MarkerOptions().position(point).title(point.toString()).icon(b));
+		}
+		else if(category.equals("기타")){
+			b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon5);
+			mark = map.addMarker(new MarkerOptions().position(point).title(point.toString()).icon(b));
+		}
+		else if(category.equals("")){
+			mark = map.addMarker(new MarkerOptions().position(point).title(point.toString()));
+		}
+		
+		
 	}
 
 	/**
@@ -557,5 +598,7 @@ public class WriteActivity extends SampleActivityBase
 			return super.onOptionsItemSelected(item);
 		}
 	}
+
+
 
 }

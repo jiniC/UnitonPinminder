@@ -59,10 +59,6 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical" >
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="1000px"
-                    android:orientation="vertical" >
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -91,12 +87,17 @@
                             android:maxLines="1"
                             android:textColor="@android:color/primary_text_light" />
                     </RelativeLayout>
+                    
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1100px"
+                    android:orientation="vertical" >
 
                     <fragment
                         android:id="@+id/map"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        class="com.google.android.gms.maps.MapFragment" />
+                        android:name="com.google.android.gms.maps.MapFragment" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -225,8 +226,8 @@
             <LinearLayout
                 android:id="@+id/r"
                 android:layout_width="match_parent"
-                android:layout_height="400px"
-                android:background="#5880c1" >
+                android:layout_height="match_parent"
+                android:background="@drawable/blue_section" >
 
                 <EditText
                     android:id="@+id/memoEt"
