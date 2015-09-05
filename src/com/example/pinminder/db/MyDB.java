@@ -85,7 +85,7 @@ public class MyDB {
 		// 2. build query
 		Cursor cursor = db.query(DREAM_TABLES, // a. table
 				COLUMNS, // b. column names
-				" id = ?", // c. selections
+				" todo = ?", // c. selections
 				new String[] { String.valueOf(id) }, // d. selections args
 				null, // e. group by
 				null, // f. having
@@ -114,6 +114,43 @@ public class MyDB {
 		// 5. return book
 		return dream;
 	}
+	// Dream Table One GET by 
+		public Dream getDreamTodo(String todo) {
+
+			db = dbHelper.getWritableDatabase();
+			// 2. build query
+			Cursor cursor = db.query(DREAM_TABLES, // a. table
+					COLUMNS, // b. column names
+					" todo = ?", // c. selections
+					new String[] { todo }, // d. selections args
+					null, // e. group by
+					null, // f. having
+					null, // g. order by
+					null); // h. limit
+
+			// 3. if we got results get the first one
+			if (cursor != null)
+				cursor.moveToFirst();
+
+			// 4. build book object
+			Dream dream = new Dream();
+			dream.setId(Integer.parseInt(cursor.getString(0)));
+			dream.setZone(cursor.getString(1));
+			dream.setTodo(cursor.getString(2));
+			dream.setLat(Float.parseFloat(cursor.getString(3)));
+			dream.setLon(Float.parseFloat(cursor.getString(4)));
+			dream.setLocation(cursor.getString(5));
+			dream.setMemo(cursor.getString(6));
+			dream.setCheck(Integer.parseInt(cursor.getString(7)));
+			dream.setNoti(Integer.parseInt(cursor.getString(8)));
+			dream.setCategory(cursor.getString(9));
+
+			Log.d("getDream(" + todo + ")", dream.toString());
+
+			// 5. return book
+			return dream;
+		}
+		
 
 	// Get All Books
 	public List<Dream> getAllDreams() {

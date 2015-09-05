@@ -60,8 +60,8 @@ public class ListViewSwipeGesture implements View.OnTouchListener {
 	static TouchCallbacks tcallbacks;
 
 	// Intermediate Usages
-	String TextColor = "#FFFFFF"; // #FF4444
-	String RangeOneColor = "#FFD060"; // "#FFD060"
+	String TextColor = "#FF00FF"; // #FF4444
+	String RangeOneColor = "#DDDED9"; // "#FFD060"
 	String RangeTwoColor = "#92C500";
 	String singleColor = "#FF4444";
 
@@ -360,7 +360,7 @@ public class ListViewSwipeGesture implements View.OnTouchListener {
 		mDownView_parent_txt1.setLayoutParams(lp1);
 		mDownView_parent_txt1.setGravity(Gravity.CENTER_HORIZONTAL);
 		mDownView_parent_txt1.setText(HalfText);
-		mDownView_parent_txt1.setWidth(textwidth2);
+		mDownView_parent_txt1.setWidth((textwidth2/2));
 		mDownView_parent_txt1.setPadding(0, textheight / 4, 0, 0);
 		mDownView_parent_txt1.setHeight(textheight);
 		mDownView_parent_txt1.setBackgroundColor(Color.parseColor(HalfColor));
@@ -377,7 +377,7 @@ public class ListViewSwipeGesture implements View.OnTouchListener {
 			mDownView_parent_txt2.setLayoutParams(lp2);
 			mDownView_parent_txt2.setGravity(Gravity.CENTER_HORIZONTAL);
 			mDownView_parent_txt2.setText(FullText);
-			mDownView_parent_txt2.setWidth(textwidth);
+			mDownView_parent_txt2.setWidth((textwidth/2));
 			mDownView_parent_txt2.setPadding(0, textheight / 4, 0, 0);
 			mDownView_parent_txt2.setHeight(textheight);
 			mDownView_parent_txt2.setBackgroundColor(Color.parseColor(FullColor));
@@ -420,7 +420,7 @@ public class ListViewSwipeGesture implements View.OnTouchListener {
 		} else {
 			width = largewidth;
 		}
-		mDownView.animate().translationX(-width).setDuration(300).setListener(new AnimatorListenerAdapter() {
+		mDownView.animate().translationX(-(width/2)).setDuration(300).setListener(new AnimatorListenerAdapter() {
 			@Override
 			public void onAnimationEnd(Animator animation) {
 				super.onAnimationEnd(animation);
