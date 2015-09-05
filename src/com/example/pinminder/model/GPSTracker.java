@@ -56,8 +56,12 @@ public class GPSTracker extends Service implements LocationListener {
             // Getting network status
             isNetworkEnabled = locationManager
                     .isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-
+            
             if (!isGPSEnabled && !isNetworkEnabled) {
+            	location = new Location("ohdoking");
+            	location.setLatitude(37.554904);
+            	location.setLongitude(126.970668);
+            	
                 // No network provider is enabled
             } else {
                 this.canGetLocation = true;
@@ -99,6 +103,8 @@ public class GPSTracker extends Service implements LocationListener {
         catch (Exception e) {
             e.printStackTrace();
         }
+        
+        
 
         return location;
     }

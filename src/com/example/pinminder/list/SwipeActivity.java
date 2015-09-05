@@ -141,8 +141,8 @@ public class SwipeActivity extends Activity  {
 			
 			Location location = gpsTracker.getLocation();
 			LatLng moveLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-			map.moveCamera(CameraUpdateFactory.newLatLngZoom(moveLatLng, 15));
-			map.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
+			map.moveCamera(CameraUpdateFactory.newLatLngZoom(moveLatLng, 10));
+			map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
 				
 			/*Marker hamburg = map.addMarker(new MarkerOptions()
 					.position(HAMBURG).title("Hamburg"));*/
