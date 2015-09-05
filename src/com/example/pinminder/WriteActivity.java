@@ -305,7 +305,9 @@ public class WriteActivity extends SampleActivityBase
 	         catch(Exception e){
 	            zone = "대한민국";
 	         }
-
+			
+			Log.i(zone,"hyunhye");
+			
 			String latLng = place.getLatLng().toString();
 			String[] split = latLng.split(",");
 			lat = Float.parseFloat(split[0].substring(10, split[0].length()));
@@ -503,7 +505,7 @@ public class WriteActivity extends SampleActivityBase
 				Toast.makeText(getApplicationContext(), "지역을 설정해주세요.", Toast.LENGTH_LONG).show();
 			} finally {
 				category = "할 것";
-				BitmapDescriptor bmp4 = BitmapDescriptorFactory.fromResource(R.drawable.mapicon5);
+				BitmapDescriptor bmp4 = BitmapDescriptorFactory.fromResource(R.drawable.mapicon4);
 				mark = map.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(location).icon(bmp4));
 				cat1.setImageResource(R.drawable.inactive1);
 				cat2.setImageResource(R.drawable.inactive2);
@@ -520,7 +522,7 @@ public class WriteActivity extends SampleActivityBase
 				Toast.makeText(getApplicationContext(), "지역을 설정해주세요.", Toast.LENGTH_LONG).show();
 			} finally {
 				category = "기타";
-				BitmapDescriptor bmp5 = BitmapDescriptorFactory.fromResource(R.drawable.mapicon4);
+				BitmapDescriptor bmp5 = BitmapDescriptorFactory.fromResource(R.drawable.mapicon5);
 				mark = map.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(location).icon(bmp5));
 				cat1.setImageResource(R.drawable.inactive1);
 				cat2.setImageResource(R.drawable.inactive2);
