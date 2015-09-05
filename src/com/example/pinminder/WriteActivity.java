@@ -327,11 +327,11 @@ public class WriteActivity extends SampleActivityBase
 				mark = map.addMarker(new MarkerOptions().position(place.getLatLng()).title(place.getAddress().toString()).icon(b));
 			}
 			else if(category.equals("할 것")){
-				b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon4);
+				b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon5);
 				mark = map.addMarker(new MarkerOptions().position(place.getLatLng()).title(place.getAddress().toString()).icon(b));
 			}
 			else if(category.equals("기타")){
-				b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon5);
+				b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon4);
 				mark = map.addMarker(new MarkerOptions().position(place.getLatLng()).title(place.getAddress().toString()).icon(b));
 			}
 			else if(category.equals("")){
@@ -505,7 +505,7 @@ public class WriteActivity extends SampleActivityBase
 				Toast.makeText(getApplicationContext(), "지역을 설정해주세요.", Toast.LENGTH_LONG).show();
 			} finally {
 				category = "할 것";
-				BitmapDescriptor bmp4 = BitmapDescriptorFactory.fromResource(R.drawable.mapicon4);
+				BitmapDescriptor bmp4 = BitmapDescriptorFactory.fromResource(R.drawable.mapicon5);
 				mark = map.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(location).icon(bmp4));
 				cat1.setImageResource(R.drawable.inactive1);
 				cat2.setImageResource(R.drawable.inactive2);
@@ -522,7 +522,7 @@ public class WriteActivity extends SampleActivityBase
 				Toast.makeText(getApplicationContext(), "지역을 설정해주세요.", Toast.LENGTH_LONG).show();
 			} finally {
 				category = "기타";
-				BitmapDescriptor bmp5 = BitmapDescriptorFactory.fromResource(R.drawable.mapicon5);
+				BitmapDescriptor bmp5 = BitmapDescriptorFactory.fromResource(R.drawable.mapicon4);
 				mark = map.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(location).icon(bmp5));
 				cat1.setImageResource(R.drawable.inactive1);
 				cat2.setImageResource(R.drawable.inactive2);
@@ -566,11 +566,11 @@ public class WriteActivity extends SampleActivityBase
 			mark = map.addMarker(new MarkerOptions().position(point).title(point.toString()).icon(b));
 		}
 		else if(category.equals("할 것")){
-			b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon4);
+			b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon5);
 			mark = map.addMarker(new MarkerOptions().position(point).title(point.toString()).icon(b));
 		}
 		else if(category.equals("기타")){
-			b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon5);
+			b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon4);
 			mark = map.addMarker(new MarkerOptions().position(point).title(point.toString()).icon(b));
 		}
 		else if(category.equals("")){
