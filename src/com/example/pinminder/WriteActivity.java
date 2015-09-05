@@ -302,7 +302,13 @@ public class WriteActivity extends SampleActivityBase
           */
 
          location = place.getAddress().toString();
-         zone = location.substring(11, 14);
+         try{
+        	 
+        	 zone = location.substring(11, 14);
+         }
+         catch(Exception e){
+        	 zone = "¥Î«—πŒ±π";
+         }
 
          String latLng = place.getLatLng().toString();
          String[] split = latLng.split(",");
@@ -517,11 +523,11 @@ public class WriteActivity extends SampleActivityBase
            finish();
             // search action
             return true;
-        case R.id.action_location_found:
+        /*case R.id.action_location_found:
            Intent i = new Intent(WriteActivity.this,DialogActivity.class);
            startActivity(i);
             // location found
-            return true;
+            return true;*/
         default:
             return super.onOptionsItemSelected(item);
         }

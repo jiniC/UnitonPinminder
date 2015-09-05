@@ -7,9 +7,9 @@
           android:showAsAction="ifRoom"/>
      
     <!-- Location Found -->
-    <item android:id="@+id/action_location_found"
+   <!--  <item android:id="@+id/action_location_found"
           android:icon="@drawable/iiicon_15"
           android:title="action_location_found"
-          android:showAsAction="ifRoom" />
+          android:showAsAction="ifRoom" /> -->
      
 </menu>

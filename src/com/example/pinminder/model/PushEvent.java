@@ -81,7 +81,7 @@ public class PushEvent extends Service {
 					
 					Log.i(TAG, "testb : " + meter);
 					
-					if(meter < 100){
+					if(meter < 1000){
 						//Toast.makeText(getApplicationContext(), String.valueOf(meter), Toast.LENGTH_LONG).show();
 						createNotification(dream.getTodo(),meter);
 					}

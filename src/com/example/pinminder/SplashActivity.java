@@ -26,8 +26,6 @@ public class SplashActivity extends Activity {
         		R.drawable.loading_2
         };
         
-        Intent i = new Intent(SplashActivity.this,ViewPagerActivity.class);
-    	startActivity(i);
         
         
         
@@ -46,10 +44,13 @@ public class SplashActivity extends Activity {
                     String s = pref.getString("tuto", "");
                     
                     
-//                    if(s.isEmpty()){
+                    if(s.isEmpty()){
                     	
+                    	Intent intent = new Intent(SplashActivity.this,ViewPagerActivity.class);
+                    	startActivity(intent);
                     	
-//                    }
+                    }
+                	
                 	finish();    // 액티비티 종료
                 	i--;
                 	
