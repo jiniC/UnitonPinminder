@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.pinminder.R;
 import com.example.pinminder.SplashActivity;
@@ -76,14 +77,13 @@ public class SwipeActivity extends Activity  {
 		cmn_list_view = (ListView) findViewById(R.id.cmn_list_view);
 		listdata = new ArrayList<Dream>();
 		InitializeValues();
-		/*
-		 * final ListViewSwipeGesture touchListener = new
-		 * ListViewSwipeGesture(cmn_list_view, swipeListener, this);
-		 * touchListener.SwipeType = ListViewSwipeGesture.Double; // Set two //
-		 * options at // background of // list item
-		 * 
-		 * cmn_list_view.setOnTouchListener(touchListener);
-		 */
+		final ListViewSwipeGesture touchListener = new ListViewSwipeGesture(cmn_list_view, swipeListener, this);
+		touchListener.SwipeType = ListViewSwipeGesture.Double; // Set two
+																// options at
+																// background of
+																// list item
+
+		cmn_list_view.setOnTouchListener(touchListener);
 
 		plusBtn = (ImageButton) findViewById(R.id.todolist_addbtn);
 		plusBtn.setOnClickListener(new OnClickListener() {
@@ -216,27 +216,64 @@ public class SwipeActivity extends Activity  {
 	}
 
 	/**
-	 * On selecting action bar icons
-	 * */
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Take appropriate action for each action item click
-		switch (item.getItemId()) {
-		case R.id.action_search:
-			Intent i2 = new Intent(SwipeActivity.this, DeleteActivity.class);
-			startActivity(i2);
-			// search action
-			return true;
-		case R.id.action_location_found:
+     * On selecting action bar icons
+     * */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Take appropriate action for each action item click
+        switch (item.getItemId()) {
+        case R.id.action_search:
+        	Intent i2 = new Intent(SwipeActivity.this,DeleteActivity.class);
+        	startActivity(i2);
+            // search action
+            return true;
+        case R.id.action_location_found:
+        	
+        	Intent i = new Intent(SwipeActivity.this,DialogActivity.class);
+        	startActivity(i);
+            // location found
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+    }
+    
+    ListViewSwipeGesture.TouchCallbacks swipeListener = new ListViewSwipeGesture.TouchCallbacks() {
 
-			Intent i = new Intent(SwipeActivity.this, DialogActivity.class);
-			startActivity(i);
-			// location found
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
+		@Override
+		public void FullSwipeListView(int position) {
+			// TODO Auto-generated method stub
+			Toast.makeText(getApplicationContext(), "수정", Toast.LENGTH_SHORT).show();
 		}
-	}
+
+		@Override
+		public void HalfSwipeListView(int position) {
+			// TODO Auto-generated method stub
+			Toast.makeText(getApplicationContext(), "삭제", Toast.LENGTH_SHORT).show();
+		}
+
+		@Override
+		public void LoadDataForScroll(int count) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void onDismiss(ListView listView, int[] reverseSortedPositions) {
+			// TODO Auto-generated method stub
+			Toast.makeText(getApplicationContext(), "Delete", Toast.LENGTH_SHORT).show();
+			for (int i : reverseSortedPositions) {
+				listdata.remove(i);
+				listAdapter.notifyDataSetChanged();
+			}
+		}
+
+		@Override
+		public void OnClickListView(int position) {
+			// TODO Auto-generated method stub
+			startActivity(new Intent(getApplicationContext(), TestActivity.class));
+		}
+    };
 
 	/*
 	 * ListViewSwipeGesture.TouchCallbacks swipeListener = new
