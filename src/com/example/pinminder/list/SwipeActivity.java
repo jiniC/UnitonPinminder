@@ -271,7 +271,13 @@ public class SwipeActivity extends Activity  {
 		@Override
 		public void OnClickListView(int position) {
 			// TODO Auto-generated method stub
-			startActivity(new Intent(getApplicationContext(), TestActivity.class));
+//			startActivity(new Intent(getApplicationContext(), TestActivity.class));
+			
+			Dream dream = db.getDreamTodo(listdata.get(position).getTodo());
+			LatLng moveLatLng = new LatLng(dream.getLat(), dream.getLon());
+			map.moveCamera(CameraUpdateFactory.newLatLngZoom(moveLatLng, 15));
+			map.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
+			
 		}
     };
 

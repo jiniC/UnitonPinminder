@@ -16,9 +16,24 @@
 
     <TextView
         android:id="@+id/mem_info_txt_id"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_horizontal|center_vertical"
         android:text="to do list 1" />
+
+    <RelativeLayout
+        android:id="@+id/rlRight"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:gravity="right" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_marginRight="5dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:scaleType="centerCrop"
+            android:src="@drawable/arrow" />
+    </RelativeLayout>
 
 </LinearLayout>
