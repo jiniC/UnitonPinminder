@@ -305,7 +305,9 @@ public class WriteActivity extends SampleActivityBase
 	         catch(Exception e){
 	            zone = "대한민국";
 	         }
-
+			
+			Log.i(zone,"hyunhye");
+			
 			String latLng = place.getLatLng().toString();
 			String[] split = latLng.split(",");
 			lat = Float.parseFloat(split[0].substring(10, split[0].length()));
@@ -325,11 +327,11 @@ public class WriteActivity extends SampleActivityBase
 				mark = map.addMarker(new MarkerOptions().position(place.getLatLng()).title(place.getAddress().toString()).icon(b));
 			}
 			else if(category.equals("할 것")){
-				b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon4);
+				b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon5);
 				mark = map.addMarker(new MarkerOptions().position(place.getLatLng()).title(place.getAddress().toString()).icon(b));
 			}
 			else if(category.equals("기타")){
-				b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon5);
+				b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon4);
 				mark = map.addMarker(new MarkerOptions().position(place.getLatLng()).title(place.getAddress().toString()).icon(b));
 			}
 			else if(category.equals("")){
@@ -564,11 +566,11 @@ public class WriteActivity extends SampleActivityBase
 			mark = map.addMarker(new MarkerOptions().position(point).title(point.toString()).icon(b));
 		}
 		else if(category.equals("할 것")){
-			b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon4);
+			b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon5);
 			mark = map.addMarker(new MarkerOptions().position(point).title(point.toString()).icon(b));
 		}
 		else if(category.equals("기타")){
-			b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon5);
+			b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon4);
 			mark = map.addMarker(new MarkerOptions().position(point).title(point.toString()).icon(b));
 		}
 		else if(category.equals("")){
