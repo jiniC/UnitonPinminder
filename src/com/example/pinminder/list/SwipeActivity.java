@@ -130,8 +130,8 @@ public class SwipeActivity extends Activity {
 	@Override
 	public void onRestart() {
 		super.onRestart();
-		Toast.makeText(getApplicationContext(), "¿ÁΩ√¿€", Toast.LENGTH_SHORT).show();
-//		notifyAll();
+
+		InitializeValues();
 		db = new MyDB(getApplicationContext());
 		listAdapter.notifyDataSetChanged();
 	}
