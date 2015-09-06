@@ -38,7 +38,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 //08-09 03:01:04.349: E/AndroidRuntime(4062): 	Suppressed: java.lang.ClassNotFoundException: com.google.android.gms.maps.MapFragment
 
-public class SwipeActivity extends Activity  {
+public class SwipeActivity extends Activity {
 
 	private ListView cmn_list_view;
 	private ListAdapter listAdapter;
@@ -50,22 +50,21 @@ public class SwipeActivity extends Activity  {
 	static final LatLng HAMBURG = new LatLng(53.558, 9.927);
 	static final LatLng KIEL = new LatLng(53.551, 9.993);
 	private GoogleMap map;
-	
+
 	GPSTracker gpsTracker;
-	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_swipe);
+		
+		db = new MyDB(getApplicationContext());
 
 		if (splash == 0) {
 
 			startActivity(new Intent(this, SplashActivity.class));
 			splash++;
 		}
-		
-		
 
 		serviceStart();
 
@@ -77,7 +76,8 @@ public class SwipeActivity extends Activity  {
 		cmn_list_view = (ListView) findViewById(R.id.cmn_list_view);
 		listdata = new ArrayList<Dream>();
 		InitializeValues();
-		final ListViewSwipeGesture touchListener = new ListViewSwipeGesture(cmn_list_view, swipeListener, this);
+		final ListViewSwipeGesture touchListener = new ListViewSwipeGesture(
+				cmn_list_view, swipeListener, this);
 		touchListener.SwipeType = ListViewSwipeGesture.Double; // Set two
 																// options at
 																// background of
@@ -99,67 +99,68 @@ public class SwipeActivity extends Activity  {
 		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
 				.getMap();
 
-		if (map != null) {
-			
-			gpsTracker = new GPSTracker(getApplicationContext());
-			
-			
-			
-			if(!listdata.isEmpty()){
-				for(Dream dream : listdata){
-					
-					int id = 0;
-					
-					if(dream.getCategory().equals("음식")){
-						id = R.drawable.mapicon1;
-					}
-					else if(dream.getCategory().equals("관람")){
-						id = R.drawable.mapicon2;
-						
-					}
-					else if(dream.getCategory().equals("활동")){
-						
-						id = R.drawable.mapicon3;
-					}
-					else if(dream.getCategory().equals("할 것")){
-						
-						id = R.drawable.mapicon4;
-					}
-					else{
-						id = R.drawable.mapicon5;
-					}
-					
-					LatLng tempLatLng = new LatLng(dream.getLat(), dream.getLon());
-					Marker kiel = map.addMarker(new MarkerOptions()
-					.position(tempLatLng)
-					.title(dream.getTodo())
-					.snippet(dream.getMemo())
-					.icon(BitmapDescriptorFactory
-							.fromResource(id)));
-				}
-			}
-			
-			Location location = gpsTracker.getLocation();
-			LatLng moveLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-			map.moveCamera(CameraUpdateFactory.newLatLngZoom(moveLatLng, 10));
-			map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
-				
-			/*Marker hamburg = map.addMarker(new MarkerOptions()
-					.position(HAMBURG).title("Hamburg"));*/
-					/*.icon(BitmapDescriptorFactory
-							.fromResource(R.drawable.ic_launcher)));*/
-		}
-
 		// Move the camera instantly to hamburg with a zoom of 15.
 
 		// Zoom in, animating the camera.
 
 	}
 
+	public void initMap() {
+		if (map != null) {
+
+			gpsTracker = new GPSTracker(getApplicationContext());
+
+			if (!listdata.isEmpty()) {
+				for (Dream dream : listdata) {
+
+					int id = 0;
+
+					if (dream.getCategory().equals("음식")) {
+						id = R.drawable.mapicon1;
+					} else if (dream.getCategory().equals("관람")) {
+						id = R.drawable.mapicon2;
+
+					} else if (dream.getCategory().equals("활동")) {
+
+						id = R.drawable.mapicon3;
+					} else if (dream.getCategory().equals("할 것")) {
+
+						id = R.drawable.mapicon4;
+					} else {
+						id = R.drawable.mapicon5;
+					}
+
+					LatLng tempLatLng = new LatLng(dream.getLat(),
+							dream.getLon());
+					Marker kiel = map.addMarker(new MarkerOptions()
+							.position(tempLatLng).title(dream.getTodo())
+							.snippet(dream.getMemo())
+							.icon(BitmapDescriptorFactory.fromResource(id)));
+				}
+			}
+
+			Location location = gpsTracker.getLocation();
+			LatLng moveLatLng = new LatLng(location.getLatitude(),
+					location.getLongitude());
+			map.moveCamera(CameraUpdateFactory.newLatLngZoom(moveLatLng, 10));
+			map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+
+			/*
+			 * Marker hamburg = map.addMarker(new MarkerOptions()
+			 * .position(HAMBURG).title("Hamburg"));
+			 */
+			/*
+			 * .icon(BitmapDescriptorFactory
+			 * .fromResource(R.drawable.ic_launcher)));
+			 */
+		}
+
+	}
+
 	private void InitializeValues() {
 		// TODO Auto-generated method stub
 
-		db = new MyDB(getApplicationContext());
+		
 
 		/*
 		 * for (Dream dream : listdata) { }
@@ -184,12 +185,11 @@ public class SwipeActivity extends Activity  {
 		 * 
 		 * }
 		 */
-		
+
 		listdata = db.getAllDreams();
 		listAdapter = new ListAdapter(this, listdata);
 		cmn_list_view.setAdapter(listAdapter);
 	}
-	
 
 	public void serviceStart() {
 		Intent i = new Intent(SwipeActivity.this, PushEvent.class);
@@ -197,11 +197,23 @@ public class SwipeActivity extends Activity  {
 	}
 
 	@Override
+	public void onResume() {
+		super.onRestart();
+		
+		db = new MyDB(getApplicationContext());
+		InitializeValues();
+		initMap();
+		listAdapter.notifyDataSetChanged();
+	}
+	
+	
+	@Override
 	public void onRestart() {
 		super.onRestart();
-
-		InitializeValues();
+		
 		db = new MyDB(getApplicationContext());
+		InitializeValues();
+		initMap();
 		listAdapter.notifyDataSetChanged();
 	}
 
@@ -216,40 +228,49 @@ public class SwipeActivity extends Activity  {
 	}
 
 	/**
-     * On selecting action bar icons
-     * */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Take appropriate action for each action item click
-        switch (item.getItemId()) {
-        case R.id.action_search:
-        	Intent i2 = new Intent(SwipeActivity.this,DeleteActivity.class);
-        	startActivity(i2);
-            // search action
-            return true;
-        case R.id.action_location_found:
-        	
-        	Intent i = new Intent(SwipeActivity.this,DialogActivity.class);
-        	startActivity(i);
-            // location found
-            return true;
-        default:
-            return super.onOptionsItemSelected(item);
-        }
-    }
-    
-    ListViewSwipeGesture.TouchCallbacks swipeListener = new ListViewSwipeGesture.TouchCallbacks() {
+	 * On selecting action bar icons
+	 * */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Take appropriate action for each action item click
+		switch (item.getItemId()) {
+		case R.id.action_search:
+			Intent i2 = new Intent(SwipeActivity.this, DeleteActivity.class);
+			startActivity(i2);
+			// search action
+			return true;
+		case R.id.action_location_found:
+
+			Intent i = new Intent(SwipeActivity.this, DialogActivity.class);
+			startActivity(i);
+			// location found
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	ListViewSwipeGesture.TouchCallbacks swipeListener = new ListViewSwipeGesture.TouchCallbacks() {
 
 		@Override
 		public void FullSwipeListView(int position) {
 			// TODO Auto-generated method stub
-			Toast.makeText(getApplicationContext(), "수정", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), "수정", Toast.LENGTH_SHORT)
+					.show();
 		}
 
 		@Override
 		public void HalfSwipeListView(int position) {
 			// TODO Auto-generated method stub
-			Toast.makeText(getApplicationContext(), "삭제", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), "삭제", Toast.LENGTH_SHORT)
+					.show();
+			db = new MyDB(getApplicationContext());
+			db.deleteDream(listdata.get(position));
+			
+			finish();
+			startActivity(getIntent());
+			// InitializeValues();
+			// onRestart();
 		}
 
 		@Override
@@ -261,7 +282,8 @@ public class SwipeActivity extends Activity  {
 		@Override
 		public void onDismiss(ListView listView, int[] reverseSortedPositions) {
 			// TODO Auto-generated method stub
-			Toast.makeText(getApplicationContext(), "Delete", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), "Delete",
+					Toast.LENGTH_SHORT).show();
 			for (int i : reverseSortedPositions) {
 				listdata.remove(i);
 				listAdapter.notifyDataSetChanged();
@@ -271,15 +293,16 @@ public class SwipeActivity extends Activity  {
 		@Override
 		public void OnClickListView(int position) {
 			// TODO Auto-generated method stub
-//			startActivity(new Intent(getApplicationContext(), TestActivity.class));
-			
+			// startActivity(new Intent(getApplicationContext(),
+			// TestActivity.class));
+
 			Dream dream = db.getDreamTodo(listdata.get(position).getTodo());
 			LatLng moveLatLng = new LatLng(dream.getLat(), dream.getLon());
 			map.moveCamera(CameraUpdateFactory.newLatLngZoom(moveLatLng, 15));
 			map.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
-			
+
 		}
-    };
+	};
 
 	/*
 	 * ListViewSwipeGesture.TouchCallbacks swipeListener = new
