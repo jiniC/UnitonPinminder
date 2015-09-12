@@ -102,6 +102,9 @@ public class SwipeActivity extends Activity {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				Intent i = new Intent(SwipeActivity.this, WriteActivity.class);
+				i.putExtra("code",0);
+				i.putExtra("pos", -1);
+				i.putExtra("id", -1);
 				startActivity(i);
 			}
 		});
@@ -163,9 +166,9 @@ public class SwipeActivity extends Activity {
 						id = R.drawable.mapicon3;
 					} else if (dream.getCategory().equals("할 것")) {
 
-						id = R.drawable.mapicon4;
-					} else {
 						id = R.drawable.mapicon5;
+					} else {
+						id = R.drawable.mapicon4;
 					}
 
 					LatLng tempLatLng = new LatLng(dream.getLat(),
@@ -339,9 +342,17 @@ public class SwipeActivity extends Activity {
 
 		@Override
 		public void FullSwipeListView(int position) {
+			// 수정하기
 			// TODO Auto-generated method stub
-			Toast.makeText(getApplicationContext(), "수정", Toast.LENGTH_SHORT)
-					.show();
+			Intent i = new Intent(SwipeActivity.this, WriteActivity.class);
+			i.putExtra("code",1);
+			
+			Dream dream = db.getDreamTodo(listdata.get(position).getTodo());
+			i.putExtra("todo", listdata.get(position).getTodo());
+			i.putExtra("id", dream.getId());
+			
+			Log.d(dream.getId()+"", "id");
+			startActivity(i);
 		}
 
 		@Override
@@ -381,7 +392,7 @@ public class SwipeActivity extends Activity {
 			// startActivity(new Intent(getApplicationContext(),
 			// TestActivity.class));
 
-			Dream dream = db.getDreamTodo(listdata.get(position).getTodo());
+			Dream dream = db.getDreamId(listdata.get(position).getId());
 			LatLng moveLatLng = new LatLng(dream.getLat(), dream.getLon());
 			map.moveCamera(CameraUpdateFactory.newLatLngZoom(moveLatLng, 15));
 			map.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);

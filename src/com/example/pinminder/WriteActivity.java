@@ -18,6 +18,8 @@ package com.example.pinminder;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -33,6 +35,7 @@ import com.example.pinminder.activities.SampleActivityBase;
 import com.example.pinminder.db.MyDB;
 import com.example.pinminder.dialog.DialogActivity;
 import com.example.pinminder.dto.Dream;
+import com.example.pinminder.list.ListAdapter;
 import com.example.pinminder.write.PlaceAutocompleteAdapter;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -71,6 +74,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Toast;
 
 public class WriteActivity extends SampleActivityBase
@@ -89,6 +93,11 @@ public class WriteActivity extends SampleActivityBase
 	private int memoid = 0;
 
 	Marker mark;
+	
+	int code;
+	String todoDB;
+	int idDB;
+	MyDB db;
 	/**
 	 * GoogleApiClient wraps our service connection to Google Play Services and
 	 * provides access to the user's sign in state as well as the Google's APIs.
@@ -121,9 +130,15 @@ public class WriteActivity extends SampleActivityBase
 
 		setContentView(R.layout.activity_write);
 
+		Intent intent = getIntent();
+    	code = intent.getIntExtra("code", 0);
+    	todoDB = intent.getStringExtra("todo");
+    	idDB = intent.getIntExtra("id", -1);
+    	
 		final ActionBar actionBar = getActionBar();
 		actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#5fc4d9")));
 		actionBar.setIcon(R.drawable.icon);
+		db = new MyDB(getApplicationContext());
 
 		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
 		map.moveCamera(CameraUpdateFactory.newLatLngZoom(SEOUL, 10));
@@ -172,6 +187,86 @@ public class WriteActivity extends SampleActivityBase
 		
 		// 맵 클릭리스너
 		map.setOnMapClickListener(this);
+		
+		// 버튼 이름 설정
+		if(code == 0){ 
+			okBtn.setText("확인");
+			deleteBtn.setText("취소");
+			
+		}else{
+			okBtn.setText("수정");
+			deleteBtn.setText("삭제");
+			
+			BitmapDescriptor b;
+			Dream dream = db.getDreamTodo(todoDB);
+			
+			LatLng moveLatLng = new LatLng(dream.getLat(), dream.getLon());
+			lat = dream.getLat();
+			lon = dream.getLon();
+			
+			map.moveCamera(CameraUpdateFactory.newLatLngZoom(moveLatLng, 15));
+			map.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
+			
+			todoEt.setText(dream.getTodo().toString());
+			mAutocompleteView.setText(dream.getLocation().toString());
+			
+			String c = dream.getCategory().toString();
+			category = c;
+			if(c.equals("음식")){
+				cat1.setImageResource(R.drawable.writeicon1);
+				cat2.setImageResource(R.drawable.inactive2);
+				cat3.setImageResource(R.drawable.inactive3);
+				cat4.setImageResource(R.drawable.inactive4);
+				cat5.setImageResource(R.drawable.inactive5);
+				
+				b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon1);
+				mark = map.addMarker(new MarkerOptions().position(moveLatLng).icon(b));
+				
+			}else if(c.equals("관람")){
+				cat1.setImageResource(R.drawable.inactive1);
+				cat2.setImageResource(R.drawable.writeicon2);
+				cat3.setImageResource(R.drawable.inactive3);
+				cat4.setImageResource(R.drawable.inactive4);
+				cat5.setImageResource(R.drawable.inactive5);
+				
+				b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon2);
+				mark = map.addMarker(new MarkerOptions().position(moveLatLng).icon(b));
+			}else if(c.equals("활동")){
+				cat1.setImageResource(R.drawable.inactive1);
+				cat2.setImageResource(R.drawable.inactive2);
+				cat3.setImageResource(R.drawable.writeicon3);
+				cat4.setImageResource(R.drawable.inactive4);
+				cat5.setImageResource(R.drawable.inactive5);
+				
+				b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon3);
+				mark = map.addMarker(new MarkerOptions().position(moveLatLng).icon(b));
+			}else if(c.equals("할 것")){
+				cat1.setImageResource(R.drawable.inactive1);
+				cat2.setImageResource(R.drawable.inactive2);
+				cat3.setImageResource(R.drawable.inactive3);
+				cat4.setImageResource(R.drawable.writeicon4);
+				cat5.setImageResource(R.drawable.inactive5);
+				
+				b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon5);
+				mark = map.addMarker(new MarkerOptions().position(moveLatLng).icon(b));
+			}else{
+				cat1.setImageResource(R.drawable.inactive1);
+				cat2.setImageResource(R.drawable.inactive2);
+				cat3.setImageResource(R.drawable.inactive3);
+				cat4.setImageResource(R.drawable.inactive4);
+				cat5.setImageResource(R.drawable.writeicon5);
+				
+				b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon4);
+				mark = map.addMarker(new MarkerOptions().position(moveLatLng).icon(b));
+			}
+			
+			if (dream.getNoti() == 1) {
+				alarmBtn.setImageResource(R.drawable.check_none_select05);
+			} else {
+				alarmBtn.setImageResource(R.drawable.check_none_select04);
+			}
+			memoEt.setText(dream.getMemo());
+		}
 
 		okBtn.setOnClickListener(new OnClickListener() {
 
@@ -183,10 +278,18 @@ public class WriteActivity extends SampleActivityBase
 				todo = todoEt.getText().toString();
 				memo = memoEt.getText().toString();
 
-				MyDB my = new MyDB(getApplicationContext());
-				Dream d = new Dream(0, zone, todo, lat, lon, location, memo, category, 0, noti);
-				my.addDream(d);
-				
+				if(code == 0){
+					Dream d = new Dream(0, zone, todo, lat, lon, location, memo, category, 0, noti);
+					Log.d(zone, "zone");
+					Log.d(location, "location");
+					db.addDream(d);
+				}
+				else{
+					location = mAutocompleteView.getText().toString();
+					Dream d = new Dream(idDB, zone, todo, lat, lon, location, memo, category, 0, noti);
+					Log.d(category, "cat");
+					db.updateDream(d);
+				}
 				finish();
 
 			}
@@ -198,7 +301,14 @@ public class WriteActivity extends SampleActivityBase
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				deleteBtn.setBackgroundColor(Color.parseColor("#ededed"));
-				finish();
+				
+				if(code == 0){
+					finish();
+				}else{
+					Dream dream = db.getDreamTodo(todoDB);
+					db.deleteDream(dream);
+					finish();
+				}
 			}
 		});
 		
@@ -307,7 +417,8 @@ public class WriteActivity extends SampleActivityBase
 			final Place place = places.get(0);
 
 			// Format details of the place for display and show it in a
-			location = place.getAddress().toString();
+			//location = place.getAddress().toString();
+			location = mAutocompleteView.getText().toString();
 			try{
 				String[] split = location.split(" ");
 	            zone = split[2].toString();
