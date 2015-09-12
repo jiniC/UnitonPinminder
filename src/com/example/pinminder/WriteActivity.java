@@ -211,6 +211,7 @@ public class WriteActivity extends SampleActivityBase
 			mAutocompleteView.setText(dream.getLocation().toString());
 			
 			String c = dream.getCategory().toString();
+			category = c;
 			if(c.equals("À½½Ä")){
 				cat1.setImageResource(R.drawable.writeicon1);
 				cat2.setImageResource(R.drawable.inactive2);

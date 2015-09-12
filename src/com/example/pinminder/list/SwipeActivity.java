@@ -308,7 +308,7 @@ public class SwipeActivity extends Activity {
 			// startActivity(new Intent(getApplicationContext(),
 			// TestActivity.class));
 
-			Dream dream = db.getDreamTodo(listdata.get(position).getTodo());
+			Dream dream = db.getDreamId(listdata.get(position).getId());
 			LatLng moveLatLng = new LatLng(dream.getLat(), dream.getLon());
 			map.moveCamera(CameraUpdateFactory.newLatLngZoom(moveLatLng, 15));
 			map.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
