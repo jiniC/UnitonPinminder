@@ -10,6 +10,8 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.pinminder.R;
+import com.example.pinminder.db.MyDB;
+import com.example.pinminder.dto.Dream;
 
 
 
@@ -19,7 +21,10 @@ public class DialogActivity extends Activity implements OnClickListener{
 	private ImageButton regionBtn, cat1, cat2, cat3, cat4, cat5, alarmBtn, memoBtn;
 	private String category;
 	Button okBtn,cancelBtn;
- 
+	int check;
+	MyDB db;
+	String name;
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
     	requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -39,6 +44,7 @@ public class DialogActivity extends Activity implements OnClickListener{
                     }
                 });*/
                 
+        db = new MyDB(getApplicationContext());
         
         
         cat1 = (ImageButton) findViewById(R.id.cate1);
@@ -60,17 +66,26 @@ public class DialogActivity extends Activity implements OnClickListener{
 
 			@Override
 			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				// cate1일때
-				// 메소드
-				// cate2일때
-				// 메소드
-				// cate3일때
-				// 메소드
-				// cate4일때
-				// 메소드
-				// cate5일때
-				// 메소드
+				Dream dream = db.getDreamTodo(name);
+				// TODO Auto-generated method stub		
+				switch (check) {
+				case 1:
+					if(dream.getCategory().equals("음식"))
+						
+					break;
+				case 2:
+					if(dream.getCategory().equals("관람"))
+					break;
+				case 3:
+					if(dream.getCategory().equals("활동"))
+					break;
+				case 4:
+					if(dream.getCategory().equals("할 것"))
+					break;
+				case 5:
+					if(dream.getCategory().equals("기타"))
+					break;
+				}
 				finish();
 
 			}
@@ -99,6 +114,7 @@ public class DialogActivity extends Activity implements OnClickListener{
 			cat3.setImageResource(R.drawable.inactive3);
 			cat4.setImageResource(R.drawable.inactive4);
 			cat5.setImageResource(R.drawable.inactive5);
+			check=1;
 			Toast.makeText(DialogActivity.this,  category , Toast.LENGTH_SHORT).show();
 			break;
 		case R.id.cate2:
@@ -108,6 +124,7 @@ public class DialogActivity extends Activity implements OnClickListener{
 			cat3.setImageResource(R.drawable.inactive3);
 			cat4.setImageResource(R.drawable.inactive4);
 			cat5.setImageResource(R.drawable.inactive5);
+			check=2;
 			Toast.makeText(DialogActivity.this, category , Toast.LENGTH_SHORT).show();
 			break;
 		case R.id.cate3:
@@ -117,6 +134,7 @@ public class DialogActivity extends Activity implements OnClickListener{
 			cat3.setImageResource(R.drawable.writeicon3);
 			cat4.setImageResource(R.drawable.inactive4);
 			cat5.setImageResource(R.drawable.inactive5);
+			check=3;
 			Toast.makeText(DialogActivity.this, category , Toast.LENGTH_SHORT).show();
 			break;
 		case R.id.cate4:
@@ -126,6 +144,7 @@ public class DialogActivity extends Activity implements OnClickListener{
 			cat3.setImageResource(R.drawable.inactive3);
 			cat4.setImageResource(R.drawable.writeicon4);
 			cat5.setImageResource(R.drawable.inactive5);
+			check=4;
 			Toast.makeText(DialogActivity.this, category , Toast.LENGTH_SHORT).show();
 			break;
 		case R.id.cate5:
@@ -135,6 +154,7 @@ public class DialogActivity extends Activity implements OnClickListener{
 			cat3.setImageResource(R.drawable.inactive3);
 			cat4.setImageResource(R.drawable.inactive4);
 			cat5.setImageResource(R.drawable.writeicon5);
+			check=5;
 			Toast.makeText(DialogActivity.this, category , Toast.LENGTH_SHORT).show();
 			break;
 		}

@@ -251,7 +251,6 @@ public class MyDB {
 
 		// 4. close
 		db.close();
-
 		return i;
 
 	}
