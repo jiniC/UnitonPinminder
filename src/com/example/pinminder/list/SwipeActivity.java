@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -92,6 +93,9 @@ public class SwipeActivity extends Activity {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				Intent i = new Intent(SwipeActivity.this, WriteActivity.class);
+				i.putExtra("code",0);
+				i.putExtra("pos", -1);
+				i.putExtra("id", -1);
 				startActivity(i);
 			}
 		});
@@ -254,9 +258,17 @@ public class SwipeActivity extends Activity {
 
 		@Override
 		public void FullSwipeListView(int position) {
+			// 수정하기
 			// TODO Auto-generated method stub
-			Toast.makeText(getApplicationContext(), "수정", Toast.LENGTH_SHORT)
-					.show();
+			Intent i = new Intent(SwipeActivity.this, WriteActivity.class);
+			i.putExtra("code",1);
+			
+			Dream dream = db.getDreamTodo(listdata.get(position).getTodo());
+			i.putExtra("todo", listdata.get(position).getTodo());
+			i.putExtra("id", dream.getId());
+			
+			Log.d(dream.getId()+"", "id");
+			startActivity(i);
 		}
 
 		@Override
