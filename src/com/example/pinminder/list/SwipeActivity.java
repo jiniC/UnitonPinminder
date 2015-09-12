@@ -129,9 +129,9 @@ public class SwipeActivity extends Activity {
 						id = R.drawable.mapicon3;
 					} else if (dream.getCategory().equals("гр ╟м")) {
 
-						id = R.drawable.mapicon4;
-					} else {
 						id = R.drawable.mapicon5;
+					} else {
+						id = R.drawable.mapicon4;
 					}
 
 					LatLng tempLatLng = new LatLng(dream.getLat(),
