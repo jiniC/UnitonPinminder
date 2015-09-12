@@ -128,7 +128,7 @@ public class DialogActivity extends Activity implements OnClickListener{
 			cat5.setImageResource(R.drawable.inactive5);
 			Toast.makeText(DialogActivity.this, category , Toast.LENGTH_SHORT).show();
 			break;
-		case R.id.cat5:
+		case R.id.cate5:
 			category = "±‚≈∏";
 			cat1.setImageResource(R.drawable.inactive1);
 			cat2.setImageResource(R.drawable.inactive2);
