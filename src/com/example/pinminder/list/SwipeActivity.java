@@ -152,8 +152,9 @@ public class SwipeActivity extends Activity {
 			gpsTracker = new GPSTracker(getApplicationContext());
 
 			if (!listdata.isEmpty()) {
+				map.clear();
 				for (Dream dream : listdata) {
-
+					
 					int id = 0;
 
 					if (dream.getCategory().equals("À½½Ä")) {
