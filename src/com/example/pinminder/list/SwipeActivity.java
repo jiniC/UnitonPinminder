@@ -3,12 +3,16 @@ package com.example.pinminder.list;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -16,15 +20,17 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener;
 import android.widget.Toast;
 
 import com.example.pinminder.R;
 import com.example.pinminder.SplashActivity;
 import com.example.pinminder.WriteActivity;
 import com.example.pinminder.db.MyDB;
-import com.example.pinminder.dialog.DeleteActivity;
 import com.example.pinminder.dialog.DialogActivity;
 import com.example.pinminder.dto.Dream;
 import com.example.pinminder.model.GPSTracker;
@@ -51,6 +57,9 @@ public class SwipeActivity extends Activity {
 	static final LatLng HAMBURG = new LatLng(53.558, 9.927);
 	static final LatLng KIEL = new LatLng(53.551, 9.993);
 	private GoogleMap map;
+	
+	EditText editsearch;
+	SearchView searchView;
 
 	GPSTracker gpsTracker;
 
@@ -106,6 +115,34 @@ public class SwipeActivity extends Activity {
 		// Move the camera instantly to hamburg with a zoom of 15.
 
 		// Zoom in, animating the camera.
+		
+		// Locate the EditText in listview_main.xml
+		
+		/*EditText editText = new EditText(getApplicationContext());
+		getActionBar().setCustomView(editText);
+	 
+			// Capture Text in EditText
+			editsearch.addTextChangedListener(new TextWatcher() {
+	 
+				@Override
+				public void afterTextChanged(Editable arg0) {
+					// TODO Auto-generated method stub
+					String text = editsearch.getText().toString().toLowerCase(Locale.getDefault());
+					listAdapter.filter(text);
+				}
+	 
+				@Override
+				public void beforeTextChanged(CharSequence arg0, int arg1,
+						int arg2, int arg3) {
+					// TODO Auto-generated method stub
+				}
+	 
+				@Override
+				public void onTextChanged(CharSequence arg0, int arg1, int arg2,
+						int arg3) {
+					// TODO Auto-generated method stub
+				}
+			});*/
 
 	}
 
@@ -115,8 +152,9 @@ public class SwipeActivity extends Activity {
 			gpsTracker = new GPSTracker(getApplicationContext());
 
 			if (!listdata.isEmpty()) {
+				map.clear();
 				for (Dream dream : listdata) {
-
+					
 					int id = 0;
 
 					if (dream.getCategory().equals("À½½Ä")) {
@@ -207,7 +245,7 @@ public class SwipeActivity extends Activity {
 		db = new MyDB(getApplicationContext());
 		InitializeValues();
 		initMap();
-		listAdapter.notifyDataSetChanged();
+//		listAdapter.notifyDataSetChanged();
 	}
 	
 	
@@ -228,8 +266,55 @@ public class SwipeActivity extends Activity {
 		inflater.inflate(R.menu.main, menu);
 		listAdapter = new ListAdapter(this, db.getAllDreams());
 		cmn_list_view.setAdapter(listAdapter);
+		
+		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+            searchView.setIconifiedByDefault(true);  
+
+        SearchView.OnQueryTextListener textChangeListener = new SearchView.OnQueryTextListener()
+        {
+            @Override
+            public boolean onQueryTextChange(String newText)
+            {
+                // this is your adapter that will be filtered
+            	listAdapter.filterData(newText);
+                return true;
+            }
+            @Override
+            public boolean onQueryTextSubmit(String query)
+            {
+                // this is your adapter that will be filtered
+            	Log.i("ohdokingQuery",query);
+            	listAdapter.filterData(query);
+                return true;
+            }
+        };
+        searchView.setOnQueryTextListener(textChangeListener);
+
+
 		return super.onCreateOptionsMenu(menu);
 	}
+	
+	
+	/*
+	private OnQueryTextListener queryTextListener = new OnQueryTextListener() {
+        @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+        @Override
+        public boolean onQueryTextSubmit(String query) {
+        	
+        	
+            return false;
+        }
+        @Override
+        public boolean onQueryTextChange(String newText) {
+            // TODO Auto-generated method stub
+        	listAdapter.filterData(newText);
+        
+            return false;
+        }
+    };*/
 
 	/**
 	 * On selecting action bar icons
@@ -238,11 +323,11 @@ public class SwipeActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Take appropriate action for each action item click
 		switch (item.getItemId()) {
-		case R.id.action_search:
+		/*case R.id.action_search:
 			Intent i2 = new Intent(SwipeActivity.this, DeleteActivity.class);
 			startActivity(i2);
 			// search action
-			return true;
+			return true;*/
 		case R.id.action_location_found:
 
 			Intent i = new Intent(SwipeActivity.this, DialogActivity.class);
