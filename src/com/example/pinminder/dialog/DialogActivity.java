@@ -61,8 +61,16 @@ public class DialogActivity extends Activity implements OnClickListener{
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				
-
+				// cate1일때
+				// 메소드
+				// cate2일때
+				// 메소드
+				// cate3일때
+				// 메소드
+				// cate4일때
+				// 메소드
+				// cate5일때
+				// 메소드
 				finish();
 
 			}
@@ -127,8 +135,14 @@ public class DialogActivity extends Activity implements OnClickListener{
 			cat3.setImageResource(R.drawable.inactive3);
 			cat4.setImageResource(R.drawable.inactive4);
 			cat5.setImageResource(R.drawable.writeicon5);
+			Toast.makeText(DialogActivity.this, category , Toast.LENGTH_SHORT).show();
 			break;
 		}
 
 	}
+    
+    
+    public void fillter() {
+    	
+    }
 }
