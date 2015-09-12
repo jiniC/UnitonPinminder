@@ -62,7 +62,7 @@ public class DialogActivity extends Activity implements OnClickListener{
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				
-
+				
 				finish();
 
 			}
