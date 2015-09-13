@@ -131,8 +131,8 @@ public class ListViewSwipeGesture implements View.OnTouchListener {
 		 * FullTextFinal =
 		 * activity.getResources().getString(R.string.basic_action_2);
 		 */
-		HalfDrawable = activity.getResources().getDrawable(R.drawable.btnclickdelete);
-		FullDrawable = activity.getResources().getDrawable(R.drawable.btnclickedit);
+		HalfDrawable = activity.getResources().getDrawable(R.drawable.delete);
+		FullDrawable = activity.getResources().getDrawable(R.drawable.modify);
 	}
 
 	public void setEnabled(boolean enabled) {
