@@ -3,7 +3,6 @@ package com.example.pinminder.list;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.SearchManager;
@@ -12,7 +11,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -20,11 +18,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.SearchView.OnQueryTextListener;
 import android.widget.Toast;
 
 import com.example.pinminder.R;
@@ -60,7 +59,9 @@ public class SwipeActivity extends Activity {
 	
 	EditText editsearch;
 	SearchView searchView;
-
+	
+	LinearLayout dummyLayer;
+	private InputMethodManager imm;
 	GPSTracker gpsTracker;
 
 	@Override
@@ -69,6 +70,7 @@ public class SwipeActivity extends Activity {
 		setContentView(R.layout.activity_swipe);
 		
 		db = new MyDB(getApplicationContext());
+		imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 
 		if (splash == 0) {
 
@@ -84,6 +86,7 @@ public class SwipeActivity extends Activity {
 		actionBar.setIcon(R.drawable.icon);
 
 		cmn_list_view = (ListView) findViewById(R.id.cmn_list_view);
+		dummyLayer = (LinearLayout) findViewById(R.id.dummyLayout);
 		listdata = new ArrayList<Dream>();
 		InitializeValues();
 		final ListViewSwipeGesture touchListener = new ListViewSwipeGesture(
@@ -268,17 +271,19 @@ public class SwipeActivity extends Activity {
 		cmn_list_view.setAdapter(listAdapter);
 		
 		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        final SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
 
             searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
             searchView.setIconifiedByDefault(true);  
-
+            
         SearchView.OnQueryTextListener textChangeListener = new SearchView.OnQueryTextListener()
         {
             @Override
             public boolean onQueryTextChange(String newText)
             {
                 // this is your adapter that will be filtered
+            	
+            	dummyLayer.setVisibility(View.GONE);
             	listAdapter.filterData(newText);
                 return true;
             }
@@ -286,8 +291,11 @@ public class SwipeActivity extends Activity {
             public boolean onQueryTextSubmit(String query)
             {
                 // this is your adapter that will be filtered
+            	dummyLayer.setVisibility(View.VISIBLE);
             	Log.i("ohdokingQuery",query);
             	listAdapter.filterData(query);
+            	imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
+            	
                 return true;
             }
         };
@@ -298,24 +306,6 @@ public class SwipeActivity extends Activity {
 	}
 	
 	
-	/*
-	private OnQueryTextListener queryTextListener = new OnQueryTextListener() {
-        @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-        @Override
-        public boolean onQueryTextSubmit(String query) {
-        	
-        	
-            return false;
-        }
-        @Override
-        public boolean onQueryTextChange(String newText) {
-            // TODO Auto-generated method stub
-        	listAdapter.filterData(newText);
-        
-            return false;
-        }
-    };*/
-
 	/**
 	 * On selecting action bar icons
 	 * */
@@ -431,5 +421,7 @@ public class SwipeActivity extends Activity {
 	 * 
 	 * };
 	 */
+	
+	
 
 }
