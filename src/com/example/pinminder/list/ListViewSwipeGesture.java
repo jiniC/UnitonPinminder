@@ -61,7 +61,7 @@ public class ListViewSwipeGesture implements View.OnTouchListener {
 
 	// Intermediate Usages
 	String TextColor = "#FF00FF"; // #FF4444
-	String RangeOneColor = "#DDDED9"; // "#FFD060"
+	String RangeOneColor = "#FFFFFF"; // "#FFD060"
 	String RangeTwoColor = "#92C500";
 	String singleColor = "#FF4444";
 
@@ -131,8 +131,8 @@ public class ListViewSwipeGesture implements View.OnTouchListener {
 		 * FullTextFinal =
 		 * activity.getResources().getString(R.string.basic_action_2);
 		 */
-		HalfDrawable = activity.getResources().getDrawable(R.drawable.btndelete);
-		FullDrawable = activity.getResources().getDrawable(R.drawable.btnedit);
+		HalfDrawable = activity.getResources().getDrawable(R.drawable.delete);
+		FullDrawable = activity.getResources().getDrawable(R.drawable.modify);
 	}
 
 	public void setEnabled(boolean enabled) {
@@ -356,16 +356,18 @@ public class ListViewSwipeGesture implements View.OnTouchListener {
 		RelativeLayout.LayoutParams lp1 = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
 				android.widget.RelativeLayout.LayoutParams.WRAP_CONTENT);
 		lp1.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+		lp1.setMargins(-2, 0, -2, 0);
 		mDownView_parent_txt1.setId(111111);
 		mDownView_parent_txt1.setLayoutParams(lp1);
 		mDownView_parent_txt1.setGravity(Gravity.CENTER_HORIZONTAL);
 		mDownView_parent_txt1.setText(HalfText);
 		mDownView_parent_txt1.setWidth((textwidth2/2));
-		mDownView_parent_txt1.setPadding(0, textheight / 4, 0, 0);
+		mDownView_parent_txt1.setPadding(0, 0, 0, 0);
 		mDownView_parent_txt1.setHeight(textheight);
 		mDownView_parent_txt1.setBackgroundColor(Color.parseColor(HalfColor));
 		mDownView_parent_txt1.setTextColor(Color.parseColor(TextColor));
-		mDownView_parent_txt1.setCompoundDrawablesWithIntrinsicBounds(null, HalfDrawable, null, null);
+		mDownView_parent_txt1.setBackgroundDrawable(HalfDrawable);
+		//mDownView_parent_txt1.setCompoundDrawablesWithIntrinsicBounds(null, HalfDrawable, null, null);
 		mDownView_parent.addView(mDownView_parent_txt1, 0);
 
 		if (SwipeType == Double) {
@@ -374,15 +376,17 @@ public class ListViewSwipeGesture implements View.OnTouchListener {
 			RelativeLayout.LayoutParams lp2 = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
 					android.widget.RelativeLayout.LayoutParams.WRAP_CONTENT);
 			lp2.addRule(RelativeLayout.LEFT_OF, mDownView_parent_txt1.getId());
+			lp2.setMargins(-2, 0, -2, 0);
 			mDownView_parent_txt2.setLayoutParams(lp2);
 			mDownView_parent_txt2.setGravity(Gravity.CENTER_HORIZONTAL);
 			mDownView_parent_txt2.setText(FullText);
 			mDownView_parent_txt2.setWidth((textwidth/2));
-			mDownView_parent_txt2.setPadding(0, textheight / 4, 0, 0);
+			mDownView_parent_txt2.setPadding(0, 0, 0, 0);
 			mDownView_parent_txt2.setHeight(textheight);
 			mDownView_parent_txt2.setBackgroundColor(Color.parseColor(FullColor));
 			mDownView_parent_txt2.setTextColor(Color.parseColor(TextColor));
-			mDownView_parent_txt2.setCompoundDrawablesWithIntrinsicBounds(null, FullDrawable, null, null);
+			mDownView_parent_txt2.setBackgroundDrawable(FullDrawable);
+			//mDownView_parent_txt2.setCompoundDrawablesWithIntrinsicBounds(null, FullDrawable, null, null);
 			mDownView_parent.addView(mDownView_parent_txt2, 1);
 		}
 	}
