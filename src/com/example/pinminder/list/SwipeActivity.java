@@ -1,29 +1,36 @@
 package com.example.pinminder.list;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
+import android.view.View.OnSystemUiVisibilityChangeListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pinminder.R;
@@ -56,10 +63,10 @@ public class SwipeActivity extends Activity {
 	static final LatLng HAMBURG = new LatLng(53.558, 9.927);
 	static final LatLng KIEL = new LatLng(53.551, 9.993);
 	private GoogleMap map;
-	
+
 	EditText editsearch;
 	SearchView searchView;
-	
+
 	LinearLayout dummyLayer;
 	private InputMethodManager imm;
 	GPSTracker gpsTracker;
@@ -68,9 +75,9 @@ public class SwipeActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_swipe);
-		
+
 		db = new MyDB(getApplicationContext());
-		imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
 		if (splash == 0) {
 
@@ -105,7 +112,7 @@ public class SwipeActivity extends Activity {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				Intent i = new Intent(SwipeActivity.this, WriteActivity.class);
-				i.putExtra("code",0);
+				i.putExtra("code", 0);
 				i.putExtra("pos", -1);
 				i.putExtra("id", -1);
 				startActivity(i);
@@ -118,34 +125,27 @@ public class SwipeActivity extends Activity {
 		// Move the camera instantly to hamburg with a zoom of 15.
 
 		// Zoom in, animating the camera.
-		
+
 		// Locate the EditText in listview_main.xml
-		
-		/*EditText editText = new EditText(getApplicationContext());
-		getActionBar().setCustomView(editText);
-	 
-			// Capture Text in EditText
-			editsearch.addTextChangedListener(new TextWatcher() {
-	 
-				@Override
-				public void afterTextChanged(Editable arg0) {
-					// TODO Auto-generated method stub
-					String text = editsearch.getText().toString().toLowerCase(Locale.getDefault());
-					listAdapter.filter(text);
-				}
-	 
-				@Override
-				public void beforeTextChanged(CharSequence arg0, int arg1,
-						int arg2, int arg3) {
-					// TODO Auto-generated method stub
-				}
-	 
-				@Override
-				public void onTextChanged(CharSequence arg0, int arg1, int arg2,
-						int arg3) {
-					// TODO Auto-generated method stub
-				}
-			});*/
+
+		/*
+		 * EditText editText = new EditText(getApplicationContext());
+		 * getActionBar().setCustomView(editText);
+		 * 
+		 * // Capture Text in EditText editsearch.addTextChangedListener(new
+		 * TextWatcher() {
+		 * 
+		 * @Override public void afterTextChanged(Editable arg0) { // TODO
+		 * Auto-generated method stub String text =
+		 * editsearch.getText().toString().toLowerCase(Locale.getDefault());
+		 * listAdapter.filter(text); }
+		 * 
+		 * @Override public void beforeTextChanged(CharSequence arg0, int arg1,
+		 * int arg2, int arg3) { // TODO Auto-generated method stub }
+		 * 
+		 * @Override public void onTextChanged(CharSequence arg0, int arg1, int
+		 * arg2, int arg3) { // TODO Auto-generated method stub } });
+		 */
 
 	}
 
@@ -157,7 +157,7 @@ public class SwipeActivity extends Activity {
 			if (!listdata.isEmpty()) {
 				map.clear();
 				for (Dream dream : listdata) {
-					
+
 					int id = 0;
 
 					if (dream.getCategory().equals("음식")) {
@@ -183,12 +183,16 @@ public class SwipeActivity extends Activity {
 							.icon(BitmapDescriptorFactory.fromResource(id)));
 				}
 			}
-
+			
 			Location location = gpsTracker.getLocation();
-			LatLng moveLatLng = new LatLng(location.getLatitude(),
-					location.getLongitude());
-			map.moveCamera(CameraUpdateFactory.newLatLngZoom(moveLatLng, 10));
-			map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+			if (location != null) {
+
+				LatLng moveLatLng = new LatLng(location.getLatitude(),
+						location.getLongitude());
+				map.moveCamera(CameraUpdateFactory
+						.newLatLngZoom(moveLatLng, 10));
+				map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+			}
 
 			/*
 			 * Marker hamburg = map.addMarker(new MarkerOptions()
@@ -204,8 +208,6 @@ public class SwipeActivity extends Activity {
 
 	private void InitializeValues() {
 		// TODO Auto-generated method stub
-
-		
 
 		/*
 		 * for (Dream dream : listdata) { }
@@ -231,10 +233,34 @@ public class SwipeActivity extends Activity {
 		 * }
 		 */
 
-		listdata = db.getAllDreams();
+		/*listdata = db.getAllDreams();
+		listAdapter = new ListAdapter(this, listdata);
+		cmn_list_view.setAdapter(listAdapter);*/
+		
+		Set<String> hashset = getPreferences();
+		ArrayList<String> list = new ArrayList<String>(hashset);
+        
+		listdata.clear();
+		listdata.addAll(db.getDreamCate(list));
 		listAdapter = new ListAdapter(this, listdata);
 		cmn_list_view.setAdapter(listAdapter);
+		
+		
+		
+		
 	}
+	
+	private Set getPreferences(){
+        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        Set<String> hash = new HashSet<String>();
+        hash.add("관람");
+        hash.add("할 것");
+        hash.add("음식");
+        hash.add("기타");
+        hash.add("활동");
+        
+        return pref.getStringSet("categoryList", hash);
+    }
 
 	public void serviceStart() {
 		Intent i = new Intent(SwipeActivity.this, PushEvent.class);
@@ -248,14 +274,13 @@ public class SwipeActivity extends Activity {
 		db = new MyDB(getApplicationContext());
 		InitializeValues();
 		initMap();
-//		listAdapter.notifyDataSetChanged();
+		// listAdapter.notifyDataSetChanged();
 	}
-	
-	
+
 	@Override
 	public void onRestart() {
 		super.onRestart();
-		
+
 		db = new MyDB(getApplicationContext());
 		InitializeValues();
 		initMap();
@@ -269,43 +294,68 @@ public class SwipeActivity extends Activity {
 		inflater.inflate(R.menu.main, menu);
 		listAdapter = new ListAdapter(this, db.getAllDreams());
 		cmn_list_view.setAdapter(listAdapter);
-		
+
 		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        final SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+		searchView = (SearchView) menu.findItem(
+				R.id.action_search).getActionView();
 
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-            searchView.setIconifiedByDefault(true);  
-            
-        SearchView.OnQueryTextListener textChangeListener = new SearchView.OnQueryTextListener()
-        {
-            @Override
-            public boolean onQueryTextChange(String newText)
-            {
-                // this is your adapter that will be filtered
-            	
-            	dummyLayer.setVisibility(View.GONE);
-            	listAdapter.filterData(newText);
-                return true;
-            }
-            @Override
-            public boolean onQueryTextSubmit(String query)
-            {
-                // this is your adapter that will be filtered
-            	dummyLayer.setVisibility(View.VISIBLE);
-            	Log.i("ohdokingQuery",query);
-            	listAdapter.filterData(query);
-            	imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
-            	
-                return true;
-            }
-        };
-        searchView.setOnQueryTextListener(textChangeListener);
+		searchView.setSearchableInfo(searchManager
+				.getSearchableInfo(getComponentName()));
+		searchView.setIconifiedByDefault(true);
 
+		SearchView.OnQueryTextListener textChangeListener = new SearchView.OnQueryTextListener() {
+			@Override
+			public boolean onQueryTextChange(String newText) {
+				// this is your adapter that will be filtered
+				
+				dummyLayer.setVisibility(View.GONE);
+				listAdapter.filterData(newText);
+				return true;
+			}
+			
+			
 
+			@Override
+			public boolean onQueryTextSubmit(String query) {
+				// this is your adapter that will be filtered
+				dummyLayer.setVisibility(View.VISIBLE);
+				Log.i("ohdokingQuery", query);
+				listAdapter.filterData(query);
+				imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
+
+				return true;
+			}
+		};
+		
+		SearchView.OnCloseListener cancel = new SearchView.OnCloseListener(){
+
+			@Override
+			public boolean onClose() {
+				dummyLayer.setVisibility(View.VISIBLE);
+				return false;
+			}
+			
+		};
+		searchView.setOnQueryTextListener(textChangeListener);
+		searchView.setOnCloseListener(cancel);
+		/*searchView.setOnKeyListener(new OnKeyListener() {
+			
+			@Override
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				// TODO Auto-generated method stub
+				if (event != null
+						&& event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+					dummyLayer.setVisibility(View.VISIBLE);
+
+				}
+				return onKey(v, keyCode, event);
+			}
+		});*/
+
+				
 		return super.onCreateOptionsMenu(menu);
 	}
-	
-	
+
 	/**
 	 * On selecting action bar icons
 	 * */
@@ -313,22 +363,37 @@ public class SwipeActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Take appropriate action for each action item click
 		switch (item.getItemId()) {
-		/*case R.id.action_search:
-			Intent i2 = new Intent(SwipeActivity.this, DeleteActivity.class);
-			startActivity(i2);
-			// search action
-			return true;*/
+		/*
+		 * case R.id.action_search: Intent i2 = new Intent(SwipeActivity.this,
+		 * DeleteActivity.class); startActivity(i2); // search action return
+		 * true;
+		 */
 		case R.id.action_location_found:
 
 			Intent i = new Intent(SwipeActivity.this, DialogActivity.class);
-			startActivity(i);
-			// location found
+			startActivityForResult(i, 1);
+			
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
+	/*
+	 * 뒤로 가기
+	 */
+	@Override
+	public void onBackPressed() {
+		if (!searchView.isIconified()) {
+			searchView.onActionViewCollapsed();
+	        dummyLayer.setVisibility(View.VISIBLE);
+	    } else {
+	        super.onBackPressed();
+	    }
+	}
 
+	/*
+	 * 수정 , 삭제, 리스트 클릭시에 지도 이동
+	 */
 	ListViewSwipeGesture.TouchCallbacks swipeListener = new ListViewSwipeGesture.TouchCallbacks() {
 
 		@Override
@@ -336,13 +401,13 @@ public class SwipeActivity extends Activity {
 			// 수정하기
 			// TODO Auto-generated method stub
 			Intent i = new Intent(SwipeActivity.this, WriteActivity.class);
-			i.putExtra("code",1);
-			
+			i.putExtra("code", 1);
+
 			Dream dream = db.getDreamTodo(listdata.get(position).getTodo());
 			i.putExtra("todo", listdata.get(position).getTodo());
 			i.putExtra("id", dream.getId());
-			
-			Log.d(dream.getId()+"", "id");
+
+			Log.d(dream.getId() + "", "id");
 			startActivity(i);
 		}
 
@@ -353,7 +418,7 @@ public class SwipeActivity extends Activity {
 					.show();
 			db = new MyDB(getApplicationContext());
 			db.deleteDream(listdata.get(position));
-			
+
 			finish();
 			startActivity(getIntent());
 			// InitializeValues();
@@ -382,7 +447,8 @@ public class SwipeActivity extends Activity {
 			// TODO Auto-generated method stub
 			// startActivity(new Intent(getApplicationContext(),
 			// TestActivity.class));
-
+			dummyLayer.setVisibility(View.VISIBLE);
+			imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
 			Dream dream = db.getDreamId(listdata.get(position).getId());
 			LatLng moveLatLng = new LatLng(dream.getLat(), dream.getLon());
 			map.moveCamera(CameraUpdateFactory.newLatLngZoom(moveLatLng, 15));
@@ -390,6 +456,26 @@ public class SwipeActivity extends Activity {
 
 		}
 	};
+	
+	/*
+	 * 다이얼로그 필터 처리
+	 */
+	@Override 
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {     
+	  super.onActivityResult(requestCode, resultCode, data); 
+	  switch(requestCode) { 
+	    case (1) : { 
+	      if (resultCode == Activity.RESULT_OK) { 
+	      ArrayList<String> newText = data.getStringArrayListExtra("filter");
+	      
+		  	listdata.clear();
+			listdata.addAll(db.getDreamCate(newText));
+			listAdapter.notifyDataSetChanged();
+	      } 
+	      break; 
+	    } 
+	  } 
+	}
 
 	/*
 	 * ListViewSwipeGesture.TouchCallbacks swipeListener = new
@@ -421,7 +507,5 @@ public class SwipeActivity extends Activity {
 	 * 
 	 * };
 	 */
-	
-	
 
 }

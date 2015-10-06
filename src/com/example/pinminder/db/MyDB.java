@@ -1,5 +1,6 @@
 package com.example.pinminder.db;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class MyDB {
 	 */
 	public MyDB(Context context) {
 		dbHelper = new MySQLiteHelper(context);
-		
+
 	}
 
 	/**
@@ -114,79 +115,81 @@ public class MyDB {
 		// 5. return book
 		return dream;
 	}
-	// Dream Table One GET by 
-		public Dream getDreamTodo(String todo) {
 
-			db = dbHelper.getWritableDatabase();
-			// 2. build query
-			Cursor cursor = db.query(DREAM_TABLES, // a. table
-					COLUMNS, // b. column names
-					" todo = ?", // c. selections
-					new String[] { todo }, // d. selections args
-					null, // e. group by
-					null, // f. having
-					null, // g. order by
-					null); // h. limit
+	// Dream Table One GET by
+	public Dream getDreamTodo(String todo) {
 
-			// 3. if we got results get the first one
-			if (cursor != null)
-				cursor.moveToFirst();
+		db = dbHelper.getWritableDatabase();
+		// 2. build query
+		Cursor cursor = db.query(DREAM_TABLES, // a. table
+				COLUMNS, // b. column names
+				" todo = ?", // c. selections
+				new String[] { todo }, // d. selections args
+				null, // e. group by
+				null, // f. having
+				null, // g. order by
+				null); // h. limit
 
-			// 4. build book object
-			Dream dream = new Dream();
-			dream.setId(Integer.parseInt(cursor.getString(0)));
-			dream.setZone(cursor.getString(1));
-			dream.setTodo(cursor.getString(2));
-			dream.setLat(Float.parseFloat(cursor.getString(3)));
-			dream.setLon(Float.parseFloat(cursor.getString(4)));
-			dream.setLocation(cursor.getString(5));
-			dream.setMemo(cursor.getString(6));
-			dream.setCheck(Integer.parseInt(cursor.getString(7)));
-			dream.setNoti(Integer.parseInt(cursor.getString(8)));
-			dream.setCategory(cursor.getString(9));
+		// 3. if we got results get the first one
+		if (cursor != null)
+			cursor.moveToFirst();
 
-			Log.d("getDream(" + todo + ")", dream.toString());
+		// 4. build book object
+		Dream dream = new Dream();
+		dream.setId(Integer.parseInt(cursor.getString(0)));
+		dream.setZone(cursor.getString(1));
+		dream.setTodo(cursor.getString(2));
+		dream.setLat(Float.parseFloat(cursor.getString(3)));
+		dream.setLon(Float.parseFloat(cursor.getString(4)));
+		dream.setLocation(cursor.getString(5));
+		dream.setMemo(cursor.getString(6));
+		dream.setCheck(Integer.parseInt(cursor.getString(7)));
+		dream.setNoti(Integer.parseInt(cursor.getString(8)));
+		dream.setCategory(cursor.getString(9));
 
-			// 5. return book
-			return dream;
-		}
-		
-		// Dream Table One GET by 
-				public Dream getDreamId(int id) {
+		Log.d("getDream(" + todo + ")", dream.toString());
 
-					db = dbHelper.getWritableDatabase();
-					// 2. build query
-					Cursor cursor = db.query(DREAM_TABLES, // a. table
-							COLUMNS, // b. column names
-							" id = ?", // c. selections
-							new String[] { Integer.toString(id) }, // d. selections args
-							null, // e. group by
-							null, // f. having
-							null, // g. order by
-							null); // h. limit
+		// 5. return book
+		return dream;
+	}
 
-					// 3. if we got results get the first one
-					if (cursor != null)
-						cursor.moveToFirst();
+	// Dream Table One GET by
+	public Dream getDreamId(int id) {
 
-					// 4. build book object
-					Dream dream = new Dream();
-					dream.setId(Integer.parseInt(cursor.getString(0)));
-					dream.setZone(cursor.getString(1));
-					dream.setTodo(cursor.getString(2));
-					dream.setLat(Float.parseFloat(cursor.getString(3)));
-					dream.setLon(Float.parseFloat(cursor.getString(4)));
-					dream.setLocation(cursor.getString(5));
-					dream.setMemo(cursor.getString(6));
-					dream.setCheck(Integer.parseInt(cursor.getString(7)));
-					dream.setNoti(Integer.parseInt(cursor.getString(8)));
-					dream.setCategory(cursor.getString(9));
+		db = dbHelper.getWritableDatabase();
+		// 2. build query
+		Cursor cursor = db.query(DREAM_TABLES, // a. table
+				COLUMNS, // b. column names
+				" id = ?", // c. selections
+				new String[] { Integer.toString(id) }, // d. selections args
+				null, // e. group by
+				null, // f. having
+				null, // g. order by
+				null); // h. limit
 
-					Log.d("getDream(" + id + ")", dream.toString());
+		// 3. if we got results get the first one
+		if (cursor != null)
+			cursor.moveToFirst();
 
-					// 5. return book
-					return dream;
-				}
+		// 4. build book object
+		Dream dream = new Dream();
+		dream.setId(Integer.parseInt(cursor.getString(0)));
+		dream.setZone(cursor.getString(1));
+		dream.setTodo(cursor.getString(2));
+		dream.setLat(Float.parseFloat(cursor.getString(3)));
+		dream.setLon(Float.parseFloat(cursor.getString(4)));
+		dream.setLocation(cursor.getString(5));
+		dream.setMemo(cursor.getString(6));
+		dream.setCheck(Integer.parseInt(cursor.getString(7)));
+		dream.setNoti(Integer.parseInt(cursor.getString(8)));
+		dream.setCategory(cursor.getString(9));
+
+		Log.d("getDream(" + id + ")", dream.toString());
+
+		// 5. return book
+		return dream;
+	}
+
 	// Get All Books
 	public List<Dream> getAllDreams() {
 		List<Dream> dreams = new LinkedList<Dream>();
@@ -220,7 +223,7 @@ public class MyDB {
 		}
 
 		Log.d("getAllBooks()", dreams.toString());
-		
+
 		db.close();
 		// return books
 		return dreams;
@@ -270,6 +273,74 @@ public class MyDB {
 		Log.d("deleteBook", dream.toString());
 
 	}
-	
-	
+
+	// Dream Table One GET by
+	public ArrayList<Dream> getDreamCate(ArrayList<String> category) { 
+		ArrayList<Dream> dreams = new ArrayList<Dream>();
+		String temp ="?";
+		String[] categoryList = new String[5];
+		categoryList[0] = category.get(0);
+		int i = 1;
+		for(i = 1; i < category.size(); i++){
+			temp = temp.concat(",?");
+				categoryList[i] = category.get(i);
+				Log.i("ohdoking",categoryList[i]);
+		}
+		
+		for(int j = i; j < 5; j++){
+			temp = temp.concat(",?");
+			categoryList[j] = String.valueOf(i);
+			Log.i("ohdoking",categoryList[j]);
+		}
+		
+		Log.i("ohdoking",temp);
+		db = dbHelper.getWritableDatabase();
+		// 2. build query
+		Cursor cursor = db.query(DREAM_TABLES, // a. table
+				COLUMNS, // b. column names
+				"category IN ("+temp+")", // c. selections
+				categoryList, // d. selections args
+				null, // e. group by
+				null, // f. having
+				null, // g. order by
+				null); // h. limit
+		
+	/*	Cursor cursor = db.rawQuery("SELECT * FROM "+DREAM_TABLES+" WHERE category IN (?)",
+				category);*/
+
+		
+		
+		// 3. if we got results get the first one
+
+		// 4. build book object
+		Dream dream = null;
+
+		if (cursor.moveToFirst()) {
+			do {
+				dream = new Dream();
+				dream.setId(Integer.parseInt(cursor.getString(0)));
+				dream.setZone(cursor.getString(1));
+				dream.setTodo(cursor.getString(2));
+				dream.setLat(Float.parseFloat(cursor.getString(3)));
+				dream.setLon(Float.parseFloat(cursor.getString(4)));
+				dream.setLocation(cursor.getString(5));
+				dream.setMemo(cursor.getString(6));
+				dream.setCheck(Integer.parseInt(cursor.getString(7)));
+				dream.setNoti(Integer.parseInt(cursor.getString(8)));
+				dream.setCategory(cursor.getString(9));
+
+				// Add book to books
+				dreams.add(dream);
+			} while (cursor.moveToNext());
+		}
+		
+		
+		
+		
+		Log.d("getDream(" + category + ")", dream.toString());
+
+		// 5. return book
+		return dreams;
+	}
+
 }

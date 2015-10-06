@@ -130,6 +130,43 @@ public class ListAdapter extends BaseAdapter {
 		notifyDataSetChanged();
 
 	}
+	
+	public void filterCategory(String query) {
+
+//		query = query;
+		
+		data.clear();
+
+		if (TextUtils.isEmpty(query)) {
+			data.addAll(originalList);
+		} else {
+//			Log.v("originalList1", String.valueOf(originalList.size()));
+			for (Dream dream : originalList) {
+
+				/*ArrayList<Dream> countryList = continent.getTodo();
+				ArrayList<Dream> newList = new ArrayList<Dream>();
+				for (Dream country : countryList) {
+					if (country.getTodo().toLowerCase().contains(query)
+							|| country.getMemo().toLowerCase().contains(query)) {
+						newList.add(country);
+					}
+				}
+				if (newList.size() > 0) {
+					Dream nContinent = new Dream(dream.getName(), newList);
+					data.add(nContinent);
+				}*/
+				
+				if (dream.getCategory().equals(query))
+				{
+					
+					data.add(dream);
+				}
+			}
+		}
+
+		notifyDataSetChanged();
+
+	}
 
 	/*
 	 * public void filter(CharSequence categoryString) { // categoryString =
