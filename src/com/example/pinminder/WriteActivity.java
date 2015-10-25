@@ -194,7 +194,8 @@ public class WriteActivity extends SampleActivityBase
 			deleteBtn.setText("취소");
 			
 		}else{
-			okBtn.setText("수정");
+			okBtn.setText(""); // 수정 글씨 없앰
+			okBtn.setEnabled(false);
 			deleteBtn.setText("삭제");
 			
 			BitmapDescriptor b;
@@ -278,11 +279,11 @@ public class WriteActivity extends SampleActivityBase
 				todo = todoEt.getText().toString();
 				memo = memoEt.getText().toString();
 
-				if(code == 0){
+				if(code == 0){/*
 					Dream d = new Dream(0, zone, todo, lat, lon, location, memo, category, 0, noti);
 					Log.d(zone, "zone");
 					Log.d(location, "location");
-					db.addDream(d);
+					db.addDream(d);*/
 				}
 				else{
 					location = mAutocompleteView.getText().toString();

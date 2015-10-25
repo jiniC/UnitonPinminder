@@ -356,7 +356,7 @@ public class ListViewSwipeGesture implements View.OnTouchListener {
 		RelativeLayout.LayoutParams lp1 = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
 				android.widget.RelativeLayout.LayoutParams.WRAP_CONTENT);
 		lp1.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-		lp1.setMargins(-2, 0, -2, 0);
+		lp1.setMargins(0, 0, 0, 0);
 		mDownView_parent_txt1.setId(111111);
 		mDownView_parent_txt1.setLayoutParams(lp1);
 		mDownView_parent_txt1.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -376,7 +376,7 @@ public class ListViewSwipeGesture implements View.OnTouchListener {
 			RelativeLayout.LayoutParams lp2 = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
 					android.widget.RelativeLayout.LayoutParams.WRAP_CONTENT);
 			lp2.addRule(RelativeLayout.LEFT_OF, mDownView_parent_txt1.getId());
-			lp2.setMargins(-2, 0, -2, 0);
+			lp2.setMargins(0, 0, 0, 0);
 			mDownView_parent_txt2.setLayoutParams(lp2);
 			mDownView_parent_txt2.setGravity(Gravity.CENTER_HORIZONTAL);
 			mDownView_parent_txt2.setText(FullText);
