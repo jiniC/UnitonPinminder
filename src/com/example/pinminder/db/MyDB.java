@@ -337,7 +337,7 @@ public class MyDB {
 		
 		
 		
-		Log.d("getDream(" + category + ")", dream.toString());
+	//		Log.d("getDream(" + category + ")", dream.toString());
 
 		// 5. return book
 		return dreams;
