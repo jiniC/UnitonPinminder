@@ -606,17 +606,18 @@ containing a value of this type.
         public static final int search_icon=0x7f020055;
         public static final int textbox=0x7f020056;
         public static final int todolist_addbtn=0x7f020057;
-        public static final int tutorial_01=0x7f020058;
-        public static final int tutorial_02=0x7f020059;
-        public static final int tutorial_03=0x7f02005a;
-        public static final int what_icon=0x7f02005b;
-        public static final int white_button=0x7f02005c;
-        public static final int white_section=0x7f02005d;
-        public static final int writeicon1=0x7f02005e;
-        public static final int writeicon2=0x7f02005f;
-        public static final int writeicon3=0x7f020060;
-        public static final int writeicon4=0x7f020061;
-        public static final int writeicon5=0x7f020062;
+        public static final int top_confirm_icon=0x7f020058;
+        public static final int tutorial_01=0x7f020059;
+        public static final int tutorial_02=0x7f02005a;
+        public static final int tutorial_03=0x7f02005b;
+        public static final int what_icon=0x7f02005c;
+        public static final int white_button=0x7f02005d;
+        public static final int white_section=0x7f02005e;
+        public static final int writeicon1=0x7f02005f;
+        public static final int writeicon2=0x7f020060;
+        public static final int writeicon3=0x7f020061;
+        public static final int writeicon4=0x7f020062;
+        public static final int writeicon5=0x7f020063;
     }
     public static final class id {
         public static final int SingleProfile=0x7f08003d;
@@ -628,7 +629,6 @@ containing a value of this type.
         public static final int adjust_width=0x7f080002;
         public static final int alarmBtn=0x7f080036;
         public static final int autocomplete_places=0x7f080030;
-        public static final int back=0x7f080056;
         public static final int book_now=0x7f080012;
         public static final int bottom=0x7f080048;
         public static final int btnShowLocation=0x7f08001a;
@@ -702,6 +702,7 @@ containing a value of this type.
         public static final int test=0x7f08000d;
         public static final int todoEt=0x7f08002d;
         public static final int todolist_addbtn=0x7f08002c;
+        public static final int top_confirm=0x7f080056;
         public static final int tvLabel1=0x7f080021;
         public static final int tvLabel3=0x7f080022;
         public static final int tvResult=0x7f080023;

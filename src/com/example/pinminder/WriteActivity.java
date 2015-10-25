@@ -194,7 +194,8 @@ public class WriteActivity extends SampleActivityBase
 			deleteBtn.setText("취소");
 			
 		}else{
-			okBtn.setText("수정");
+			okBtn.setText(""); // 수정 글씨 없앰
+			okBtn.setEnabled(false);
 			deleteBtn.setText("삭제");
 			
 			BitmapDescriptor b;
@@ -274,10 +275,11 @@ public class WriteActivity extends SampleActivityBase
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				// 버튼 색 바꾸기
+				
 				okBtn.setBackgroundColor(Color.parseColor("#ededed"));
 				todo = todoEt.getText().toString();
 				memo = memoEt.getText().toString();
-
+				
 				if(code == 0){
 					Dream d = new Dream(0, zone, todo, lat, lon, location, memo, category, 0, noti);
 					Log.d(zone, "zone");
@@ -285,10 +287,11 @@ public class WriteActivity extends SampleActivityBase
 					db.addDream(d);
 				}
 				else{
+					/*
 					location = mAutocompleteView.getText().toString();
 					Dream d = new Dream(idDB, zone, todo, lat, lon, location, memo, category, 0, noti);
 					Log.d(category, "cat");
-					db.updateDream(d);
+					db.updateDream(d);*/
 				}
 				finish();
 
@@ -708,7 +711,15 @@ public class WriteActivity extends SampleActivityBase
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Take appropriate action for each action item click
 		switch (item.getItemId()) {
-		case R.id.back:
+		case R.id.top_confirm:
+			okBtn.setBackgroundColor(Color.parseColor("#ededed"));
+			todo = todoEt.getText().toString();
+			memo = memoEt.getText().toString();
+			
+			location = mAutocompleteView.getText().toString();
+			Dream d = new Dream(idDB, zone, todo, lat, lon, location, memo, category, 0, noti);
+			Log.d(category, "cat");
+			db.updateDream(d);
 			finish();
 			// search action
 			return true;
