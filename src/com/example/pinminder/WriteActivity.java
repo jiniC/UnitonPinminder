@@ -18,8 +18,6 @@ package com.example.pinminder;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -35,7 +33,6 @@ import com.example.pinminder.activities.SampleActivityBase;
 import com.example.pinminder.db.MyDB;
 import com.example.pinminder.dialog.DialogActivity;
 import com.example.pinminder.dto.Dream;
-import com.example.pinminder.list.ListAdapter;
 import com.example.pinminder.write.PlaceAutocompleteAdapter;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -61,20 +58,19 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Toast;
 
 public class WriteActivity extends SampleActivityBase
@@ -135,9 +131,21 @@ public class WriteActivity extends SampleActivityBase
     	todoDB = intent.getStringExtra("todo");
     	idDB = intent.getIntExtra("id", -1);
     	
-		final ActionBar actionBar = getActionBar();
+/*		final ActionBar actionBar = getActionBar();
 		actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#5fc4d9")));
-		actionBar.setIcon(R.drawable.icon);
+		ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,ActionBar.LayoutParams.WRAP_CONTENT, Gravity.CENTER );		
+
+		actionBar.setIcon(R.drawable.logo3);
+		actionBar.setDisplayShowTitleEnabled(false);*/
+    	LayoutInflater inflater = (LayoutInflater)getActionBar().getThemedContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+    	View view = inflater.inflate(R.layout.actionbar, null);
+    	ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,ActionBar.LayoutParams.WRAP_CONTENT, Gravity.CENTER );
+    	getActionBar().setDisplayShowTitleEnabled(false);
+    	getActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent))); 
+    	getActionBar().setDisplayShowCustomEnabled(true);
+    	getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
+    	getActionBar().setCustomView(view, params);
+    	
 		db = new MyDB(getApplicationContext());
 
 		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();

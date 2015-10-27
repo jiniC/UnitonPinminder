@@ -5,34 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.app.SearchManager;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.location.Location;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnKeyListener;
-import android.view.View.OnSystemUiVisibilityChangeListener;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.SearchView;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.pinminder.R;
 import com.example.pinminder.SplashActivity;
 import com.example.pinminder.WriteActivity;
@@ -48,6 +20,33 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import android.app.ActionBar;
+import android.app.Activity;
+import android.app.SearchManager;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.location.Location;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 //08-09 03:01:04.349: E/AndroidRuntime(4062): 	Suppressed: java.lang.ClassNotFoundException: com.google.android.gms.maps.MapFragment
 
@@ -66,7 +65,8 @@ public class SwipeActivity extends Activity {
 
 	EditText editsearch;
 	SearchView searchView;
-
+	ImageView addtutorial;
+	
 	LinearLayout dummyLayer;
 	private InputMethodManager imm;
 	GPSTracker gpsTracker;
@@ -87,11 +87,21 @@ public class SwipeActivity extends Activity {
 
 		serviceStart();
 
-		final ActionBar actionBar = getActionBar();
+/*		final ActionBar actionBar = getActionBar();
 		actionBar.setBackgroundDrawable(new ColorDrawable(Color
 				.parseColor("#5fc4d9")));
-		actionBar.setIcon(R.drawable.icon);
-
+		ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,ActionBar.LayoutParams.WRAP_CONTENT, Gravity.CENTER );
+		actionBar.setDisplayShowTitleEnabled(false);
+		actionBar.setIcon(R.drawable.logo3);*/
+		LayoutInflater inflater = (LayoutInflater)getActionBar().getThemedContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+		View view = inflater.inflate(R.layout.actionbar, null);
+		ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,ActionBar.LayoutParams.WRAP_CONTENT, Gravity.CENTER );
+		getActionBar().setDisplayShowTitleEnabled(false);
+		getActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent))); 
+		getActionBar().setDisplayShowCustomEnabled(true);
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
+		getActionBar().setCustomView(view, params);
+		
 		cmn_list_view = (ListView) findViewById(R.id.cmn_list_view);
 		dummyLayer = (LinearLayout) findViewById(R.id.dummyLayout);
 		listdata = new ArrayList<Dream>();
@@ -102,7 +112,16 @@ public class SwipeActivity extends Activity {
 																// options at
 																// background of
 																// list item
-
+		
+		/*****************list 아이템이 하나도 없는 경우 추가 튜토리얼 보이기********************/
+		addtutorial = (ImageView) findViewById(R.id.addtutorial);
+		if(cmn_list_view.getCount()==0){
+			addtutorial.setVisibility(View.VISIBLE);
+		}
+		else{
+			addtutorial.setVisibility(View.INVISIBLE);
+		}
+		
 		cmn_list_view.setOnTouchListener(touchListener);
 
 		plusBtn = (ImageButton) findViewById(R.id.todolist_addbtn);
@@ -271,6 +290,15 @@ public class SwipeActivity extends Activity {
 	public void onResume() {
 		super.onRestart();
 		
+		/*****************list 아이템이 하나도 없는 경우 추가 튜토리얼 보이기********************/
+		addtutorial = (ImageView) findViewById(R.id.addtutorial);
+		if(cmn_list_view.getCount()==0){
+			addtutorial.setVisibility(View.VISIBLE);
+		}
+		else{
+			addtutorial.setVisibility(View.INVISIBLE);
+		}
+		
 		db = new MyDB(getApplicationContext());
 		InitializeValues();
 		initMap();
@@ -281,6 +309,15 @@ public class SwipeActivity extends Activity {
 	public void onRestart() {
 		super.onRestart();
 
+		/*****************list 아이템이 하나도 없는 경우 추가 튜토리얼 보이기********************/
+		addtutorial = (ImageView) findViewById(R.id.addtutorial);
+		if(cmn_list_view.getCount()==0){
+			addtutorial.setVisibility(View.VISIBLE);
+		}
+		else{
+			addtutorial.setVisibility(View.INVISIBLE);
+		}
+		
 		db = new MyDB(getApplicationContext());
 		InitializeValues();
 		initMap();
