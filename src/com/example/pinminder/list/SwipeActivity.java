@@ -48,6 +48,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 //08-09 03:01:04.349: E/AndroidRuntime(4062): 	Suppressed: java.lang.ClassNotFoundException: com.google.android.gms.maps.MapFragment
 
@@ -100,6 +101,7 @@ public class SwipeActivity extends Activity {
 		getActionBar().setDisplayShowTitleEnabled(false);
 		getActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent))); 
 		getActionBar().setDisplayShowCustomEnabled(true);
+		//getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
 		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
 		getActionBar().setCustomView(view, params);
 		
@@ -334,11 +336,9 @@ public class SwipeActivity extends Activity {
 		cmn_list_view.setAdapter(listAdapter);
 
 		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-		searchView = (SearchView) menu.findItem(
-				R.id.action_search).getActionView();
+		searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
 
-		searchView.setSearchableInfo(searchManager
-				.getSearchableInfo(getComponentName()));
+		searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 		searchView.setIconifiedByDefault(true);
 
 		SearchView.OnQueryTextListener textChangeListener = new SearchView.OnQueryTextListener() {
