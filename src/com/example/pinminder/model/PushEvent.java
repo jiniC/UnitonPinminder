@@ -216,7 +216,7 @@ public class PushEvent extends Service {
 
 				Log.i(TAG, "testb : " + meter);
 
-				if (meter < 100) {
+				if (meter < 1000) {
 					Toast.makeText(getApplicationContext(),
 							String.valueOf(meter), Toast.LENGTH_LONG).show();
 				}
@@ -242,8 +242,8 @@ public class PushEvent extends Service {
 		mBuilder.setTicker("Notification.Builder");
 		mBuilder.setWhen(System.currentTimeMillis());
 		mBuilder.setNumber(list.size());
-		mBuilder.setContentTitle("Don't Forget It");
-		mBuilder.setContentText(memo);
+		mBuilder.setContentTitle("PIN Minder");
+		mBuilder.setContentText("\'" + list.get(0).getTodo() + "\' 가 있어요");
 		mBuilder.setDefaults(Notification.DEFAULT_SOUND
 				| Notification.DEFAULT_VIBRATE);
 		mBuilder.setContentIntent(pendingIntent);

@@ -340,5 +340,13 @@ public class MyDB {
 		// 5. return book
 		return dreams;
 	}
+	
+	public void deleteTable(){
+		db = dbHelper.getWritableDatabase();
+		// 2. delete
+		db.delete(DREAM_TABLES,null,null);
+		
+		db.close();
+	}
 
 }

@@ -1,14 +1,25 @@
 package com.example.pinminder.list;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+
+import org.apache.http.protocol.HTTP;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -16,23 +27,24 @@ import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnKeyListener;
-import android.view.View.OnSystemUiVisibilityChangeListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.pinminder.R;
 import com.example.pinminder.SplashActivity;
 import com.example.pinminder.WriteActivity;
@@ -49,8 +61,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-//08-09 03:01:04.349: E/AndroidRuntime(4062): 	Suppressed: java.lang.ClassNotFoundException: com.google.android.gms.maps.MapFragment
-
 public class SwipeActivity extends Activity {
 
 	private ListView cmn_list_view;
@@ -60,8 +70,7 @@ public class SwipeActivity extends Activity {
 	MyDB db;
 	public static int splash = 0;
 
-	static final LatLng HAMBURG = new LatLng(53.558, 9.927);
-	static final LatLng KIEL = new LatLng(53.551, 9.993);
+	public Map<Integer,Marker> markerList;
 	private GoogleMap map;
 
 	EditText editsearch;
@@ -77,6 +86,7 @@ public class SwipeActivity extends Activity {
 		setContentView(R.layout.activity_swipe);
 
 		db = new MyDB(getApplicationContext());
+		testApi();
 		imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
 		if (splash == 0) {
@@ -146,14 +156,63 @@ public class SwipeActivity extends Activity {
 		 * @Override public void onTextChanged(CharSequence arg0, int arg1, int
 		 * arg2, int arg3) { // TODO Auto-generated method stub } });
 		 */
+		
+		/*
+		 * gps check
+		 */
+		
+		
+		chkGpsService();
+		
+		
 
+	}
+	
+	private boolean chkGpsService() {
+
+		String gps = android.provider.Settings.Secure.getString(
+				getContentResolver(),
+				android.provider.Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+
+		Log.d(gps, "aaaa");
+
+		if (!(gps.matches(".*gps.*") && gps.matches(".*network.*"))) {
+
+			// GPS OFF 일때 Dialog 표시
+			AlertDialog.Builder gsDialog = new AlertDialog.Builder(this);
+			gsDialog.setTitle("위치 서비스 설정");
+			gsDialog.setMessage("PIN Minder 알림을 받기 위해서는 내 위치 정보가 필요합니다.\n단말기의 설정에서 '위치 서비스' 사용을 허용해주세요.");
+			gsDialog.setPositiveButton("설정하기",
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int which) {
+							// GPS설정 화면으로 이동
+							Intent intent = new Intent(
+									android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+							intent.addCategory(Intent.CATEGORY_DEFAULT);
+							startActivity(intent);
+						}
+					})
+					.setNegativeButton("취소",
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int which) {
+									return;
+								}
+							}).create().show();
+			return false;
+
+		} else {
+			return true;
+		}
 	}
 
 	public void initMap() {
 		if (map != null) {
 
 			gpsTracker = new GPSTracker(getApplicationContext());
-
+			
+			markerList = new HashMap<Integer,Marker>();
+			
 			if (!listdata.isEmpty()) {
 				map.clear();
 				for (Dream dream : listdata) {
@@ -177,10 +236,13 @@ public class SwipeActivity extends Activity {
 
 					LatLng tempLatLng = new LatLng(dream.getLat(),
 							dream.getLon());
-					Marker kiel = map.addMarker(new MarkerOptions()
+					Marker marker = map.addMarker(new MarkerOptions()
 							.position(tempLatLng).title(dream.getTodo())
 							.snippet(dream.getMemo())
 							.icon(BitmapDescriptorFactory.fromResource(id)));
+					
+					markerList.put(dream.getId(),marker);
+					
 				}
 			}
 			
@@ -453,7 +515,10 @@ public class SwipeActivity extends Activity {
 			LatLng moveLatLng = new LatLng(dream.getLat(), dream.getLon());
 			map.moveCamera(CameraUpdateFactory.newLatLngZoom(moveLatLng, 15));
 			map.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
-
+			
+			Marker marker = markerList.get(dream.getId());
+			marker.showInfoWindow();
+			
 		}
 	};
 	
@@ -507,5 +572,112 @@ public class SwipeActivity extends Activity {
 	 * 
 	 * };
 	 */
+	
+	/*
+	 * test api
+	 */
+	
+	public void testApi(){
+		String key = "kbOUead1jRb3%2BIJz3Z%2FFfYQQrTXxsxZhBxIhgIjeA3WXM83aAUGiPiUHefz3G7QObpRxaZnffelPT8oNMLcH1g%3D%3D";
+		String serviceKey;
+		String count = "20";
+		
+		db.deleteTable();
+		
+		try {
+			serviceKey = URLEncoder.encode(key,"UTF-8");
+		
+		String url = " http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?"
+				+ "ServiceKey=" + key
+				+ "&areaCode=1"
+				+ "&numOfRows=" + count
+				+ "&pageNo=1"
+				+ "&MobileOS=AND"
+				+ "&MobileApp=ohdoking"
+				+ "&_type=json";
+		 
+		
+		Log.i("ohdoking",url);
+		JsonObjectRequest jsonRequest = new JsonObjectRequest
+		        (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+		        	
+		        	
+		            @Override
+		            public void onResponse(JSONObject response) {
+		                // the response is already constructed as a JSONObject!
+		                try {
+		                	Log.i("ohdoking",response.toString());
+		                    response = response.getJSONObject("response").getJSONObject("body").getJSONObject("items");
+		                    JSONArray rowArray = response.getJSONArray("item");
+		                    
+		                    
+		                    for(int i=0;i<rowArray.length();i++){
+		                    	
+	                            JSONObject jresponse = rowArray.getJSONObject(i);
+	                            
+	                            try{
+	                            	jresponse.getString("mapx");
+	                            }
+	                            catch(Exception e){
+	                            	continue;
+	                            }
+	                            String zone = "대한민국";
+	                            String todo = jresponse.getString("title");
+	                            double lat = Double.valueOf(jresponse.getString("mapy"));
+	                            double lon = Double.valueOf(jresponse.getString("mapx"));
+	                            
+	                            String location = jresponse.getString("zipcode");
+	                            String memo = "";
+	                            String category = "음식";
+	                            Integer noti = 1;
+	                            
+	                           
+	                            
+	                           /* Dream(Integer id, String zone, String todo, double lat, double lon,
+	                			String location, String memo, String category, Integer check,
+	                			Integer noti)*/
+	                            
+	                            Dream d = new Dream(0, zone, todo, lat, lon, location, memo, category, 0, noti);
+	        					Log.d(zone, "zone");
+	        					Log.d(location, "location");
+	        					db.addDream(d);
+			                }
+//		                    System.out.println("Site: "+site+"\nNetwork: "+network);
+		                    
+		                    
+		                } catch (JSONException e) {
+		                    e.printStackTrace();
+		                }
+		            }
+		        }, new Response.ErrorListener() {
+		 
+		            @Override
+		            public void onErrorResponse(VolleyError error) {
+		                error.printStackTrace();
+		            }
+		        });
+		Volley.newRequestQueue(this).add(jsonRequest);
+		
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		 
+	}
+	
+	String checkCategory(String c){
+		if(c.equals("음식")){
+			return "음식";
+		}else if(c.equals("관람")){
+			return "관림";
+		}else if(c.equals("활동")){
+			return "활동";
+		}else if(c.equals("할 것")){
+			return "할 것";
+		}else if(c.equals("할 것")){
+			return "운동";
+		}
+		return null;
+	}
 
 }
