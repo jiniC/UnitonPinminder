@@ -12,13 +12,14 @@ public class Dream {
 	String category;
 	Integer check;
 	Integer noti;
+	Integer pin;
 	
 	public Dream(){
 		
 	}
 	public Dream(Integer id, String zone, String todo, double lat, double lon,
 			String location, String memo, String category, Integer check,
-			Integer noti) {
+			Integer noti,Integer pin) {
 		super();
 		this.id = id;
 		this.zone = zone;
@@ -30,6 +31,7 @@ public class Dream {
 		this.category = category;
 		this.check = check;
 		this.noti = noti;
+		this.pin = pin;
 	}
 	
 	/*
@@ -96,6 +98,13 @@ public class Dream {
 	public void setNoti(Integer noti) {
 		this.noti = noti;
 	}
+	public Integer getPin() {
+		return pin;
+	}
+	public void setPin(Integer pin) {
+		this.pin = pin;
+	}
+	
 	
 	
 

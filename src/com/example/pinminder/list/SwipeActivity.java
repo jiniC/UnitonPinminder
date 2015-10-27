@@ -2,7 +2,9 @@ package com.example.pinminder.list;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -15,13 +17,15 @@ import org.json.JSONObject;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.os.Bundle;
@@ -42,6 +46,7 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -53,6 +58,7 @@ import com.example.pinminder.WriteActivity;
 import com.example.pinminder.db.MyDB;
 import com.example.pinminder.dialog.DialogActivity;
 import com.example.pinminder.dto.Dream;
+import com.example.pinminder.model.AlarmReceiver;
 import com.example.pinminder.model.GPSTracker;
 import com.example.pinminder.model.PushEvent;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -79,15 +85,22 @@ public class SwipeActivity extends Activity {
 	SearchView searchView;
 	ImageView addtutorial;
 	
+	ProgressDialog pDialog;
+	
 	LinearLayout dummyLayer;
 	private InputMethodManager imm;
 	GPSTracker gpsTracker;
+	
+	private PendingIntent pendingIntent;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_swipe);
-
+		
+		Intent alarmIntent = new Intent(SwipeActivity.this, AlarmReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(SwipeActivity.this, 0, alarmIntent, 0);
+        startAt10();
 		db = new MyDB(getApplicationContext());
 		testApi();
 		imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -358,24 +371,25 @@ public class SwipeActivity extends Activity {
 		
 		/*****************list 아이템이 하나도 없는 경우 추가 튜토리얼 보이기********************/
 		addtutorial = (ImageView) findViewById(R.id.addtutorial);
+		
+		
+		db = new MyDB(getApplicationContext());
+		InitializeValues();
+		initMap();
+		 listAdapter.notifyDataSetChanged();
 		if(cmn_list_view.getCount()==0){
 			addtutorial.setVisibility(View.VISIBLE);
 		}
 		else{
 			addtutorial.setVisibility(View.INVISIBLE);
 		}
-		
-		db = new MyDB(getApplicationContext());
-		InitializeValues();
-		initMap();
-		// listAdapter.notifyDataSetChanged();
 	}
 
 	@Override
 	public void onRestart() {
 		super.onRestart();
 
-		/*****************list 아이템이 하나도 없는 경우 추가 튜토리얼 보이기********************/
+		//*****************list 아이템이 하나도 없는 경우 추가 튜토리얼 보이기********************//*
 		addtutorial = (ImageView) findViewById(R.id.addtutorial);
 		if(cmn_list_view.getCount()==0){
 			addtutorial.setVisibility(View.VISIBLE);
@@ -619,7 +633,13 @@ public class SwipeActivity extends Activity {
 	public void testApi(){
 		String key = "kbOUead1jRb3%2BIJz3Z%2FFfYQQrTXxsxZhBxIhgIjeA3WXM83aAUGiPiUHefz3G7QObpRxaZnffelPT8oNMLcH1g%3D%3D";
 		String serviceKey;
-		String count = "20";
+		String count = "150";
+		
+		pDialog = new ProgressDialog(this);
+		pDialog.setMessage("Please wait...");
+        pDialog.setCancelable(false);
+        
+        showpDialog();
 		
 		db.deleteTable();
 		
@@ -634,6 +654,8 @@ public class SwipeActivity extends Activity {
 				+ "&MobileOS=AND"
 				+ "&MobileApp=ohdoking"
 				+ "&_type=json";
+		
+		
 		 
 		
 		Log.i("ohdoking",url);
@@ -661,13 +683,13 @@ public class SwipeActivity extends Activity {
 	                            	continue;
 	                            }
 	                            String zone = "대한민국";
-	                            String todo = jresponse.getString("title");
+	                            String todo = new String(jresponse.getString("title").getBytes("8859_1"), Charset.forName("UTF-8"));
 	                            double lat = Double.valueOf(jresponse.getString("mapy"));
 	                            double lon = Double.valueOf(jresponse.getString("mapx"));
 	                            
-	                            String location = jresponse.getString("zipcode");
+	                            String location = new String(jresponse.getString("addr1").getBytes("8859_1"), Charset.forName("UTF-8"));
 	                            String memo = "";
-	                            String category = "음식";
+	                            String category = checkCategory("음식");
 	                            Integer noti = 1;
 	                            
 	                           
@@ -676,7 +698,7 @@ public class SwipeActivity extends Activity {
 	                			String location, String memo, String category, Integer check,
 	                			Integer noti)*/
 	                            
-	                            Dream d = new Dream(0, zone, todo, lat, lon, location, memo, category, 0, noti);
+	                            Dream d = new Dream(0, zone, todo, lat, lon, location, memo, category, 0, noti,0);
 	        					Log.d(zone, "zone");
 	        					Log.d(location, "location");
 	        					db.addDream(d);
@@ -686,15 +708,40 @@ public class SwipeActivity extends Activity {
 		                    
 		                } catch (JSONException e) {
 		                    e.printStackTrace();
-		                }
+		                } catch (UnsupportedEncodingException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+		                
+		                hidepDialog();
+		                addtutorial.setVisibility(View.INVISIBLE);
+		                InitializeValues();
+		        		initMap();
+		                listAdapter.notifyDataSetChanged();
 		            }
 		        }, new Response.ErrorListener() {
 		 
 		            @Override
 		            public void onErrorResponse(VolleyError error) {
 		                error.printStackTrace();
+		                hidepDialog();
 		            }
-		        });
+		        }){
+
+		        /**
+		         * Passing some request headers
+		         * */
+		        @Override
+		        public Map<String, String> getHeaders() throws AuthFailureError {
+		            HashMap<String, String> headers = new HashMap<String, String>();
+		            
+//		            conn.setDefaultUseCaches(false); 
+
+		            
+		            
+		            return headers;
+		        }
+		};
 		Volley.newRequestQueue(this).add(jsonRequest);
 		
 		} catch (UnsupportedEncodingException e1) {
@@ -718,5 +765,30 @@ public class SwipeActivity extends Activity {
 		}
 		return null;
 	}
+	
+	private void showpDialog() {
+        if (!pDialog.isShowing())
+            pDialog.show();
+    }
+ 
+    private void hidepDialog() {
+        if (pDialog.isShowing())
+            pDialog.dismiss();
+    }
+    
+    public void startAt10() {
+        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        int interval = 1000 * 60 * 20;
+
+        /* Set the alarm to start at 10:30 AM */
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, 2);
+        calendar.set(Calendar.MINUTE, 9);
+
+        /* Repeating on every 20 minutes interval */
+        manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                1000 * 60 * 20, pendingIntent);
+    }
 
 }

@@ -22,7 +22,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 				+ "id INTEGER PRIMARY KEY AUTOINCREMENT, " + "zone VARCHAR(100), "
 				+ "todo VARCHAR(100), " + "lat NUMERIC(10,5), " + "lon NUMERIC(10,5), "
 				+ "location VARCHAR(100), " + "memo VARCHAR(100), " + "checked INTEGER, "
-				+ "noti INTEGER,"+" category VARCHAR(100))";
+				+ "noti INTEGER,"+" category VARCHAR(100),"+" pin INTEGER)";
 
 		// create books table
 		db.execSQL(CREATE_BOOK_TABLE);
@@ -31,7 +31,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		// Drop older books table if existed
-		db.execSQL("DROP TABLE IF EXISTS books");
+		db.execSQL("DROP TABLE IF EXISTS dreams");
 
 		// create fresh books table
 		this.onCreate(db);

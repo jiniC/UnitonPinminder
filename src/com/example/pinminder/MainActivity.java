@@ -95,7 +95,7 @@ public class MainActivity extends Activity {
 		
 		MyDB my = new MyDB(this);
 		Dream d = new Dream(1, "test", "test2", 123.123, 123.123,
-				"test3", "test4", "test5", 1,0);
+				"test3", "test4", "test5", 1,0,1);
 		my.addDream(d);
 		/*Toast toast = Toast.makeText(getApplicationContext(),
 				my.getDream(0).getCategory(), Toast.LENGTH_LONG);
@@ -142,7 +142,7 @@ public class MainActivity extends Activity {
         }
     }
     
- // 媛� 遺덈윭�삤湲�
+ // 揶쏉옙 �겫�뜄�쑎占쎌궎疫뀐옙
     private void getPreferences(){
         
     }

@@ -923,6 +923,7 @@ containing a value of this type.
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
+            
 
         
 
@@ -939,10 +940,10 @@ containing a value of this type.
          */
         public static final int AppBaseTheme=0x7f060005;
         /**  Application theme. 
- All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f060006;
         public static final int Theme_IAPTheme=0x7f060000;
+        public static final int Theme_MyAppTheme=0x7f060007;
         public static final int WalletFragmentDefaultButtonTextAppearance=0x7f060003;
         public static final int WalletFragmentDefaultDetailsHeaderTextAppearance=0x7f060002;
         public static final int WalletFragmentDefaultDetailsTextAppearance=0x7f060001;

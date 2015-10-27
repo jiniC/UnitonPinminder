@@ -46,10 +46,11 @@ public class MyDB {
 	private static final String KEY_CHECK = "checked";
 	private static final String KEY_NOTI = "noti";
 	private static final String KEY_CATEGORY = "category";
+	private static final String KEY_PIN = "pin";
 
 	private static final String[] COLUMNS = { KEY_ID, KEY_ZONE, KEY_TODO,
 			KEY_LAT, KEY_LON, KEY_LOCATION, KEY_MEMO, KEY_CHECK, KEY_NOTI,
-			KEY_CATEGORY };
+			KEY_CATEGORY,KEY_PIN };
 
 	// Dream Table ALL ADD
 	public void addDream(Dream dream) {
@@ -68,6 +69,7 @@ public class MyDB {
 		values.put(KEY_CHECK, dream.getCheck());
 		values.put(KEY_NOTI, dream.getNoti());
 		values.put(KEY_CATEGORY, dream.getCategory());
+		values.put(KEY_PIN, dream.getPin());
 
 		// 3. insert
 		db.insert(DREAM_TABLES, // table
@@ -228,6 +230,64 @@ public class MyDB {
 		// return books
 		return dreams;
 	}
+	
+	public List<Dream> getAllDreamsInToday() {
+		List<Dream> dreams = new LinkedList<Dream>();
+
+		db = dbHelper.getWritableDatabase();
+		// 1. build the query
+		String query = "SELECT  * FROM " + DREAM_TABLES + " WHERE zone not like 'ohdoking'";
+
+		// 2. get reference to writable DB
+		Cursor cursor = db.rawQuery(query, null);
+
+		// 3. go over each row, build book and add it to list
+		Dream dream = null;
+		if (cursor.moveToFirst()) {
+			do {
+				dream = new Dream();
+				dream.setId(Integer.parseInt(cursor.getString(0)));
+				dream.setZone(cursor.getString(1));
+				dream.setTodo(cursor.getString(2));
+				dream.setLat(Float.parseFloat(cursor.getString(3)));
+				dream.setLon(Float.parseFloat(cursor.getString(4)));
+				dream.setLocation(cursor.getString(5));
+				dream.setMemo(cursor.getString(6));
+				dream.setCheck(Integer.parseInt(cursor.getString(7)));
+				dream.setNoti(Integer.parseInt(cursor.getString(8)));
+				dream.setCategory(cursor.getString(9));
+
+				// Add book to books
+				dreams.add(dream);
+			} while (cursor.moveToNext());
+		}
+
+		Log.d("getAllBooks()", dreams.toString());
+
+		db.close();
+		// return books
+		return dreams;
+	}
+	
+	public int updateDreamInToday(Integer id) {
+
+		// 1. get reference to writable DB
+		db = dbHelper.getWritableDatabase();
+		// 2. create ContentValues to add key "column"/value
+		ContentValues values = new ContentValues();
+		values.put(KEY_ZONE, "ohdoking");
+		// 3. updating row
+		int i = db.update(DREAM_TABLES, // table
+				values, // column/value
+				KEY_ID + " = ?", // selections
+				new String[] { String.valueOf(id) }); // selection
+
+		// 4. close
+		db.close();
+		return i;
+
+	}
+	
 
 	// Updating single book
 	public int updateDream(Dream dream) {
@@ -344,7 +404,9 @@ public class MyDB {
 	public void deleteTable(){
 		db = dbHelper.getWritableDatabase();
 		// 2. delete
-		db.delete(DREAM_TABLES,null,null);
+		
+		db.delete(DREAM_TABLES, KEY_PIN + " = ?",
+				new String[] { String.valueOf(0) });
 		
 		db.close();
 	}

@@ -10,6 +10,8 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -59,7 +61,7 @@ public class PushEvent extends Service {
 			locationA.setLongitude(longitude);
 
 			List<Dream> list = new ArrayList<Dream>();
-			list = my.getAllDreams();
+			list = my.getAllDreamsInToday();
 			
 			ArrayList<Dream> tempList = new ArrayList<Dream>();
 
@@ -84,15 +86,17 @@ public class PushEvent extends Service {
 
 				Log.i(TAG, "testb : " + meter);
 
-				if (meter < 100) {
+				if (meter < 1000) {
 					// Toast.makeText(getApplicationContext(),
 					// String.valueOf(meter), Toast.LENGTH_LONG).show();
 					// createNotification(dream.getTodo(),meter,count);
 					tempList.add(dream);
+					my.updateDreamInToday(dream.getId());
 				}
 			}
 			if (!tempList.isEmpty()) {
 				createNotification("할일이 있어!", meter, tempList);
+				
 			}
 
 		}
@@ -238,8 +242,11 @@ public class PushEvent extends Service {
 				PendingIntent.FLAG_UPDATE_CURRENT);
 
 		Notification.Builder mBuilder = new Notification.Builder(this);
+		Bitmap bm = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.indicator);
+		
 		mBuilder.setSmallIcon(R.drawable.indicator);
-		mBuilder.setTicker("Notification.Builder");
+		mBuilder.setLargeIcon(bm);
+		mBuilder.setTicker("PIN Minder");
 		mBuilder.setWhen(System.currentTimeMillis());
 		mBuilder.setNumber(list.size());
 		mBuilder.setContentTitle("PIN Minder");
