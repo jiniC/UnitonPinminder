@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.http.protocol.HTTP;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,6 +26,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -35,6 +36,7 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -46,7 +48,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.pinminder.R;
-import com.example.pinminder.SplashActivity;
+import com.example.pinminder.SplashActivity2;
 import com.example.pinminder.WriteActivity;
 import com.example.pinminder.db.MyDB;
 import com.example.pinminder.dialog.DialogActivity;
@@ -75,7 +77,8 @@ public class SwipeActivity extends Activity {
 
 	EditText editsearch;
 	SearchView searchView;
-
+	ImageView addtutorial;
+	
 	LinearLayout dummyLayer;
 	private InputMethodManager imm;
 	GPSTracker gpsTracker;
@@ -91,17 +94,28 @@ public class SwipeActivity extends Activity {
 
 		if (splash == 0) {
 
-			startActivity(new Intent(this, SplashActivity.class));
+			startActivity(new Intent(this, SplashActivity2.class));
 			splash++;
 		}
 
 		serviceStart();
 
-		final ActionBar actionBar = getActionBar();
+/*		final ActionBar actionBar = getActionBar();
 		actionBar.setBackgroundDrawable(new ColorDrawable(Color
 				.parseColor("#5fc4d9")));
-		actionBar.setIcon(R.drawable.icon);
-
+		ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,ActionBar.LayoutParams.WRAP_CONTENT, Gravity.CENTER );
+		actionBar.setDisplayShowTitleEnabled(false);
+		actionBar.setIcon(R.drawable.logo3);*/
+		LayoutInflater inflater = (LayoutInflater)getActionBar().getThemedContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+		View view = inflater.inflate(R.layout.actionbar, null);
+		ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,ActionBar.LayoutParams.WRAP_CONTENT, Gravity.CENTER );
+		getActionBar().setDisplayShowTitleEnabled(false);
+		getActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent))); 
+		getActionBar().setDisplayShowCustomEnabled(true);
+		//getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
+		getActionBar().setCustomView(view, params);
+		
 		cmn_list_view = (ListView) findViewById(R.id.cmn_list_view);
 		dummyLayer = (LinearLayout) findViewById(R.id.dummyLayout);
 		listdata = new ArrayList<Dream>();
@@ -112,7 +126,16 @@ public class SwipeActivity extends Activity {
 																// options at
 																// background of
 																// list item
-
+		
+		/*****************list 아이템이 하나도 없는 경우 추가 튜토리얼 보이기********************/
+		addtutorial = (ImageView) findViewById(R.id.addtutorial);
+		if(cmn_list_view.getCount()==0){
+			addtutorial.setVisibility(View.VISIBLE);
+		}
+		else{
+			addtutorial.setVisibility(View.INVISIBLE);
+		}
+		
 		cmn_list_view.setOnTouchListener(touchListener);
 
 		plusBtn = (ImageButton) findViewById(R.id.todolist_addbtn);
@@ -333,6 +356,15 @@ public class SwipeActivity extends Activity {
 	public void onResume() {
 		super.onRestart();
 		
+		/*****************list 아이템이 하나도 없는 경우 추가 튜토리얼 보이기********************/
+		addtutorial = (ImageView) findViewById(R.id.addtutorial);
+		if(cmn_list_view.getCount()==0){
+			addtutorial.setVisibility(View.VISIBLE);
+		}
+		else{
+			addtutorial.setVisibility(View.INVISIBLE);
+		}
+		
 		db = new MyDB(getApplicationContext());
 		InitializeValues();
 		initMap();
@@ -343,6 +375,15 @@ public class SwipeActivity extends Activity {
 	public void onRestart() {
 		super.onRestart();
 
+		/*****************list 아이템이 하나도 없는 경우 추가 튜토리얼 보이기********************/
+		addtutorial = (ImageView) findViewById(R.id.addtutorial);
+		if(cmn_list_view.getCount()==0){
+			addtutorial.setVisibility(View.VISIBLE);
+		}
+		else{
+			addtutorial.setVisibility(View.INVISIBLE);
+		}
+		
 		db = new MyDB(getApplicationContext());
 		InitializeValues();
 		initMap();
@@ -358,11 +399,9 @@ public class SwipeActivity extends Activity {
 		cmn_list_view.setAdapter(listAdapter);
 
 		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-		searchView = (SearchView) menu.findItem(
-				R.id.action_search).getActionView();
+		searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
 
-		searchView.setSearchableInfo(searchManager
-				.getSearchableInfo(getComponentName()));
+		searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 		searchView.setIconifiedByDefault(true);
 
 		SearchView.OnQueryTextListener textChangeListener = new SearchView.OnQueryTextListener() {

@@ -29,7 +29,7 @@ public class MainActivity extends Activity {
 		
 		if(splash == 0){
 			
-			startActivity(new Intent(this, SplashActivity.class));
+			startActivity(new Intent(this, SplashActivity2.class));
 			splash++;
 		}
 		
@@ -142,7 +142,7 @@ public class MainActivity extends Activity {
         }
     }
     
- // 값 불러오기
+ // 媛� 遺덈윭�삤湲�
     private void getPreferences(){
         
     }
