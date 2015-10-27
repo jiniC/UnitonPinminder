@@ -148,7 +148,8 @@ public class WriteActivity extends SampleActivityBase
     	getActionBar().setDisplayShowTitleEnabled(false);
     	getActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent))); 
     	getActionBar().setDisplayShowCustomEnabled(true);
-    	getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
+    	//getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
+    	getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.top_navi));
     	getActionBar().setCustomView(view, params);
     	
 		db = new MyDB(getApplicationContext());

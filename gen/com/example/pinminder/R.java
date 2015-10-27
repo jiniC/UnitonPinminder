@@ -613,17 +613,18 @@ containing a value of this type.
         public static final int textbox=0x7f02005c;
         public static final int todolist_addbtn=0x7f02005d;
         public static final int top_confirm_icon=0x7f02005e;
-        public static final int tutorial_01=0x7f02005f;
-        public static final int tutorial_02=0x7f020060;
-        public static final int tutorial_03=0x7f020061;
-        public static final int what_icon=0x7f020062;
-        public static final int white_button=0x7f020063;
-        public static final int white_section=0x7f020064;
-        public static final int writeicon1=0x7f020065;
-        public static final int writeicon2=0x7f020066;
-        public static final int writeicon3=0x7f020067;
-        public static final int writeicon4=0x7f020068;
-        public static final int writeicon5=0x7f020069;
+        public static final int top_navi=0x7f02005f;
+        public static final int tutorial_01=0x7f020060;
+        public static final int tutorial_02=0x7f020061;
+        public static final int tutorial_03=0x7f020062;
+        public static final int what_icon=0x7f020063;
+        public static final int white_button=0x7f020064;
+        public static final int white_section=0x7f020065;
+        public static final int writeicon1=0x7f020066;
+        public static final int writeicon2=0x7f020067;
+        public static final int writeicon3=0x7f020068;
+        public static final int writeicon4=0x7f020069;
+        public static final int writeicon5=0x7f02006a;
     }
     public static final class id {
         public static final int SingleProfile=0x7f08003f;
@@ -738,7 +739,8 @@ containing a value of this type.
         public static final int splash_activity2=0x7f03000f;
         public static final int test_layout=0x7f030010;
         public static final int three=0x7f030011;
-        public static final int two=0x7f030012;
+        public static final int top_navi=0x7f030012;
+        public static final int two=0x7f030013;
     }
     public static final class menu {
         public static final int android_gpstracking=0x7f0c0000;
