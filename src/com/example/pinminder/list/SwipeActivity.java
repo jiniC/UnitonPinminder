@@ -7,6 +7,7 @@ import java.util.Set;
 
 import com.example.pinminder.R;
 import com.example.pinminder.SplashActivity;
+import com.example.pinminder.SplashActivity2;
 import com.example.pinminder.WriteActivity;
 import com.example.pinminder.db.MyDB;
 import com.example.pinminder.dialog.DialogActivity;
