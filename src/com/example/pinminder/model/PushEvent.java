@@ -238,7 +238,7 @@ public class PushEvent extends Service {
 				PendingIntent.FLAG_UPDATE_CURRENT);
 
 		Notification.Builder mBuilder = new Notification.Builder(this);
-		mBuilder.setSmallIcon(R.drawable.ic_launcher2);
+		mBuilder.setSmallIcon(R.drawable.indicator);
 		mBuilder.setTicker("Notification.Builder");
 		mBuilder.setWhen(System.currentTimeMillis());
 		mBuilder.setNumber(list.size());

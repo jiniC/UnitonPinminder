@@ -34,7 +34,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pinminder.R;
-import com.example.pinminder.SplashActivity;
+import com.example.pinminder.SplashActivity2;
 import com.example.pinminder.WriteActivity;
 import com.example.pinminder.db.MyDB;
 import com.example.pinminder.dialog.DialogActivity;
@@ -81,7 +81,7 @@ public class SwipeActivity extends Activity {
 
 		if (splash == 0) {
 
-			startActivity(new Intent(this, SplashActivity.class));
+			startActivity(new Intent(this, SplashActivity2.class));
 			splash++;
 		}
 
