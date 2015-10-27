@@ -81,7 +81,7 @@ public class SwipeActivity extends Activity {
 
 		if (splash == 0) {
 
-			startActivity(new Intent(this, SplashActivity.class));
+			startActivity(new Intent(this, SplashActivity2.class));
 			splash++;
 		}
 

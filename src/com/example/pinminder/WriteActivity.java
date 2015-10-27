@@ -197,11 +197,11 @@ public class WriteActivity extends SampleActivityBase
 		map.setOnMapClickListener(this);
 		
 		// 버튼 이름 설정
-		if(code == 0){ 
+		if(code == 0){ // code=0 : 처음 등록할 때
 			okBtn.setText("확인");
 			deleteBtn.setText("취소");
 			
-		}else{
+		}else{ // 수정할 때
 			okBtn.setText(""); // 수정 글씨 없앰
 			okBtn.setEnabled(false);
 			deleteBtn.setText("삭제");
@@ -287,22 +287,26 @@ public class WriteActivity extends SampleActivityBase
 				okBtn.setBackgroundColor(Color.parseColor("#ededed"));
 				todo = todoEt.getText().toString();
 				memo = memoEt.getText().toString();
-				
-				if(code == 0){
-					Dream d = new Dream(0, zone, todo, lat, lon, location, memo, category, 0, noti);
-					Log.d(zone, "zone");
-					Log.d(location, "location");
-					db.addDream(d);
+				if(todo.equals("")||location.equals("")||category.equals(""))
+				{
+					Toast.makeText(getApplicationContext(), "필수사항을 입력해주세요.", Toast.LENGTH_LONG).show();
 				}
 				else{
-					/*
-					location = mAutocompleteView.getText().toString();
-					Dream d = new Dream(idDB, zone, todo, lat, lon, location, memo, category, 0, noti);
-					Log.d(category, "cat");
-					db.updateDream(d);*/
+					if(code == 0){ // code=0 : 처음 등록할 때
+						Dream d = new Dream(0, zone, todo, lat, lon, location, memo, category, 0, noti);
+						Log.d(zone, "zone");
+						Log.d(location, "location");
+						db.addDream(d);
+					}
+					else{
+						/*
+						location = mAutocompleteView.getText().toString();
+						Dream d = new Dream(idDB, zone, todo, lat, lon, location, memo, category, 0, noti);
+						Log.d(category, "cat");
+						db.updateDream(d);*/
+					}
+					finish();
 				}
-				finish();
-
 			}
 		});
 
@@ -720,15 +724,31 @@ public class WriteActivity extends SampleActivityBase
 		// Take appropriate action for each action item click
 		switch (item.getItemId()) {
 		case R.id.top_confirm:
+			
 			okBtn.setBackgroundColor(Color.parseColor("#ededed"));
 			todo = todoEt.getText().toString();
 			memo = memoEt.getText().toString();
-			
 			location = mAutocompleteView.getText().toString();
-			Dream d = new Dream(idDB, zone, todo, lat, lon, location, memo, category, 0, noti);
-			Log.d(category, "cat");
-			db.updateDream(d);
-			finish();
+			
+			if(todo.equals("")||location.equals("")||category.equals(""))
+			{
+				Toast.makeText(getApplicationContext(), "필수사항을 입력해주세요.", Toast.LENGTH_LONG).show();
+			}
+			else{
+				Dream d = new Dream(idDB, zone, todo, lat, lon, location, memo, category, 0, noti);
+				Log.d(category, "cat");
+				if(code==0)
+				{
+					db.addDream(d);
+				}
+				else 
+				{
+					db.updateDream(d);
+					
+				}
+				finish();
+			}
+			
 			// search action
 			return true;
 		case R.id.action_location_found:
