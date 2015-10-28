@@ -15,37 +15,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.AlertDialog;
-import android.app.PendingIntent;
-import android.app.ProgressDialog;
-import android.app.SearchManager;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.drawable.ColorDrawable;
-import android.location.Location;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.SearchView;
-import android.widget.Toast;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -68,6 +37,41 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import android.app.ActionBar;
+import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.AlertDialog;
+import android.app.PendingIntent;
+import android.app.ProgressDialog;
+import android.app.SearchManager;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.location.Location;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 
 public class SwipeActivity extends Activity {
 
@@ -409,6 +413,7 @@ public class SwipeActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.main, menu);
+		
 		listAdapter = new ListAdapter(this, db.getAllDreams());
 		cmn_list_view.setAdapter(listAdapter);
 
@@ -418,6 +423,22 @@ public class SwipeActivity extends Activity {
 		searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 		searchView.setIconifiedByDefault(true);
 
+		int searchImgId = getResources().getIdentifier("android:id/search_button", null, null);
+	    ImageView v = (ImageView) searchView.findViewById(searchImgId);
+	    v.setImageResource(R.drawable.search_icon); 
+	    
+	    int closeButtonId = getResources().getIdentifier("android:id/search_close_btn", null, null);  
+	    ImageView closeButtonImage = (ImageView) searchView.findViewById(closeButtonId);  
+	    closeButtonImage.setImageResource(R.drawable.search_icon);  
+		
+		int id = searchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
+		TextView textView = (TextView) searchView.findViewById(id);
+		textView.setTextColor(Color.BLACK);
+		
+		
+		searchView.setLayoutParams(new android.app.ActionBar.LayoutParams(Gravity.LEFT));
+        
+        
 		SearchView.OnQueryTextListener textChangeListener = new SearchView.OnQueryTextListener() {
 			@Override
 			public boolean onQueryTextChange(String newText) {
