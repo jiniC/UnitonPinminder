@@ -198,10 +198,13 @@ public class MyDB {
 
 		db = dbHelper.getWritableDatabase();
 		// 1. build the query
-		String query = "SELECT  * FROM " + DREAM_TABLES;
+		String query = "SELECT  * FROM " + DREAM_TABLES + " ORDER BY RANDOM()";
+		
+		Cursor cursor = this.db.query(DREAM_TABLES+" Order BY RANDOM()",
+                new String[] { "*" }, null, null, null, null, null);
 
 		// 2. get reference to writable DB
-		Cursor cursor = db.rawQuery(query, null);
+		//Cursor cursor = db.rawQuery(query, null);
 
 		// 3. go over each row, build book and add it to list
 		Dream dream = null;
@@ -380,7 +383,7 @@ public class MyDB {
 				categoryList, // d. selections args
 				null, // e. group by
 				null, // f. having
-				null, // g. order by
+				"RANDOM()", // g. order by
 				null); // h. limit
 		
 	/*	Cursor cursor = db.rawQuery("SELECT * FROM "+DREAM_TABLES+" WHERE category IN (?)",

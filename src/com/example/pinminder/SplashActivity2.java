@@ -92,7 +92,7 @@ public class SplashActivity2 extends Activity {
     public void testApi(){
 		String key = "kbOUead1jRb3%2BIJz3Z%2FFfYQQrTXxsxZhBxIhgIjeA3WXM83aAUGiPiUHefz3G7QObpRxaZnffelPT8oNMLcH1g%3D%3D";
 		String serviceKey;
-		String count = "30";
+		String count = "10";
 		
 		
 		db.deleteTable();
@@ -105,7 +105,46 @@ public class SplashActivity2 extends Activity {
 				+ "&arrange=B"
 				+ "&contentTypeId=12"
 				+ "&areaCode=1"
+				+ "&cat1=A02"
+				+ "&cat2=A0205"
 				+ "&numOfRows=" + count
+				+ "&pageNo=1"
+				+ "&MobileOS=AND"
+				+ "&MobileApp=ohdoking"
+				+ "&_type=json";
+		String urlTour2 = " http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?"
+				+ "ServiceKey=" + key
+				+ "&arrange=B"
+				+ "&contentTypeId=12"
+				+ "&areaCode=1"
+				+ "&cat1=A02"
+				+ "&cat2=A0202"
+				+ "&numOfRows=" + count
+				+ "&pageNo=1"
+				+ "&MobileOS=AND"
+				+ "&MobileApp=ohdoking"
+				+ "&_type=json";
+		String urlTour3 = " http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?"
+				+ "ServiceKey=" + key
+				+ "&arrange=B"
+				+ "&contentTypeId=12"
+				+ "&areaCode=1"
+				+ "&cat1=A02"
+				+ "&cat2=A0201"
+				+ "&numOfRows=" + count
+				+ "&pageNo=1"
+				+ "&MobileOS=AND"
+				+ "&MobileApp=ohdoking"
+				+ "&_type=json";
+		
+		String urlShow = " http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?"
+				+ "ServiceKey=" + key
+				+ "&arrange=B"
+				+ "&contentTypeId=15"
+				+ "&areaCode=1"
+				+ "&cat1=A02"
+				+ "&cat2=A0207"
+				+ "&numOfRows=30" 
 				+ "&pageNo=1"
 				+ "&MobileOS=AND"
 				+ "&MobileApp=ohdoking"
@@ -116,7 +155,9 @@ public class SplashActivity2 extends Activity {
 				+ "&arrange=B"
 				+ "&contentTypeId=15"
 				+ "&areaCode=1"
-				+ "&numOfRows=60" 
+				+ "&cat1=A02"
+				+ "&cat2=A0208"
+				+ "&numOfRows=30" 
 				+ "&pageNo=1"
 				+ "&MobileOS=AND"
 				+ "&MobileApp=ohdoking"
@@ -128,13 +169,12 @@ public class SplashActivity2 extends Activity {
 				+ "&arrange=B"
 				+ "&contentTypeId=39"
 				+ "&areaCode=1"
-				+ "&numOfRows=" + count
+				+ "&numOfRows=30"
 				+ "&pageNo=1"
 				+ "&MobileOS=AND"
 				+ "&MobileApp=ohdoking"
 				+ "&_type=json";
 		
-		Log.i("ohdoking",urlFestival);
 		JsonObjectRequest jsonRequestTour = new JsonObjectRequest
 		        (Request.Method.GET, urlTour, null, new Response.Listener<JSONObject>() {
 		        	
@@ -142,7 +182,40 @@ public class SplashActivity2 extends Activity {
 		            @Override
 		            public void onResponse(JSONObject response) {
 		                // the response is already constructed as a JSONObject!
+		            	inputApiResult(response);
 		            	
+		            }
+		        }, new Response.ErrorListener() {
+		 
+		            @Override
+		            public void onErrorResponse(VolleyError error) {
+		                error.printStackTrace();
+		            }
+		        });
+		JsonObjectRequest jsonRequestTour2 = new JsonObjectRequest
+		        (Request.Method.GET, urlTour, null, new Response.Listener<JSONObject>() {
+		        	
+		        	
+		            @Override
+		            public void onResponse(JSONObject response) {
+		                // the response is already constructed as a JSONObject!
+		            	inputApiResult(response);
+		            	
+		            }
+		        }, new Response.ErrorListener() {
+		 
+		            @Override
+		            public void onErrorResponse(VolleyError error) {
+		                error.printStackTrace();
+		            }
+		        });
+		JsonObjectRequest jsonRequestTour3 = new JsonObjectRequest
+		        (Request.Method.GET, urlTour, null, new Response.Listener<JSONObject>() {
+		        	
+		        	
+		            @Override
+		            public void onResponse(JSONObject response) {
+		                // the response is already constructed as a JSONObject!
 		            	inputApiResult(response);
 		            	finishApi = 1;
 		            	
@@ -173,6 +246,25 @@ public class SplashActivity2 extends Activity {
 		                error.printStackTrace();
 		            }
 		        });
+		JsonObjectRequest jsonRequestShow = new JsonObjectRequest
+		        (Request.Method.GET, urlShow, null, new Response.Listener<JSONObject>() {
+		        	
+		        	
+		            @Override
+		            public void onResponse(JSONObject response) {
+		                // the response is already constructed as a JSONObject!
+		            	
+		            	Log.i("ohdoking", response.toString());
+		            	inputApiResult(response);
+		            	
+		            }
+		        }, new Response.ErrorListener() {
+		 
+		            @Override
+		            public void onErrorResponse(VolleyError error) {
+		                error.printStackTrace();
+		            }
+		        });
 		
 		JsonObjectRequest jsonRequestFood = new JsonObjectRequest
 		        (Request.Method.GET, urlFood, null, new Response.Listener<JSONObject>() {
@@ -181,7 +273,6 @@ public class SplashActivity2 extends Activity {
 		            @Override
 		            public void onResponse(JSONObject response) {
 		                // the response is already constructed as a JSONObject!
-		            	
 		            	inputApiResult(response);
 		            	
 		            }
@@ -195,8 +286,11 @@ public class SplashActivity2 extends Activity {
 		
 		
 		Volley.newRequestQueue(this).add(jsonRequestFestival);
+		Volley.newRequestQueue(this).add(jsonRequestShow);
 		Volley.newRequestQueue(this).add(jsonRequestFood);
 		Volley.newRequestQueue(this).add(jsonRequestTour);
+		Volley.newRequestQueue(this).add(jsonRequestTour2);
+		Volley.newRequestQueue(this).add(jsonRequestTour3);
 		
 		} catch (UnsupportedEncodingException e1) {
 			// TODO Auto-generated catch block
@@ -208,7 +302,6 @@ public class SplashActivity2 extends Activity {
 	
 	void inputApiResult(JSONObject response){
 		 try {
-         	Log.i("ohdoking",response.toString());
              response = response.getJSONObject("response").getJSONObject("body").getJSONObject("items");
              JSONArray rowArray = response.getJSONArray("item");
              
@@ -260,7 +353,7 @@ public class SplashActivity2 extends Activity {
 		if(c.equals("A0502")){
 			return "음식"; 
 		}else if(c.equals("A0208")){
-			return "관림"; //미술
+			return "관람"; //미술
 		}
 		else if(c.equals("A0207")){
 			return "활동"; //축제
