@@ -265,9 +265,9 @@ public class SwipeActivity extends Activity {
 						id = R.drawable.mapicon3;
 					} else if (dream.getCategory().equals("할 것")) {
 
-						id = R.drawable.mapicon5;
-					} else {
 						id = R.drawable.mapicon4;
+					} else {
+						id = R.drawable.mapicon5;
 					}
 
 					LatLng tempLatLng = new LatLng(dream.getLat(),
@@ -760,7 +760,7 @@ public class SwipeActivity extends Activity {
 			return "활동";
 		}else if(c.equals("할 것")){
 			return "할 것";
-		}else if(c.equals("할 것")){
+		}else if(c.equals("운동")){
 			return "운동";
 		}
 		return null;
