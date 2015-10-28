@@ -3,8 +3,11 @@ package com.example.pinminder.list;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -269,9 +272,9 @@ public class SwipeActivity extends Activity {
 						id = R.drawable.mapicon3;
 					} else if (dream.getCategory().equals("할 것")) {
 
-						id = R.drawable.mapicon5;
-					} else {
 						id = R.drawable.mapicon4;
+					} else {
+						id = R.drawable.mapicon5;
 					}
 
 					LatLng tempLatLng = new LatLng(dream.getLat(),
@@ -293,7 +296,7 @@ public class SwipeActivity extends Activity {
 						location.getLongitude());
 				map.moveCamera(CameraUpdateFactory
 						.newLatLngZoom(moveLatLng, 10));
-				map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+				map.animateCamera(CameraUpdateFactory.zoomTo(14), 2000, null);
 			}
 
 			/*
@@ -654,7 +657,7 @@ public class SwipeActivity extends Activity {
 	public void testApi(){
 		String key = "kbOUead1jRb3%2BIJz3Z%2FFfYQQrTXxsxZhBxIhgIjeA3WXM83aAUGiPiUHefz3G7QObpRxaZnffelPT8oNMLcH1g%3D%3D";
 		String serviceKey;
-		String count = "150";
+		String count = "30";
 		
 		pDialog = new ProgressDialog(this);
 		pDialog.setMessage("Please wait...");
@@ -667,8 +670,10 @@ public class SwipeActivity extends Activity {
 		try {
 			serviceKey = URLEncoder.encode(key,"UTF-8");
 		
-		String url = " http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?"
+		String urlTour = " http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?"
 				+ "ServiceKey=" + key
+				+ "&arrange=B"
+				+ "&contentTypeId=12"
 				+ "&areaCode=1"
 				+ "&numOfRows=" + count
 				+ "&pageNo=1"
@@ -676,69 +681,40 @@ public class SwipeActivity extends Activity {
 				+ "&MobileApp=ohdoking"
 				+ "&_type=json";
 		
+		String urlFestival = " http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?"
+				+ "ServiceKey=" + key
+				+ "&arrange=B"
+				+ "&contentTypeId=15"
+				+ "&areaCode=1"
+				+ "&numOfRows=60" 
+				+ "&pageNo=1"
+				+ "&MobileOS=AND"
+				+ "&MobileApp=ohdoking"
+				+ "&_type=json";
 		
-		 
 		
-		Log.i("ohdoking",url);
-		JsonObjectRequest jsonRequest = new JsonObjectRequest
-		        (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+		String urlFood = " http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?"
+				+ "ServiceKey=" + key
+				+ "&arrange=B"
+				+ "&contentTypeId=39"
+				+ "&areaCode=1"
+				+ "&numOfRows=" + count
+				+ "&pageNo=1"
+				+ "&MobileOS=AND"
+				+ "&MobileApp=ohdoking"
+				+ "&_type=json";
+		
+		Log.i("ohdoking",urlFestival);
+		JsonObjectRequest jsonRequestTour = new JsonObjectRequest
+		        (Request.Method.GET, urlTour, null, new Response.Listener<JSONObject>() {
 		        	
 		        	
 		            @Override
 		            public void onResponse(JSONObject response) {
 		                // the response is already constructed as a JSONObject!
-		                try {
-		                	Log.i("ohdoking",response.toString());
-		                    response = response.getJSONObject("response").getJSONObject("body").getJSONObject("items");
-		                    JSONArray rowArray = response.getJSONArray("item");
-		                    
-		                    
-		                    for(int i=0;i<rowArray.length();i++){
-		                    	
-	                            JSONObject jresponse = rowArray.getJSONObject(i);
-	                            
-	                            try{
-	                            	jresponse.getString("mapx");
-	                            }
-	                            catch(Exception e){
-	                            	continue;
-	                            }
-	                            String zone = "대한민국";
-	                            String todo = new String(jresponse.getString("title").getBytes("8859_1"), Charset.forName("UTF-8"));
-	                            double lat = Double.valueOf(jresponse.getString("mapy"));
-	                            double lon = Double.valueOf(jresponse.getString("mapx"));
-	                            
-	                            String location = new String(jresponse.getString("addr1").getBytes("8859_1"), Charset.forName("UTF-8"));
-	                            String memo = "";
-	                            String category = checkCategory("음식");
-	                            Integer noti = 1;
-	                            
-	                           
-	                            
-	                           /* Dream(Integer id, String zone, String todo, double lat, double lon,
-	                			String location, String memo, String category, Integer check,
-	                			Integer noti)*/
-	                            
-	                            Dream d = new Dream(0, zone, todo, lat, lon, location, memo, category, 0, noti,0);
-	        					Log.d(zone, "zone");
-	        					Log.d(location, "location");
-	        					db.addDream(d);
-			                }
-//		                    System.out.println("Site: "+site+"\nNetwork: "+network);
-		                    
-		                    
-		                } catch (JSONException e) {
-		                    e.printStackTrace();
-		                } catch (UnsupportedEncodingException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-		                
-		                hidepDialog();
-		                addtutorial.setVisibility(View.INVISIBLE);
-		                InitializeValues();
-		        		initMap();
-		                listAdapter.notifyDataSetChanged();
+		            	
+		            	inputApiResult(response);
+		            	
 		            }
 		        }, new Response.ErrorListener() {
 		 
@@ -747,23 +723,50 @@ public class SwipeActivity extends Activity {
 		                error.printStackTrace();
 		                hidepDialog();
 		            }
-		        }){
-
-		        /**
-		         * Passing some request headers
-		         * */
-		        @Override
-		        public Map<String, String> getHeaders() throws AuthFailureError {
-		            HashMap<String, String> headers = new HashMap<String, String>();
-		            
-//		            conn.setDefaultUseCaches(false); 
-
-		            
-		            
-		            return headers;
-		        }
-		};
-		Volley.newRequestQueue(this).add(jsonRequest);
+		        });
+		
+		JsonObjectRequest jsonRequestFestival = new JsonObjectRequest
+		        (Request.Method.GET, urlFestival, null, new Response.Listener<JSONObject>() {
+		        	
+		        	
+		            @Override
+		            public void onResponse(JSONObject response) {
+		                // the response is already constructed as a JSONObject!
+		            	
+		            	inputApiResult(response);
+		            	
+		            }
+		        }, new Response.ErrorListener() {
+		 
+		            @Override
+		            public void onErrorResponse(VolleyError error) {
+		                error.printStackTrace();
+		            }
+		        });
+		
+		JsonObjectRequest jsonRequestFood = new JsonObjectRequest
+		        (Request.Method.GET, urlFood, null, new Response.Listener<JSONObject>() {
+		        	
+		        	
+		            @Override
+		            public void onResponse(JSONObject response) {
+		                // the response is already constructed as a JSONObject!
+		            	
+		            	inputApiResult(response);
+		            	
+		            }
+		        }, new Response.ErrorListener() {
+		 
+		            @Override
+		            public void onErrorResponse(VolleyError error) {
+		                error.printStackTrace();
+		            }
+		        });
+		
+		
+		Volley.newRequestQueue(this).add(jsonRequestFestival);
+		Volley.newRequestQueue(this).add(jsonRequestFood);
+		Volley.newRequestQueue(this).add(jsonRequestTour);
 		
 		} catch (UnsupportedEncodingException e1) {
 			// TODO Auto-generated catch block
@@ -772,19 +775,76 @@ public class SwipeActivity extends Activity {
 		 
 	}
 	
+	
+	void inputApiResult(JSONObject response){
+		 try {
+         	Log.i("ohdoking",response.toString());
+             response = response.getJSONObject("response").getJSONObject("body").getJSONObject("items");
+             JSONArray rowArray = response.getJSONArray("item");
+             
+             
+             for(int i=0;i<rowArray.length();i++){
+             	
+                 JSONObject jresponse = rowArray.getJSONObject(i);
+                 
+                 try{
+                 	jresponse.getString("mapx");
+                 }
+                 catch(Exception e){
+                 	continue;
+                 }
+                 String zone = "대한민국";
+                 String todo = new String(jresponse.getString("title").getBytes("8859_1"), Charset.forName("UTF-8"));
+                 double lat = Double.valueOf(jresponse.getString("mapy"));
+                 double lon = Double.valueOf(jresponse.getString("mapx"));
+                 
+                 String location = new String(jresponse.getString("addr1").getBytes("8859_1"), Charset.forName("UTF-8"));
+                 String memo = "";
+                 String category = checkCategory(jresponse.getString("cat2").toString());
+                 Integer noti = 1;
+                 
+                
+                 
+                /* Dream(Integer id, String zone, String todo, double lat, double lon,
+     			String location, String memo, String category, Integer check,
+     			Integer noti)*/
+                 
+                 Dream d = new Dream(0, zone, todo, lat, lon, location, memo, category, 0, noti,0);
+					Log.d(zone, "zone");
+					Log.d(location, "location");
+					db.addDream(d);
+             }
+//             System.out.println("Site: "+site+"\nNetwork: "+network);
+             
+             
+         } catch (JSONException e) {
+             e.printStackTrace();
+         } catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+         
+         hidepDialog();
+         addtutorial.setVisibility(View.INVISIBLE);
+         InitializeValues();
+ 		initMap();
+         listAdapter.notifyDataSetChanged();
+
+	}
 	String checkCategory(String c){
-		if(c.equals("음식")){
-			return "음식";
-		}else if(c.equals("관람")){
-			return "관림";
-		}else if(c.equals("활동")){
-			return "활동";
-		}else if(c.equals("할 것")){
-			return "할 것";
-		}else if(c.equals("할 것")){
-			return "운동";
+		if(c.equals("A0502")){
+			return "음식"; 
+		}else if(c.equals("A0208")){
+			return "관림"; //미술
 		}
-		return null;
+		else if(c.equals("A0207")){
+			return "활동"; //축제
+		}else if(c.equals("A0201") || c.equals("A0202") || c.equals("A0205")){
+			return "할 것"; // 관광지 
+		}
+		else{
+			return "기타";
+		}
 	}
 	
 	private void showpDialog() {
@@ -799,17 +859,34 @@ public class SwipeActivity extends Activity {
     
     public void startAt10() {
         AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        int interval = 1000 * 60 * 20;
+        int interval = 24 * 60 * 60 * 1000;
 
         /* Set the alarm to start at 10:30 AM */
         Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 2);
-        calendar.set(Calendar.MINUTE, 9);
+//        calendar.setTimeInMillis(System.currentTimeMillis());
+//        calendar.set(Calendar.HOUR_OF_DAY, 2);
+//        calendar.set(Calendar.MINUTE, 9);
+        
 
+//        calendar.set(Calendar.HOUR_OF_DAY, 1); // For 1 PM or 2 PM
+//        calendar.set(Calendar.MINUTE, 0);
+//        calendar.set(Calendar.SECOND, 0);
+        
+     // every day at scheduled time 
+       // if it's after or equal 9 am schedule for next day
+       if (Calendar.getInstance().get(Calendar.HOUR_OF_DAY) >= 9) {
+            calendar.add(Calendar.DAY_OF_YEAR, 1); 
+        }
+        calendar.set(Calendar.HOUR_OF_DAY, 3);
+        calendar.set(Calendar.MINUTE, 30);
+        calendar.set(Calendar.SECOND, 0);
         /* Repeating on every 20 minutes interval */
-        manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                1000 * 60 * 20, pendingIntent);
+//        manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+//                1000 * 60 * 20, pendingIntent);
+        
+        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), interval, pendingIntent);
+        
+        Toast.makeText(this, "Alarm Set", Toast.LENGTH_SHORT).show();
     }
 
 }

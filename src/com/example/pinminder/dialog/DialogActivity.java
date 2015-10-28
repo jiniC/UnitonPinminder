@@ -188,7 +188,7 @@ public class DialogActivity extends Activity implements OnClickListener{
 			}
 			
 			check=1;
-			Toast.makeText(DialogActivity.this,  category , Toast.LENGTH_SHORT).show();
+			Toast.makeText(DialogActivity.this,  "음식" , Toast.LENGTH_SHORT).show();
 			break;
 		case R.id.cate2:
 			category = "관람";
@@ -203,7 +203,7 @@ public class DialogActivity extends Activity implements OnClickListener{
 				categoryList.add(category);
 			}
 			check=2;
-			Toast.makeText(DialogActivity.this, category , Toast.LENGTH_SHORT).show();
+			Toast.makeText(DialogActivity.this, "관람" , Toast.LENGTH_SHORT).show();
 			break;
 		case R.id.cate3:
 			category = "활동";
@@ -218,7 +218,7 @@ public class DialogActivity extends Activity implements OnClickListener{
 				categoryList.add(category);
 			}
 			check=3;
-			Toast.makeText(DialogActivity.this, category , Toast.LENGTH_SHORT).show();
+			Toast.makeText(DialogActivity.this, "축제" , Toast.LENGTH_SHORT).show();
 			break;
 		case R.id.cate4:
 			category = "할 것";
@@ -233,7 +233,7 @@ public class DialogActivity extends Activity implements OnClickListener{
 				categoryList.add(category);
 			}
 			check=4;
-			Toast.makeText(DialogActivity.this, category , Toast.LENGTH_SHORT).show();
+			Toast.makeText(DialogActivity.this, "장소" , Toast.LENGTH_SHORT).show();
 			break;
 		case R.id.cate5:
 			category = "기타";
@@ -248,7 +248,7 @@ public class DialogActivity extends Activity implements OnClickListener{
 				categoryList.add(category);
 			}
 			check=5;
-			Toast.makeText(DialogActivity.this, category , Toast.LENGTH_SHORT).show();
+			Toast.makeText(DialogActivity.this, "기타" , Toast.LENGTH_SHORT).show();
 			break;
 		}
 
