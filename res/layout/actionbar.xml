@@ -8,6 +8,6 @@
         android:id="@+id/imageView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/logo4" />
+        android:src="@drawable/logo5" />
 
 </LinearLayout>

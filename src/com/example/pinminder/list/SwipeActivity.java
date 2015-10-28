@@ -3,11 +3,8 @@ package com.example.pinminder.list;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -18,7 +15,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -42,6 +38,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.app.ActionBar;
+import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
@@ -54,9 +51,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -417,6 +414,8 @@ public class SwipeActivity extends Activity {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.main, menu);
 		
+		MenuItem searchViewItem = menu.findItem(R.id.action_search);
+		
 		listAdapter = new ListAdapter(this, db.getAllDreams());
 		cmn_list_view.setAdapter(listAdapter);
 
@@ -425,7 +424,7 @@ public class SwipeActivity extends Activity {
 
 		searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 		searchView.setIconifiedByDefault(true);
-
+		
 		int searchImgId = getResources().getIdentifier("android:id/search_button", null, null);
 	    ImageView v = (ImageView) searchView.findViewById(searchImgId);
 	    v.setImageResource(R.drawable.search_icon); 
@@ -438,10 +437,40 @@ public class SwipeActivity extends Activity {
 		TextView textView = (TextView) searchView.findViewById(id);
 		textView.setTextColor(Color.BLACK);
 		
+		/*int searchPlateId = searchView.getContext().getResources()
+		        .getIdentifier("android:id/search_plate", null, null);
+		View searchPlateView = searchView.findViewById(searchPlateId);
+		if (searchPlateView != null) {
+		    searchPlateView.setBackgroundColor(R.drawable.line); //depand you can set
+		}*/
 		
-		searchView.setLayoutParams(new android.app.ActionBar.LayoutParams(Gravity.LEFT));
-        
-        
+		//android.view.ViewGroup.LayoutParams params = searchView.getLayoutParams(); 
+		//searchView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT)); 
+		//searchView.setLayoutParams(new android.app.ActionBar.LayoutParams(Gravity.LEFT));
+		getActionBar().setDisplayShowHomeEnabled(false);
+		/*ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
+	    searchView.setLayoutParams(params);
+	    MenuItemCompat.expandActionView(searchViewItem);
+	    MenuItemCompat.setOnActionExpandListener(searchViewItem, new MenuItemCompat.OnActionExpandListener() {
+
+	         (non-Javadoc)
+	         * @see android.support.v4.view.MenuItemCompat.OnActionExpandListener#onMenuItemActionExpand(android.view.MenuItem)
+	         
+	        @Override
+	        public boolean onMenuItemActionExpand(MenuItem item) {
+
+	            return true;
+	        }
+
+	         (non-Javadoc)
+	         * @see android.support.v4.view.MenuItemCompat.OnActionExpandListener#onMenuItemActionCollapse(android.view.MenuItem)
+	         
+	        @Override
+	        public boolean onMenuItemActionCollapse(MenuItem item) {
+
+	            return false;
+	        }
+	    });*/
 		SearchView.OnQueryTextListener textChangeListener = new SearchView.OnQueryTextListener() {
 			@Override
 			public boolean onQueryTextChange(String newText) {
