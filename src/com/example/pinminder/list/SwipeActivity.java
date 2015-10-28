@@ -105,7 +105,7 @@ public class SwipeActivity extends Activity {
         pendingIntent = PendingIntent.getBroadcast(SwipeActivity.this, 0, alarmIntent, 0);
         startAt10();
 		db = new MyDB(getApplicationContext());
-		testApi();
+//		testApi();
 		imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
 		if (splash == 0) {
@@ -639,7 +639,7 @@ public class SwipeActivity extends Activity {
 		String count = "30";
 		
 		pDialog = new ProgressDialog(this);
-		pDialog.setMessage("Please wait...");
+		pDialog.setMessage("잠시만 기다려주세요.");
         pDialog.setCancelable(false);
         
         showpDialog();
@@ -730,7 +730,6 @@ public class SwipeActivity extends Activity {
 		            @Override
 		            public void onResponse(JSONObject response) {
 		                // the response is already constructed as a JSONObject!
-		            	
 		            	inputApiResult(response);
 		            	
 		            }
@@ -839,6 +838,7 @@ public class SwipeActivity extends Activity {
     public void startAt10() {
         AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         int interval = 24 * 60 * 60 * 1000;
+//        int interval = 20000;
 
         /* Set the alarm to start at 10:30 AM */
         Calendar calendar = Calendar.getInstance();
@@ -853,11 +853,11 @@ public class SwipeActivity extends Activity {
         
      // every day at scheduled time 
        // if it's after or equal 9 am schedule for next day
-       if (Calendar.getInstance().get(Calendar.HOUR_OF_DAY) >= 9) {
-            calendar.add(Calendar.DAY_OF_YEAR, 1); 
-        }
-        calendar.set(Calendar.HOUR_OF_DAY, 3);
-        calendar.set(Calendar.MINUTE, 30);
+//       if (Calendar.getInstance().get(Calendar.HOUR_OF_DAY) >= 9) {
+//            calendar.add(Calendar.DAY_OF_YEAR, 1); 
+//        }
+        calendar.set(Calendar.HOUR_OF_DAY, 22);
+        calendar.set(Calendar.MINUTE, 24);
         calendar.set(Calendar.SECOND, 0);
         /* Repeating on every 20 minutes interval */
 //        manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
