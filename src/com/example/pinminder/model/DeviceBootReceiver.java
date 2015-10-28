@@ -19,7 +19,8 @@ public class DeviceBootReceiver extends BroadcastReceiver {
             PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, alarmIntent, 0);
 
             AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-            int interval = 20;
+            int interval = 24 * 60 * 60 * 1000;
+//            int interval = 20000;
 
             /* Set the alarm to start at 10:30 AM */
             Calendar calendar = Calendar.getInstance();
@@ -34,18 +35,14 @@ public class DeviceBootReceiver extends BroadcastReceiver {
             
          // every day at scheduled time 
            // if it's after or equal 9 am schedule for next day
-           if (Calendar.getInstance().get(Calendar.HOUR_OF_DAY) >= 9) {
-                calendar.add(Calendar.DAY_OF_YEAR, 1); 
-            }
-            calendar.set(Calendar.HOUR_OF_DAY, 22);
-            calendar.set(Calendar.MINUTE, 8);
+            calendar.set(Calendar.HOUR_OF_DAY, 1);
+            calendar.set(Calendar.MINUTE, 0);
             calendar.set(Calendar.SECOND, 0);
             /* Repeating on every 20 minutes interval */
 //            manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
 //                    1000 * 60 * 20, pendingIntent);
             
             manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), interval, pendingIntent);
-            Toast.makeText(context, "Alarm Set", Toast.LENGTH_SHORT).show();
         }
     }
 }

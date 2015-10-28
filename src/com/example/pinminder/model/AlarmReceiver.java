@@ -15,10 +15,11 @@ public class AlarmReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
     	db = new MyDB(context);
     	
-    	db.refreshDreamInToday();
+    	int i = db.refreshDreamInToday();
+    	
     	
         // For our recurring task, we'll just display a message
-//        Toast.makeText(context, "refresh noti", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "refresh count noti : " + String.valueOf(i), Toast.LENGTH_SHORT).show();
         
         Vibrator vibe = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);         
       vibe.vibrate(1000);  

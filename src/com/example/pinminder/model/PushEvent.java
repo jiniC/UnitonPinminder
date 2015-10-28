@@ -65,7 +65,8 @@ public class PushEvent extends Service {
 			list = my.getAllDreamsInToday();
 			
 			ArrayList<Dream> tempList = new ArrayList<Dream>();
-
+			int minorMeter = 10000000;
+			String minorName = "";
 			for (Dream dream : list) {
 				double tempLat = dream.getLat();
 				double tempLon = dream.getLon();
@@ -86,15 +87,24 @@ public class PushEvent extends Service {
 				meter = (int) distance;
 
 				Log.i(TAG, "testb : " + meter);
+				
+				if(minorMeter > meter){
+					minorMeter = meter;
+					minorName = dream.getTodo();
+				}
+			
 
-				if (meter < 1000 && dream.getNoti()==1) {
+				if (meter < 100 && dream.getNoti()==1) {
 					// Toast.makeText(getApplicationContext(),
 					// String.valueOf(meter), Toast.LENGTH_LONG).show();
 					// createNotification(dream.getTodo(),meter,count);
+					
 					tempList.add(dream);
 					my.updateDreamInToday(dream.getId());
 				}
 			}
+//			Toast.makeText(getApplicationContext(),
+//					minorName +" " + String.valueOf(minorMeter), Toast.LENGTH_LONG).show();
 			if (!tempList.isEmpty()) {
 				createNotification("할일이 있어!", meter, tempList);
 				

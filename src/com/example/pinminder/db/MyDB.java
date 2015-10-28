@@ -284,7 +284,7 @@ public class MyDB {
 				values, // column/value
 				KEY_ID + " = ?", // selections
 				new String[] { String.valueOf(id) }); // selection
-
+		
 		// 4. close
 		db.close();
 		return i;
@@ -296,13 +296,12 @@ public class MyDB {
 		db = dbHelper.getWritableDatabase();
 		// 2. create ContentValues to add key "column"/value
 		ContentValues values = new ContentValues();
-		values.put(KEY_ZONE, "");
+		values.put(KEY_ZONE, "new");
 		// 3. updating row
 		int i = db.update(DREAM_TABLES, // table
 				values, // column/value
 				KEY_ZONE + " = ?", // selections
 				new String[] { "ohdoking" }); // selection
-
 		// 4. close
 		db.close();
 		return i;
