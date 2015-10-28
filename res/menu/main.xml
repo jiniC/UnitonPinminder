@@ -5,7 +5,7 @@
       android:icon="@drawable/search_icon"
       android:title="action_search"
       android:showAsAction="always"
-      android:orderInCategory="3"
+      android:orderInCategory="2"
       android:actionViewClass="android.widget.SearchView"/>
      
     <!-- Location Found -->
