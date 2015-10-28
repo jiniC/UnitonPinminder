@@ -287,6 +287,24 @@ public class MyDB {
 		return i;
 
 	}
+	public int refreshDreamInToday() {
+
+		// 1. get reference to writable DB
+		db = dbHelper.getWritableDatabase();
+		// 2. create ContentValues to add key "column"/value
+		ContentValues values = new ContentValues();
+		values.put(KEY_ZONE, "");
+		// 3. updating row
+		int i = db.update(DREAM_TABLES, // table
+				values, // column/value
+				KEY_ZONE + " = ?", // selections
+				new String[] { "ohdoking" }); // selection
+
+		// 4. close
+		db.close();
+		return i;
+
+	}
 	
 
 	// Updating single book
@@ -400,6 +418,8 @@ public class MyDB {
 		// 5. return book
 		return dreams;
 	}
+	
+	
 	
 	public void deleteTable(){
 		db = dbHelper.getWritableDatabase();

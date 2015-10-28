@@ -474,11 +474,11 @@ public class WriteActivity extends SampleActivityBase
 				mark = map.addMarker(new MarkerOptions().position(place.getLatLng()).title(place.getAddress().toString()).icon(b));
 			}
 			else if(category.equals("할 것")){
-				b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon5);
+				b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon4);
 				mark = map.addMarker(new MarkerOptions().position(place.getLatLng()).title(place.getAddress().toString()).icon(b));
 			}
 			else if(category.equals("기타")){
-				b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon4);
+				b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon5);
 				mark = map.addMarker(new MarkerOptions().position(place.getLatLng()).title(place.getAddress().toString()).icon(b));
 			}
 			else if(category.equals("")){
@@ -712,11 +712,11 @@ public class WriteActivity extends SampleActivityBase
 			b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon3);
 			mark = map.addMarker(new MarkerOptions().position(point).title(point.toString()).icon(b));
 		}
-		else if(category.equals("할 것")){
+		else if(category.equals("기타")){
 			b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon5);
 			mark = map.addMarker(new MarkerOptions().position(point).title(point.toString()).icon(b));
 		}
-		else if(category.equals("기타")){
+		else if(category.equals("할 것")){
 			b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon4);
 			mark = map.addMarker(new MarkerOptions().position(point).title(point.toString()).icon(b));
 		}
