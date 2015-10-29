@@ -50,10 +50,10 @@ public class DialogActivity extends Activity implements OnClickListener {
 		categoryList = new ArrayList<String>();
 
 		categoryId1 = 1;
-		categoryId2 = 1;
-		categoryId3 = 1;
-		categoryId4 = 1;
-		categoryId5 = 1;
+		categoryId2 = 2;
+		categoryId3 = 3;
+		categoryId4 = 4;
+		categoryId5 = 5;
 
 		/*
 		 * CustomGrid adapter = new CustomGrid(DialogActivity.this, web,
