@@ -431,18 +431,18 @@ public class SwipeActivity extends Activity {
 	    
 	    int closeButtonId = getResources().getIdentifier("android:id/search_close_btn", null, null);  
 	    ImageView closeButtonImage = (ImageView) searchView.findViewById(closeButtonId);  
-	    closeButtonImage.setImageResource(R.drawable.search_icon);  
+	    closeButtonImage.setImageResource(R.drawable.icon_close);  
 		
 		int id = searchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
 		TextView textView = (TextView) searchView.findViewById(id);
 		textView.setTextColor(Color.BLACK);
 		
-		/*int searchPlateId = searchView.getContext().getResources()
+		int searchPlateId = searchView.getContext().getResources()
 		        .getIdentifier("android:id/search_plate", null, null);
 		View searchPlateView = searchView.findViewById(searchPlateId);
 		if (searchPlateView != null) {
-		    searchPlateView.setBackgroundColor(R.drawable.line); //depand you can set
-		}*/
+		    searchPlateView.setBackgroundDrawable(getResources().getDrawable(R.drawable.search_line)); //depand you can set
+		}
 		
 		//android.view.ViewGroup.LayoutParams params = searchView.getLayoutParams(); 
 		//searchView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT)); 
