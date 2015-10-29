@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -86,7 +87,7 @@ public class PushEvent extends Service {
 
 				Log.i(TAG, "testb : " + meter);
 
-				if (meter < 1000) {
+				if (meter < 1000 && dream.getNoti()==1) {
 					// Toast.makeText(getApplicationContext(),
 					// String.valueOf(meter), Toast.LENGTH_LONG).show();
 					// createNotification(dream.getTodo(),meter,count);
@@ -220,7 +221,7 @@ public class PushEvent extends Service {
 
 				Log.i(TAG, "testb : " + meter);
 
-				if (meter < 1000) {
+				if (meter < 100) {
 					Toast.makeText(getApplicationContext(),
 							String.valueOf(meter), Toast.LENGTH_LONG).show();
 				}
@@ -245,7 +246,7 @@ public class PushEvent extends Service {
 		Bitmap bm = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.indicator);
 		
 		mBuilder.setSmallIcon(R.drawable.indicator);
-		mBuilder.setLargeIcon(bm);
+//		mBuilder.setLargeIcon(bm);
 		mBuilder.setTicker("PIN Minder");
 		mBuilder.setWhen(System.currentTimeMillis());
 		mBuilder.setNumber(list.size());
@@ -255,6 +256,9 @@ public class PushEvent extends Service {
 				| Notification.DEFAULT_VIBRATE);
 		mBuilder.setContentIntent(pendingIntent);
 		mBuilder.setAutoCancel(true);
+		
+		
+		mBuilder.setColor(Color.parseColor("#ffffff"));
 
 		mBuilder.setPriority(NotificationCompat.PRIORITY_MAX);
 

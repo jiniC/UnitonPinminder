@@ -12,7 +12,7 @@
     <item android:id="@+id/action_location_found"
           android:icon="@drawable/what_icon"
           android:title="action_location_found"
-          android:orderInCategory="7"
+          android:orderInCategory="1"
           android:showAsAction="ifRoom" />
 
 </menu>
