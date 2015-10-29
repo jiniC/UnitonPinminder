@@ -81,6 +81,7 @@ public class DialogActivity extends Activity implements OnClickListener{
 		cat4 = (ImageButton) findViewById(R.id.cate4);
 		cat5 = (ImageButton) findViewById(R.id.cate5);
 		
+		
 		 for (String category : list) {
 			 Log.i("ohdoking",category);
 				if(category.equals("음식")){
@@ -121,11 +122,15 @@ public class DialogActivity extends Activity implements OnClickListener{
 
 			@Override
 			public void onClick(View arg0) {
-				savePreferences(categoryList);
-				resultIntent.putExtra("filter", categoryList);
-				setResult(Activity.RESULT_OK, resultIntent);
-				finish();
-
+				if(categoryId1 == 1 && categoryId2 == 1 && categoryId3 == 1 && categoryId4 == 1 && categoryId5 == 0){
+					Toast.makeText(getApplicationContext(), "하나 이상 선택해주세요.", Toast.LENGTH_LONG).show();
+					
+				}else{
+					savePreferences(categoryList);
+					resultIntent.putExtra("filter", categoryList);
+					setResult(Activity.RESULT_OK, resultIntent);
+					finish();
+				}
 			}
 		});
 
