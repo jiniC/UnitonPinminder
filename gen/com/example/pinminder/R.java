@@ -618,17 +618,18 @@ containing a value of this type.
         public static final int todolist_addbtn=0x7f020061;
         public static final int top_confirm_icon=0x7f020062;
         public static final int top_navi=0x7f020063;
-        public static final int tutorial_01=0x7f020064;
-        public static final int tutorial_02=0x7f020065;
-        public static final int tutorial_03=0x7f020066;
-        public static final int what_icon=0x7f020067;
-        public static final int white_button=0x7f020068;
-        public static final int white_section=0x7f020069;
-        public static final int writeicon1=0x7f02006a;
-        public static final int writeicon2=0x7f02006b;
-        public static final int writeicon3=0x7f02006c;
-        public static final int writeicon4=0x7f02006d;
-        public static final int writeicon5=0x7f02006e;
+        public static final int top_navi2=0x7f020064;
+        public static final int tutorial_01=0x7f020065;
+        public static final int tutorial_02=0x7f020066;
+        public static final int tutorial_03=0x7f020067;
+        public static final int what_icon=0x7f020068;
+        public static final int white_button=0x7f020069;
+        public static final int white_section=0x7f02006a;
+        public static final int writeicon1=0x7f02006b;
+        public static final int writeicon2=0x7f02006c;
+        public static final int writeicon3=0x7f02006d;
+        public static final int writeicon4=0x7f02006e;
+        public static final int writeicon5=0x7f02006f;
     }
     public static final class id {
         public static final int SingleProfile=0x7f08003f;
