@@ -361,7 +361,7 @@ public class ListViewSwipeGesture implements View.OnTouchListener {
 		mDownView_parent_txt1.setLayoutParams(lp1);
 		mDownView_parent_txt1.setGravity(Gravity.CENTER_HORIZONTAL);
 		mDownView_parent_txt1.setText(HalfText);
-		mDownView_parent_txt1.setWidth((textwidth2/2));
+		mDownView_parent_txt1.setWidth((textwidth2/3));
 		mDownView_parent_txt1.setPadding(0, 0, 0, 0);
 		mDownView_parent_txt1.setHeight(textheight);
 		mDownView_parent_txt1.setBackgroundColor(Color.parseColor(HalfColor));
@@ -380,7 +380,7 @@ public class ListViewSwipeGesture implements View.OnTouchListener {
 			mDownView_parent_txt2.setLayoutParams(lp2);
 			mDownView_parent_txt2.setGravity(Gravity.CENTER_HORIZONTAL);
 			mDownView_parent_txt2.setText(FullText);
-			mDownView_parent_txt2.setWidth((textwidth/2));
+			mDownView_parent_txt2.setWidth((textwidth/3));
 			mDownView_parent_txt2.setPadding(0, 0, 0, 0);
 			mDownView_parent_txt2.setHeight(textheight);
 			mDownView_parent_txt2.setBackgroundColor(Color.parseColor(FullColor));
