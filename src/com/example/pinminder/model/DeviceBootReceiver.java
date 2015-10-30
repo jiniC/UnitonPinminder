@@ -32,7 +32,7 @@ public class DeviceBootReceiver extends BroadcastReceiver {
 //            calendar.set(Calendar.HOUR_OF_DAY, 1); // For 1 PM or 2 PM
 //            calendar.set(Calendar.MINUTE, 0);
 //            calendar.set(Calendar.SECOND, 0);
-            
+            	
          // every day at scheduled time 
            // if it's after or equal 9 am schedule for next day
             calendar.set(Calendar.HOUR_OF_DAY, 1);

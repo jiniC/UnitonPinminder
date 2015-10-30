@@ -106,6 +106,10 @@ public class SwipeActivity extends Activity {
         pendingIntent = PendingIntent.getBroadcast(SwipeActivity.this, 0, alarmIntent, 0);
         startAt10();
 		db = new MyDB(getApplicationContext());
+		
+		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
+				.getMap();
+		
 //		testApi();
 		imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
@@ -169,8 +173,7 @@ public class SwipeActivity extends Activity {
 			}
 		});
 
-		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
-				.getMap();
+		
 
 		// Move the camera instantly to hamburg with a zoom of 15.
 
@@ -340,14 +343,18 @@ public class SwipeActivity extends Activity {
 		cmn_list_view.setAdapter(listAdapter);*/
 		
 		Set<String> hashset = getPreferences();
+		
 		ArrayList<String> list = new ArrayList<String>(hashset);
+		
         
 		listdata.clear();
 		listdata.addAll(db.getDreamCate(list));
+		
+		for (Dream string : listdata) {
+			Log.i("ohdoking12",string.getCategory() + "//" +  string.getTodo());
+		}
 		listAdapter = new ListAdapter(this, listdata);
 		cmn_list_view.setAdapter(listAdapter);
-		
-		
 		
 		
 	}
@@ -371,7 +378,7 @@ public class SwipeActivity extends Activity {
 
 	@Override
 	public void onResume() {
-		super.onRestart();
+		super.onResume();
 		
 		/*****************list 아이템이 하나도 없는 경우 추가 튜토리얼 보이기********************/
 		addtutorial = (ImageView) findViewById(R.id.addtutorial);
@@ -389,24 +396,27 @@ public class SwipeActivity extends Activity {
 		}
 	}
 
-	@Override
-	public void onRestart() {
-		super.onRestart();
-
-		//*****************list 아이템이 하나도 없는 경우 추가 튜토리얼 보이기********************//*
-		addtutorial = (ImageView) findViewById(R.id.addtutorial);
-		if(cmn_list_view.getCount()==0){
-			addtutorial.setVisibility(View.VISIBLE);
-		}
-		else{
-			addtutorial.setVisibility(View.INVISIBLE);
-		}
-		
-		db = new MyDB(getApplicationContext());
-		InitializeValues();
-		initMap();
-		listAdapter.notifyDataSetChanged();
-	}
+//	@Override
+//	public void onRestart() {
+//		super.onRestart();
+//		
+//		Toast.makeText(getApplicationContext(), "restart",
+//				Toast.LENGTH_SHORT).show();
+//
+//		//*****************list 아이템이 하나도 없는 경우 추가 튜토리얼 보이기********************//*
+//		addtutorial = (ImageView) findViewById(R.id.addtutorial);
+//		if(cmn_list_view.getCount()==0){
+//			addtutorial.setVisibility(View.VISIBLE);
+//		}
+//		else{
+//			addtutorial.setVisibility(View.INVISIBLE);
+//		}
+//		
+//		db = new MyDB(getApplicationContext());
+//		InitializeValues();
+//		initMap();
+//		listAdapter.notifyDataSetChanged();
+//	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -416,8 +426,8 @@ public class SwipeActivity extends Activity {
 		
 		MenuItem searchViewItem = menu.findItem(R.id.action_search);
 		
-		listAdapter = new ListAdapter(this, db.getAllDreams());
-		cmn_list_view.setAdapter(listAdapter);
+//		final ListAdapter listAdapter = new ListAdapter(this, db.getAllDreams());
+//		cmn_list_view.setAdapter(listAdapter);
 
 		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 		searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
@@ -582,8 +592,7 @@ public class SwipeActivity extends Activity {
 		@Override
 		public void HalfSwipeListView(int position) {
 			// TODO Auto-generated method stub
-			Toast.makeText(getApplicationContext(), "삭제", Toast.LENGTH_SHORT)
-					.show();
+			
 			db = new MyDB(getApplicationContext());
 			db.deleteDream(listdata.get(position));
 
@@ -733,7 +742,6 @@ public class SwipeActivity extends Activity {
 				+ "&MobileApp=ohdoking"
 				+ "&_type=json";
 		
-		Log.i("ohdoking",urlFestival);
 		JsonObjectRequest jsonRequestTour = new JsonObjectRequest
 		        (Request.Method.GET, urlTour, null, new Response.Listener<JSONObject>() {
 		        	
@@ -806,7 +814,6 @@ public class SwipeActivity extends Activity {
 	
 	void inputApiResult(JSONObject response){
 		 try {
-         	Log.i("ohdoking",response.toString());
              response = response.getJSONObject("response").getJSONObject("body").getJSONObject("items");
              JSONArray rowArray = response.getJSONArray("item");
              

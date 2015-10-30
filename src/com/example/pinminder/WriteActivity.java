@@ -300,8 +300,6 @@ public class WriteActivity extends SampleActivityBase
 				else{
 					if(code == 0){ // code=0 : 처음 등록할 때
 						Dream d = new Dream(0, zone, todo, lat, lon, location, memo, category, 0, noti,1);
-						Log.d(zone, "zone");
-						Log.d(location, "location");
 						db.addDream(d);
 					}
 					else{

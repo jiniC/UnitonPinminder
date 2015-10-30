@@ -9,6 +9,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.pinminder.dto.Dream;
 
@@ -17,12 +18,16 @@ public class MyDB {
 	private MySQLiteHelper dbHelper;
 
 	private SQLiteDatabase db;
+	
+	Context context;
 
 	/**
 	 * 
 	 * @param context
 	 */
 	public MyDB(Context context) {
+		
+		this.context = context;
 		dbHelper = new MySQLiteHelper(context);
 
 	}
@@ -198,7 +203,7 @@ public class MyDB {
 
 		db = dbHelper.getWritableDatabase();
 		// 1. build the query
-		String query = "SELECT  * FROM " + DREAM_TABLES + " ORDER BY RANDOM()";
+//		String query = "SELECT  * FROM " + DREAM_TABLES + " ORDER BY RANDOM()";
 		
 		Cursor cursor = this.db.query(DREAM_TABLES+" Order BY RANDOM()",
                 new String[] { "*" }, null, null, null, null, null);
@@ -344,13 +349,18 @@ public class MyDB {
 		// 1. get reference to writable DB
 		db = dbHelper.getWritableDatabase();
 		// 2. delete
+		
+		
 		db.delete(DREAM_TABLES, KEY_ID + " = ?",
 				new String[] { String.valueOf(dream.getId()) });
-
+		
 		// 3. close
 		db.close();
 
-		Log.d("deleteBook", dream.toString());
+		Log.d("deleteBook", dream.getTodo().toString());
+		
+		Toast.makeText(context, dream.getTodo().toString() + " ªË¡¶", Toast.LENGTH_SHORT)
+		.show();
 
 	}
 

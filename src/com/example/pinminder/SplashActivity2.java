@@ -63,7 +63,7 @@ public class SplashActivity2 extends Activity {
                 if(i == imageArray.length)
                 {
                 	
-                	if(finishApi == 1){
+                	if(finishApi == 6){
 	                	SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
 	                    String s = pref.getString("tuto", "");
 	                    
@@ -93,6 +93,8 @@ public class SplashActivity2 extends Activity {
 		String key = "kbOUead1jRb3%2BIJz3Z%2FFfYQQrTXxsxZhBxIhgIjeA3WXM83aAUGiPiUHefz3G7QObpRxaZnffelPT8oNMLcH1g%3D%3D";
 		String serviceKey;
 		String count = "10";
+		String type = "C";
+		String type2 = "B";
 		
 		
 		db.deleteTable();
@@ -102,7 +104,7 @@ public class SplashActivity2 extends Activity {
 		
 		String urlTour = " http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?"
 				+ "ServiceKey=" + key
-				+ "&arrange=B"
+				+ "&arrange=" + type2
 				+ "&contentTypeId=12"
 				+ "&areaCode=1"
 				+ "&cat1=A02"
@@ -114,7 +116,7 @@ public class SplashActivity2 extends Activity {
 				+ "&_type=json";
 		String urlTour2 = " http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?"
 				+ "ServiceKey=" + key
-				+ "&arrange=B"
+				+ "&arrange=" + type2
 				+ "&contentTypeId=12"
 				+ "&areaCode=1"
 				+ "&cat1=A02"
@@ -126,7 +128,7 @@ public class SplashActivity2 extends Activity {
 				+ "&_type=json";
 		String urlTour3 = " http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?"
 				+ "ServiceKey=" + key
-				+ "&arrange=B"
+				+ "&arrange=" + type2
 				+ "&contentTypeId=12"
 				+ "&areaCode=1"
 				+ "&cat1=A02"
@@ -139,7 +141,7 @@ public class SplashActivity2 extends Activity {
 		
 		String urlShow = " http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?"
 				+ "ServiceKey=" + key
-				+ "&arrange=B"
+				+ "&arrange=" + type
 				+ "&contentTypeId=15"
 				+ "&areaCode=1"
 				+ "&cat1=A02"
@@ -152,7 +154,7 @@ public class SplashActivity2 extends Activity {
 		
 		String urlFestival = " http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?"
 				+ "ServiceKey=" + key
-				+ "&arrange=B"
+				+ "&arrange=" + type
 				+ "&contentTypeId=15"
 				+ "&areaCode=1"
 				+ "&cat1=A02"
@@ -166,7 +168,7 @@ public class SplashActivity2 extends Activity {
 		
 		String urlFood = " http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?"
 				+ "ServiceKey=" + key
-				+ "&arrange=B"
+				+ "&arrange=" + type2
 				+ "&contentTypeId=39"
 				+ "&areaCode=1"
 				+ "&numOfRows=30"
@@ -183,6 +185,8 @@ public class SplashActivity2 extends Activity {
 		            public void onResponse(JSONObject response) {
 		                // the response is already constructed as a JSONObject!
 		            	inputApiResult(response);
+		            	Log.i("ohdoking",response.toString());
+		            	finishApi = finishApi+ 1;
 		            	
 		            }
 		        }, new Response.ErrorListener() {
@@ -193,13 +197,14 @@ public class SplashActivity2 extends Activity {
 		            }
 		        });
 		JsonObjectRequest jsonRequestTour2 = new JsonObjectRequest
-		        (Request.Method.GET, urlTour, null, new Response.Listener<JSONObject>() {
+		        (Request.Method.GET, urlTour2, null, new Response.Listener<JSONObject>() {
 		        	
 		        	
 		            @Override
 		            public void onResponse(JSONObject response) {
 		                // the response is already constructed as a JSONObject!
 		            	inputApiResult(response);
+		            	finishApi = finishApi+ 1;
 		            	
 		            }
 		        }, new Response.ErrorListener() {
@@ -210,14 +215,14 @@ public class SplashActivity2 extends Activity {
 		            }
 		        });
 		JsonObjectRequest jsonRequestTour3 = new JsonObjectRequest
-		        (Request.Method.GET, urlTour, null, new Response.Listener<JSONObject>() {
+		        (Request.Method.GET, urlTour3, null, new Response.Listener<JSONObject>() {
 		        	
 		        	
 		            @Override
 		            public void onResponse(JSONObject response) {
 		                // the response is already constructed as a JSONObject!
 		            	inputApiResult(response);
-		            	finishApi = 1;
+		            	finishApi = finishApi+ 1;
 		            	
 		            }
 		        }, new Response.ErrorListener() {
@@ -237,6 +242,7 @@ public class SplashActivity2 extends Activity {
 		                // the response is already constructed as a JSONObject!
 		            	
 		            	inputApiResult(response);
+		            	finishApi = finishApi+ 1;
 		            	
 		            }
 		        }, new Response.ErrorListener() {
@@ -254,8 +260,8 @@ public class SplashActivity2 extends Activity {
 		            public void onResponse(JSONObject response) {
 		                // the response is already constructed as a JSONObject!
 		            	
-		            	Log.i("ohdoking", response.toString());
 		            	inputApiResult(response);
+		            	finishApi = finishApi+ 1;
 		            	
 		            }
 		        }, new Response.ErrorListener() {
@@ -274,7 +280,7 @@ public class SplashActivity2 extends Activity {
 		            public void onResponse(JSONObject response) {
 		                // the response is already constructed as a JSONObject!
 		            	inputApiResult(response);
-		            	
+		            	finishApi = finishApi+ 1;
 		            }
 		        }, new Response.ErrorListener() {
 		 
@@ -305,6 +311,7 @@ public class SplashActivity2 extends Activity {
              response = response.getJSONObject("response").getJSONObject("body").getJSONObject("items");
              JSONArray rowArray = response.getJSONArray("item");
              
+             Log.i("ohdokingtest",rowArray.getJSONObject(0).getString("cat2").toString());
              
              for(int i=0;i<rowArray.length();i++){
              	
@@ -322,7 +329,15 @@ public class SplashActivity2 extends Activity {
                  double lon = Double.valueOf(jresponse.getString("mapx"));
                  
                  String location = new String(jresponse.getString("addr1").getBytes("8859_1"), Charset.forName("UTF-8"));
-                 String memo = "";
+                 
+                 String memo = ""; 
+                 if(!jresponse.has("tel")){
+                	 memo = "";
+                 }
+                 else{
+                	 
+                	 memo = new String(jresponse.getString("tel").getBytes("8859_1"), Charset.forName("UTF-8"));
+                 }
                  String category = checkCategory(jresponse.getString("cat2").toString());
                  Integer noti = 1;
                  
@@ -333,8 +348,6 @@ public class SplashActivity2 extends Activity {
      			Integer noti)*/
                  
                  Dream d = new Dream(0, zone, todo, lat, lon, location, memo, category, 0, noti,0);
-					Log.d(zone, "zone");
-					Log.d(location, "location");
 					db.addDream(d);
              }
 //             System.out.println("Site: "+site+"\nNetwork: "+network);
@@ -362,6 +375,7 @@ public class SplashActivity2 extends Activity {
 		}
 		else{
 			return "±âÅ¸";
+			
 		}
 	}
     
