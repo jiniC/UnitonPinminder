@@ -380,11 +380,7 @@ public class ListViewSwipeGesture implements View.OnTouchListener {
 			mDownView_parent_txt2.setLayoutParams(lp2);
 			mDownView_parent_txt2.setGravity(Gravity.CENTER_HORIZONTAL);
 			mDownView_parent_txt2.setText(FullText);
-<<<<<<< HEAD
 			mDownView_parent_txt2.setWidth((textwidth2/3));
-=======
-			mDownView_parent_txt2.setWidth((textwidth/3));
->>>>>>> 6a180d088d536cad3649042f958642f0cba09848
 			mDownView_parent_txt2.setPadding(0, 0, 0, 0);
 			mDownView_parent_txt2.setHeight(textheight);
 			mDownView_parent_txt2.setBackgroundColor(Color.parseColor(FullColor));
