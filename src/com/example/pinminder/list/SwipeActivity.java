@@ -130,7 +130,7 @@ public class SwipeActivity extends Activity {
 		getActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent))); 
 		getActionBar().setDisplayShowCustomEnabled(true);
 		//getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
-		getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.top_navi));
+		getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.top_navi2));
 		getActionBar().setCustomView(view, params);
 		
 		cmn_list_view = (ListView) findViewById(R.id.cmn_list_view);
