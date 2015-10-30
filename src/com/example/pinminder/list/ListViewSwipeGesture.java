@@ -417,7 +417,7 @@ public class ListViewSwipeGesture implements View.OnTouchListener {
 		Log.d("FUll Swipe trigger call", "Works**********************" + mDismissAnimationRefCount);
 		old_mDownView = mDownView;
 		int width;
-		double a=2.45;
+		double a=2.48;
 		if (SwipeType == Single || SwipeType == Dismiss) {
 			width = textwidth;
 			if (SwipeType == Dismiss)
