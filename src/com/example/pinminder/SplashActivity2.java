@@ -45,7 +45,7 @@ public class SplashActivity2 extends Activity {
         testApi();
         final int[] imageArray = { R.drawable.loading_01, 
         		R.drawable.loading_02,
-        		R.drawable.loading_01
+        		R.drawable.loading_01,
         };
         
         

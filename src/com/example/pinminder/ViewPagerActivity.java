@@ -21,7 +21,7 @@ public class ViewPagerActivity extends Activity {
  
     @Override
     public void onCreate(Bundle savedInstanceState) {
-    	requestWindowFeature(Window.FEATURE_NO_TITLE);
+       requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);     //show main.xml   
         savePreferences();
@@ -44,13 +44,18 @@ public class ViewPagerActivity extends Activity {
             mPager.setCurrentItem(1);
         }else if(type==2){
             mPager.setCurrentItem(2);
+        }else if(type==3){
+            mPager.setCurrentItem(3);
+        }else if(type==4){
+            mPager.setCurrentItem(4);
         }
     }
      
-    private Button btn_one;
+ /*   private Button btn_one;
     private Button btn_two;
     private Button btn_three;
-     
+    private Button btn_four;
+    private Button btn_five;*/
     /**
      * Layout
      */
@@ -79,7 +84,7 @@ public class ViewPagerActivity extends Activity {
          
         @Override
         public int getCount() {
-            return 3;
+            return 5;
         }
  
         @Override
@@ -98,17 +103,25 @@ public class ViewPagerActivity extends Activity {
                 v = mInflater.inflate(R.layout.three, null);
                 v.findViewById(R.id.iv_three); 
                 v.findViewById(R.id.btn_click_3).setOnClickListener(mPagerListener);
+            }else if(position == 3){
+                v = mInflater.inflate(R.layout.four, null);
+                v.findViewById(R.id.iv_four); 
+                v.findViewById(R.id.btn_click_4).setOnClickListener(mPagerListener);
+            }else if(position == 4){
+                v = mInflater.inflate(R.layout.five, null);
+                v.findViewById(R.id.iv_five); 
+                v.findViewById(R.id.btn_click_5).setOnClickListener(mPagerListener);
                 v.setOnClickListener(new OnClickListener() {
-					
-					@Override
-					public void onClick(View v) {
-						// TODO Auto-generated method stub
-						Intent i = new Intent(getApplicationContext(),SwipeActivity.class); 
-						startActivity(i);
-						finish();
-						
-					}
-				});
+               
+               @Override
+               public void onClick(View v) {
+                  // TODO Auto-generated method stub
+                  Intent i = new Intent(getApplicationContext(),SwipeActivity.class); 
+                  startActivity(i);
+                  finish();
+                  
+               }
+            });
             }
             /*else{
             }*/
