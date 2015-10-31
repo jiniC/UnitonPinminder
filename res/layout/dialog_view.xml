@@ -94,7 +94,7 @@
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="1dip"
-                android:layout_marginBottom="12dip"
+                android:layout_marginBottom="0dip"
                 android:layout_marginLeft="6dip"
                 android:layout_marginRight="6dip"
                 android:layout_marginTop="15dip"
