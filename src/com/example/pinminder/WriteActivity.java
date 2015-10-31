@@ -315,8 +315,10 @@ public class WriteActivity extends SampleActivityBase
 				if(todo.getBytes().length <= 0||location.getBytes().length <= 0||category.getBytes().length <= 0)
 				{
 					Toast.makeText(getApplicationContext(),todo_s+location_s+category_s+"을(를) 입력해 주세요.", Toast.LENGTH_LONG).show();
+					okBtn.setBackgroundColor(Color.parseColor("#ffffff"));
 				}
 				else{
+					okBtn.setBackgroundColor(Color.parseColor("#ededed"));
 					if(code == 0){ // code=0 : 처음 등록할 때
 						Dream d = new Dream(0, zone, todo, lat, lon, location, memo, category, 0, noti,1);
 						db.addDream(d);
