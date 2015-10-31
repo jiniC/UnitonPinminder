@@ -293,9 +293,28 @@ public class WriteActivity extends SampleActivityBase
 				okBtn.setBackgroundColor(Color.parseColor("#ededed"));
 				todo = todoEt.getText().toString();
 				memo = memoEt.getText().toString();
-				if(todo.equals("")||location.equals("")||category.equals(""))
+				location = mAutocompleteView.getText().toString();
+				String x="";
+				String todo_s="";
+				String location_s="";
+				String category_s="";
+				
+				if(todo.getBytes().length <= 0)
 				{
-					Toast.makeText(getApplicationContext(), "필수사항을 입력해주세요.", Toast.LENGTH_LONG).show();
+					todo_s="'할 일' ";
+				}
+				if(location.getBytes().length <= 0)
+				{
+					location_s="'지역' ";
+				}
+				if(category.getBytes().length <= 0)
+				{
+					category_s="'카테고리' ";
+				}
+				
+				if(todo.getBytes().length <= 0||location.getBytes().length <= 0||category.getBytes().length <= 0)
+				{
+					Toast.makeText(getApplicationContext(),todo_s+location_s+category_s+"을(를) 입력해 주세요.", Toast.LENGTH_LONG).show();
 				}
 				else{
 					if(code == 0){ // code=0 : 처음 등록할 때
@@ -738,10 +757,25 @@ public class WriteActivity extends SampleActivityBase
 			todo = todoEt.getText().toString();
 			memo = memoEt.getText().toString();
 			location = mAutocompleteView.getText().toString();
-			
-			if(todo.equals("")||location.equals("")||category.equals(""))
+			String todo_s="";
+			String location_s="";
+			String category_s="";
+			if(todo.getBytes().length <= 0)
 			{
-				Toast.makeText(getApplicationContext(), "필수사항을 입력해주세요.", Toast.LENGTH_LONG).show();
+				todo_s="'할 일' ";
+			}
+			if(location.getBytes().length <= 0)
+			{
+				location_s="'지역' ";
+			}
+			if(category.getBytes().length <= 0)
+			{
+				category_s="'카테고리' ";
+			}
+			
+			if(todo.getBytes().length <= 0||location.getBytes().length <= 0||category.getBytes().length <= 0)
+			{
+				Toast.makeText(getApplicationContext(),todo_s+location_s+category_s+"을(를) 입력해 주세요.", Toast.LENGTH_LONG).show();
 			}
 			else{
 				Dream d = new Dream(idDB, zone, todo, lat, lon, location, memo, category, 0, noti,1);
