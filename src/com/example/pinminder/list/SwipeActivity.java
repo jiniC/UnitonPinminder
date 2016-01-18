@@ -296,7 +296,6 @@ public class SwipeActivity extends Activity {
 			 * .icon(BitmapDescriptorFactory
 			 * .fromResource(R.drawable.ic_launcher)));
 			 */
-			
 		    
 		    map.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
 				
