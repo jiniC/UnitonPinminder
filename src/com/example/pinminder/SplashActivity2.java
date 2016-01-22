@@ -185,7 +185,7 @@ public class SplashActivity2 extends Activity {
 		            public void onResponse(JSONObject response) {
 		                // the response is already constructed as a JSONObject!
 		            	inputApiResult(response);
-		            	Log.i("ohdoking",response.toString());
+		            	Log.i("ohdoking99",response.toString());
 		            	finishApi = finishApi+ 1;
 		            	
 		            }
