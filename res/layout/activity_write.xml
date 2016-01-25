@@ -5,6 +5,7 @@
     android:orientation="vertical" >
 
     <ScrollView
+        android:id="@+id/mainScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
@@ -59,46 +60,53 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical" >
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="205px"
+                    android:layout_marginLeft="93px"
+                    android:layout_marginRight="103px" >
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="205px"
-                        android:layout_marginLeft="93px"
-                        android:layout_marginRight="103px" >
+                    <ImageButton
+                        android:id="@+id/regionBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="#00000000"
+                        android:src="@drawable/grayicon" />
 
-                        <ImageButton
-                            android:id="@+id/regionBtn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:background="#00000000"
-                            android:src="@drawable/grayicon" />
+                    <AutoCompleteTextView
+                        android:id="@+id/autocomplete_places"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:background="#00000000"
+                        android:ems="16"
+                        android:hint="지역을 입력해 주세요"
+                        android:maxLines="1"
+                        android:textColor="@android:color/primary_text_light" />
+                </RelativeLayout>
 
-                        <AutoCompleteTextView
-                            android:id="@+id/autocomplete_places"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_centerVertical="true"
-                            android:background="#00000000"
-                            android:ems="16"
-                            android:hint="지역을 입력해 주세요"
-                            android:maxLines="1"
-                            android:textColor="@android:color/primary_text_light" />
-                    </RelativeLayout>
-                    
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="1100px"
                     android:orientation="vertical" >
 
                     <fragment
                         android:id="@+id/map"
+                        android:name="com.google.android.gms.maps.MapFragment"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:name="com.google.android.gms.maps.MapFragment" />
-                </LinearLayout>
+                        android:layout_marginBottom="-500dp"
+                        android:layout_marginTop="-500dp" />
+
+                    <ImageView
+                        android:id="@+id/transparent_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent" />
+                </RelativeLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -119,9 +127,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:gravity="center"
                 android:layout_marginLeft="93px"
-                android:layout_marginRight="103px" >
+                android:layout_marginRight="103px"
+                android:gravity="center" >
 
                 <ImageButton
                     android:id="@+id/cat1"
@@ -239,8 +247,8 @@
                     android:id="@+id/memoEt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
                     android:layout_gravity="center"
+                    android:layout_margin="15dp"
                     android:background="#00000000"
                     android:ems="10"
                     android:maxLines="3"

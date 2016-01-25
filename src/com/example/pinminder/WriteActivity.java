@@ -13,29 +13,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.ActionBar;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.Toast;
-
 import com.example.pinminder.activities.SampleActivityBase;
 import com.example.pinminder.db.MyDB;
 import com.example.pinminder.dialog.DialogActivity;
@@ -59,6 +36,32 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import android.app.ActionBar;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.Toast;
+
 
 
 
@@ -69,6 +72,9 @@ public class WriteActivity extends SampleActivityBase
 	Button deleteBtn, okBtn;
 	private EditText todoEt, memoEt;
 	LinearLayout r;
+	
+	ScrollView mainScrollView;
+	ImageView transparentImageView; 
 
 	private String zone, todo, location, memo, category;
 	private double lat, lon;
@@ -369,6 +375,37 @@ public class WriteActivity extends SampleActivityBase
 				mAutocompleteView.setText("");
 			}
 		});
+		
+		// MapFragment in ScrollView
+		mainScrollView = (ScrollView) findViewById(R.id.mainScrollView);
+		transparentImageView = (ImageView) findViewById(R.id.transparent_image);
+
+		transparentImageView.setOnTouchListener(new View.OnTouchListener() {
+
+		    @Override
+		    public boolean onTouch(View v, MotionEvent event) {
+		        int action = event.getAction();
+		        switch (action) {
+		           case MotionEvent.ACTION_DOWN:
+		                // Disallow ScrollView to intercept touch events.
+		                mainScrollView.requestDisallowInterceptTouchEvent(true);
+		                // Disable touch on transparent view
+		                return false;
+
+		           case MotionEvent.ACTION_UP:
+		                // Allow ScrollView to intercept touch events.
+		                mainScrollView.requestDisallowInterceptTouchEvent(false);
+		                return true;
+
+		           case MotionEvent.ACTION_MOVE:
+		                mainScrollView.requestDisallowInterceptTouchEvent(true);
+		                return false;
+
+		           default: 
+		                return true;
+		        }   
+		    }
+		});
 
 	}
 
@@ -401,7 +438,6 @@ public class WriteActivity extends SampleActivityBase
 			PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi.getPlaceById(mGoogleApiClient, placeId);
 			placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
 
-			Toast.makeText(getApplicationContext(), "Clicked: " + item.description, Toast.LENGTH_SHORT).show();
 			Log.i(TAG, "Called getPlaceById to get Place details for " + item.placeId);
 		}
 	};
