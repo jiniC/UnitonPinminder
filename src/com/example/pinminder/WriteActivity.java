@@ -42,6 +42,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -295,13 +297,6 @@ public class WriteActivity extends SampleActivityBase
 						Dream d = new Dream(0, zone, todo, lat, lon, location, memo, category, 0, noti,1);
 						db.addDream(d);
 					}
-					else{
-						/*
-						location = mAutocompleteView.getText().toString();
-						Dream d = new Dream(idDB, zone, todo, lat, lon, location, memo, category, 0, noti);
-						Log.d(category, "cat");
-						db.updateDream(d);*/
-					}
 					finish();
 				}
 			}
@@ -406,7 +401,38 @@ public class WriteActivity extends SampleActivityBase
 		        }   
 		    }
 		});
+		
+		// EditText Event
+		// EditText 값 변경 이벤트 탐지
+		TextWatcher watcher = new TextWatcher(){
+		    @Override
+		    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+		         //텍스트의 길이가 변경되었을 경우 발생할 이벤트를 작성.
+		    }
+		    @Override
+		    public void onTextChanged(CharSequence s, int start, int before, int count) {
+		         //텍스트가 변경될때마다 발생할 이벤트를 작성.
+		         if(todoEt.getText().length()>0)
+		        	 cancelBtn.setVisibility(View.VISIBLE);
+		         else
+		        	 cancelBtn.setVisibility(View.INVISIBLE);
+		         
+		         if(mAutocompleteView.getText().toString().length()>0)
+		        	 regionBtn.setVisibility(View.VISIBLE);
+		         else
+		        	 regionBtn.setVisibility(View.INVISIBLE);
+		    }
 
+			@Override
+			public void afterTextChanged(Editable arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		};
+		 
+		// 호출
+		todoEt.addTextChangedListener(watcher);
+		mAutocompleteView.addTextChangedListener(watcher);
 	}
 
 	/**
