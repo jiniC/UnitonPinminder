@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="21"
+        android:minSdkVersion="17"
         android:targetSdkVersion="22" />
 
     <permission
@@ -87,6 +87,9 @@
         <activity
             android:name=".AndroidGPSTrackingActivity"
             android:label="@string/title_activity_create_notification" >
+        </activity>
+        <activity
+            android:name=".SettingActivity" >
         </activity>
         <activity
             android:name=".dialog.DialogActivity"

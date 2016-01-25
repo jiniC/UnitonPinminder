@@ -21,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.pinminder.R;
+import com.example.pinminder.SettingActivity;
 import com.example.pinminder.SplashActivity2;
 import com.example.pinminder.WriteActivity;
 import com.example.pinminder.db.MyDB;
@@ -47,6 +48,7 @@ import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -62,6 +64,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -137,8 +140,11 @@ public class SwipeActivity extends Activity {
 		LayoutInflater inflater = (LayoutInflater) getActionBar().getThemedContext()
 				.getSystemService(LAYOUT_INFLATER_SERVICE);
 		View view = inflater.inflate(R.layout.actionbar, null);
-		ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,
-				ActionBar.LayoutParams.WRAP_CONTENT, Gravity.CENTER);
+		
+		ImageView settingImageView = (ImageView)view.findViewById(R.id.settingImg);
+		
+		ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
+				ActionBar.LayoutParams.MATCH_PARENT, Gravity.LEFT);
 		getActionBar().setDisplayShowTitleEnabled(false);
 		getActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
 		getActionBar().setDisplayShowCustomEnabled(true);
@@ -153,6 +159,17 @@ public class SwipeActivity extends Activity {
 		InitializeValues();
 		final ListViewSwipeGesture touchListener = new ListViewSwipeGesture(cmn_list_view, swipeListener, this);
 		touchListener.SwipeType = ListViewSwipeGesture.Double; // Set two
+		
+		settingImageView.setOnClickListener(new View.OnClickListener() {
+		    @Override
+		    public void onClick(View v) {
+		    	Intent i = new Intent(SwipeActivity.this, SettingActivity.class);
+				startActivity(i);
+		    	Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_SHORT).show();
+		    }
+		});
+		
+		
 		// options at
 		// background of
 		// list item
@@ -211,9 +228,21 @@ public class SwipeActivity extends Activity {
 		 */
 
 		chkGpsService();
-
+		
 	}
+	
+	  //onoff 가능 알림
+    private void apiSettingToast(){
+		 LayoutInflater inflater = getLayoutInflater();
+        View toastLayout = inflater.inflate(R.layout.custom_toast, (ViewGroup) findViewById(R.id.custom_toast_layout));
 
+        Toast toast = new Toast(getApplicationContext());
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(toastLayout);
+        toast.show();
+	}
+	
+	
 	private boolean chkGpsService() {
 
 		String gps = android.provider.Settings.Secure.getString(getContentResolver(),
@@ -227,6 +256,16 @@ public class SwipeActivity extends Activity {
 			AlertDialog.Builder gsDialog = new AlertDialog.Builder(this);
 			gsDialog.setTitle("위치 서비스 설정");
 			gsDialog.setMessage("PIN Minder 알림을 받기 위해서는 내 위치 정보가 필요합니다.\n단말기의 설정에서 '위치 서비스' 사용을 허용해주세요.");
+			
+			gsDialog.setOnDismissListener(new OnDismissListener() {
+				@Override
+				public void onDismiss(DialogInterface dialog) {
+					if(getUsingApi() == false){
+						apiSettingToast();					
+					}
+				}
+			});
+			
 			gsDialog.setPositiveButton("설정하기", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					// GPS설정 화면으로 이동
@@ -909,6 +948,13 @@ public class SwipeActivity extends Activity {
 		manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), interval, pendingIntent);
 
 	}
+	
+	 //api 받아오기 여부
+    private boolean getUsingApi(){
+        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        return pref.getBoolean("usingApi", false);    
+        
+    }
 
 	   /**로그인 다이얼로그를 표시한다.*/
     public void showLoginDialog(String title) {
