@@ -21,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.pinminder.R;
+import com.example.pinminder.SettingActivity;
 import com.example.pinminder.SplashActivity2;
 import com.example.pinminder.WriteActivity;
 import com.example.pinminder.db.MyDB;
@@ -63,6 +64,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -134,8 +136,11 @@ public class SwipeActivity extends Activity {
 		LayoutInflater inflater = (LayoutInflater) getActionBar().getThemedContext()
 				.getSystemService(LAYOUT_INFLATER_SERVICE);
 		View view = inflater.inflate(R.layout.actionbar, null);
-		ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,
-				ActionBar.LayoutParams.WRAP_CONTENT, Gravity.CENTER);
+		
+		ImageView settingImageView = (ImageView)view.findViewById(R.id.settingImg);
+		
+		ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
+				ActionBar.LayoutParams.MATCH_PARENT, Gravity.LEFT);
 		getActionBar().setDisplayShowTitleEnabled(false);
 		getActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
 		getActionBar().setDisplayShowCustomEnabled(true);
@@ -150,6 +155,17 @@ public class SwipeActivity extends Activity {
 		InitializeValues();
 		final ListViewSwipeGesture touchListener = new ListViewSwipeGesture(cmn_list_view, swipeListener, this);
 		touchListener.SwipeType = ListViewSwipeGesture.Double; // Set two
+		
+		settingImageView.setOnClickListener(new View.OnClickListener() {
+		    @Override
+		    public void onClick(View v) {
+		    	Intent i = new Intent(SwipeActivity.this, SettingActivity.class);
+				startActivity(i);
+		    	Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_SHORT).show();
+		    }
+		});
+		
+		
 		// options at
 		// background of
 		// list item
@@ -208,9 +224,10 @@ public class SwipeActivity extends Activity {
 		 */
 
 		chkGpsService();
-
+		
 	}
-
+	
+	
 	private boolean chkGpsService() {
 
 		String gps = android.provider.Settings.Secure.getString(getContentResolver(),
