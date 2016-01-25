@@ -13,29 +13,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.ActionBar;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.Toast;
-
 import com.example.pinminder.activities.SampleActivityBase;
 import com.example.pinminder.db.MyDB;
 import com.example.pinminder.dialog.DialogActivity;
@@ -59,23 +36,59 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import android.app.ActionBar;
+import android.app.ActionBar.LayoutParams;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
+import android.widget.Toast;
+
 
 
 
 public class WriteActivity extends SampleActivityBase
-		implements OnClickListener, OnMapClickListener,GoogleApiClient.OnConnectionFailedListener {
+		implements OnClickListener, OnMapClickListener,GoogleApiClient.OnConnectionFailedListener, AnimationListener {
 
 	private ImageButton cancelBtn, regionBtn, cat1, cat2, cat3, cat4, cat5, alarmBtn, memoBtn;
 	Button deleteBtn, okBtn;
 	private EditText todoEt, memoEt;
 	LinearLayout r;
+	
+	ScrollView mainScrollView;
+	ImageView transparentImageView; 
 
 	private String zone, todo, location, memo, category;
 	private double lat, lon;
 	private int check, noti = 0;
 
 	private int id;
-	private int memoid = 0;
+	private int memoid = 1;
 
 	Marker mark;
 	
@@ -83,6 +96,9 @@ public class WriteActivity extends SampleActivityBase
 	String todoDB;
 	int idDB;
 	MyDB db;
+	
+	Animation animation, slideUp_animation;
+	
 	/**
 	 * GoogleApiClient wraps our service connection to Google Play Services and
 	 * provides access to the user's sign in state as well as the Google's APIs.
@@ -185,6 +201,12 @@ public class WriteActivity extends SampleActivityBase
 		
 		// 맵 클릭리스너
 		map.setOnMapClickListener(this);
+		
+		animation = AnimationUtils.loadAnimation(this,R.anim.slide_down);
+		slideUp_animation = AnimationUtils.loadAnimation(this,R.anim.slide_up);
+		// set animation listener
+		animation.setAnimationListener(this);
+		slideUp_animation.setAnimationListener(this);
 		
 		// 버튼 이름 설정
 		if(code == 0){ // code=0 : 처음 등록할 때
@@ -289,13 +311,6 @@ public class WriteActivity extends SampleActivityBase
 						Dream d = new Dream(0, zone, todo, lat, lon, location, memo, category, 0, noti,1);
 						db.addDream(d);
 					}
-					else{
-						/*
-						location = mAutocompleteView.getText().toString();
-						Dream d = new Dream(idDB, zone, todo, lat, lon, location, memo, category, 0, noti);
-						Log.d(category, "cat");
-						db.updateDream(d);*/
-					}
 					finish();
 				}
 			}
@@ -347,14 +362,22 @@ public class WriteActivity extends SampleActivityBase
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				if (memoid == 0) {
-					r.setBackgroundResource(R.drawable.white_section);
-					memoEt.setEnabled(false);
+					//r.setBackgroundResource(R.drawable.white_section);
+					r.startAnimation(slideUp_animation);
+					
+					/*변경하고 싶은 레이아웃의 파라미터 값을 가져 옴*/
+					LinearLayout.LayoutParams rControl = (LinearLayout.LayoutParams) r.getLayoutParams();			 
+					/*해당 margin값 변경*/
+					rControl.height=0;
+					r.setLayoutParams(rControl);
 
 					memoBtn.setImageResource(R.drawable.icon_02);
 					memoid = 1;
 				} else {
 					r.setBackgroundResource(R.drawable.blue_section);
-					memoEt.setEnabled(true);
+					r.startAnimation(animation);
+					r.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+
 
 					memoBtn.setImageResource(R.drawable.icon_01);
 					memoid = 0;
@@ -369,7 +392,69 @@ public class WriteActivity extends SampleActivityBase
 				mAutocompleteView.setText("");
 			}
 		});
+		
+		// MapFragment in ScrollView
+		mainScrollView = (ScrollView) findViewById(R.id.mainScrollView);
+		transparentImageView = (ImageView) findViewById(R.id.transparent_image);
 
+		transparentImageView.setOnTouchListener(new View.OnTouchListener() {
+
+		    @Override
+		    public boolean onTouch(View v, MotionEvent event) {
+		        int action = event.getAction();
+		        switch (action) {
+		           case MotionEvent.ACTION_DOWN:
+		                // Disallow ScrollView to intercept touch events.
+		                mainScrollView.requestDisallowInterceptTouchEvent(true);
+		                // Disable touch on transparent view
+		                return false;
+
+		           case MotionEvent.ACTION_UP:
+		                // Allow ScrollView to intercept touch events.
+		                mainScrollView.requestDisallowInterceptTouchEvent(false);
+		                return true;
+
+		           case MotionEvent.ACTION_MOVE:
+		                mainScrollView.requestDisallowInterceptTouchEvent(true);
+		                return false;
+
+		           default: 
+		                return true;
+		        }   
+		    }
+		});
+		
+		// EditText Event
+		// EditText 값 변경 이벤트 탐지
+		TextWatcher watcher = new TextWatcher(){
+		    @Override
+		    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+		         //텍스트의 길이가 변경되었을 경우 발생할 이벤트를 작성.
+		    }
+		    @Override
+		    public void onTextChanged(CharSequence s, int start, int before, int count) {
+		         //텍스트가 변경될때마다 발생할 이벤트를 작성.
+		         if(todoEt.getText().length()>0)
+		        	 cancelBtn.setVisibility(View.VISIBLE);
+		         else
+		        	 cancelBtn.setVisibility(View.INVISIBLE);
+		         
+		         if(mAutocompleteView.getText().toString().length()>0)
+		        	 regionBtn.setVisibility(View.VISIBLE);
+		         else
+		        	 regionBtn.setVisibility(View.INVISIBLE);
+		    }
+
+			@Override
+			public void afterTextChanged(Editable arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		};
+		 
+		// 호출
+		todoEt.addTextChangedListener(watcher);
+		mAutocompleteView.addTextChangedListener(watcher);
 	}
 
 	/**
@@ -401,7 +486,6 @@ public class WriteActivity extends SampleActivityBase
 			PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi.getPlaceById(mGoogleApiClient, placeId);
 			placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
 
-			Toast.makeText(getApplicationContext(), "Clicked: " + item.description, Toast.LENGTH_SHORT).show();
 			Log.i(TAG, "Called getPlaceById to get Place details for " + item.placeId);
 		}
 	};
@@ -770,6 +854,24 @@ public class WriteActivity extends SampleActivityBase
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+
+	@Override
+	public void onAnimationEnd(Animation animation) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onAnimationRepeat(Animation animation) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onAnimationStart(Animation animation) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	
