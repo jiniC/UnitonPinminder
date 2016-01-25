@@ -1,53 +1,43 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:layout_above="@+id/relativeLayout2"
+    android:layout_alignLeft="@+id/relativeLayout2"
+    android:orientation="vertical"
+    android:background="#ffffff"
+    tools:context="com.example.settings.MainActivity" >
 
-    <LinearLayout
+    <ImageButton
+        android:id="@+id/logoBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:background="#ffffffff"
+        android:src="@drawable/logo5" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/logo5" />
-
-    </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <ListView
-                android:id="@+id/setting_list_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:animateLayoutChanges="true"
-                android:divider="@null"
-                android:dividerHeight="0dp"
-                android:fadeScrollbars="true"
-                android:smoothScrollbar="true" >
-            </ListView>
-            
-        </FrameLayout>
-
-    </RelativeLayout>
-    
-    <LinearLayout
+    <Button
+        android:id="@+id/mailBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:text="문의하기" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/logo5" />
+    <Button
+        android:id="@+id/tutorialBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="튜토리얼 다시 보기" />
 
-    </LinearLayout>
+    <Button
+        android:id="@+id/movieBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="핀마인더 소개 동영상 보러가기" />
+
+
+    <Switch
+        android:id="@+id/dataSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="우리지역 공공데이터 다운로드 받기" />
 
 </LinearLayout>
