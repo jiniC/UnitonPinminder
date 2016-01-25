@@ -33,7 +33,6 @@ import com.example.pinminder.model.PushEvent;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
-import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -49,6 +48,7 @@ import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -66,6 +66,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -92,6 +94,8 @@ public class SwipeActivity extends Activity {
 	EditText editsearch;
 	SearchView searchView;
 	ImageView addtutorial;
+	private CheckBox checkbox_ask;
+	int check;
 
 	ProgressDialog pDialog;
 
@@ -227,6 +231,17 @@ public class SwipeActivity extends Activity {
 		
 	}
 	
+	  //onoff 가능 알림
+    private void apiSettingToast(){
+		 LayoutInflater inflater = getLayoutInflater();
+        View toastLayout = inflater.inflate(R.layout.custom_toast, (ViewGroup) findViewById(R.id.custom_toast_layout));
+
+        Toast toast = new Toast(getApplicationContext());
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(toastLayout);
+        toast.show();
+	}
+	
 	
 	private boolean chkGpsService() {
 
@@ -241,6 +256,16 @@ public class SwipeActivity extends Activity {
 			AlertDialog.Builder gsDialog = new AlertDialog.Builder(this);
 			gsDialog.setTitle("위치 서비스 설정");
 			gsDialog.setMessage("PIN Minder 알림을 받기 위해서는 내 위치 정보가 필요합니다.\n단말기의 설정에서 '위치 서비스' 사용을 허용해주세요.");
+			
+			gsDialog.setOnDismissListener(new OnDismissListener() {
+				@Override
+				public void onDismiss(DialogInterface dialog) {
+					if(getUsingApi() == false){
+						apiSettingToast();					
+					}
+				}
+			});
+			
 			gsDialog.setPositiveButton("설정하기", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					// GPS설정 화면으로 이동
@@ -319,16 +344,19 @@ public class SwipeActivity extends Activity {
 				@Override
 				public void onInfoWindowClick(Marker marker) {
 					// TODO Auto-generated method stub
-					// 구글 검색
-					//Uri uri = Uri.parse("http://www.google.com/#q="+marker.getTitle().toString());
-					
-					// 네이버 검색
-					Uri uri = Uri.parse("http://search.naver.com/search.naver?where=nexearch&query="+marker.getTitle().toString()+"&ie=utf8");
-					
-					// 네이버 앱 바로 연동
-					// Uri uri = Uri.parse("naversearchapp://keywordsearch?mode=result&query="+marker.getTitle().toString()+"&version=10");
-		        	Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-		        	startActivity(intent);
+					if(getPreferencesCheck()==true){
+						// 구글 검색
+						//Uri uri = Uri.parse("http://www.google.com/#q="+marker.getTitle().toString());
+						// 네이버 검색
+						Uri uri = Uri.parse("http://search.naver.com/search.naver?where=nexearch&query="+marker.getTitle().toString()+"&ie=utf8");
+						
+						// 네이버 앱 바로 연동
+						// Uri uri = Uri.parse("naversearchapp://keywordsearch?mode=result&query="+marker.getTitle().toString()+"&version=10");
+			        	Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+			        	startActivity(intent);
+					}else{
+						showLoginDialog(marker.getTitle().toString());
+					}
 				}
 			});
 		}
@@ -920,5 +948,77 @@ public class SwipeActivity extends Activity {
 		manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), interval, pendingIntent);
 
 	}
+	
+	 //api 받아오기 여부
+    private boolean getUsingApi(){
+        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        return pref.getBoolean("usingApi", false);    
+        
+    }
 
+	   /**로그인 다이얼로그를 표시한다.*/
+    public void showLoginDialog(String title) {
+    	final String markerTitle = title;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+ 
+        /**dialog.xml 읽어들이기*/
+        //Layout 리소스를 로드할 수 있는 객체
+        LayoutInflater inflater = getLayoutInflater();
+ 
+        //"/res/layout/dialog.xml" 파일을 로드하기
+        //--> "OK"버튼이 눌러지면, 이 객체에 접근해서 포함된 EditText객체를 취득
+        final View view = inflater.inflate(R.layout.activity_search_dialog, null);
+        checkbox_ask = (CheckBox) view.findViewById(R.id.checkbox_ask);
+		checkbox_ask.setChecked(false);
+		
+        //Dialog에 Message 대신, XML 레이아웃을 포함시킨다.
+        builder.setView(view);
+ 
+ 
+        /**취소버튼 처리*/
+        builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(), "CANCEL 눌러짐", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+ 
+        /**확인버튼 처리*/
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            	if(checkbox_ask.isChecked()){
+					savePreferencesCheck(true);
+				}else{
+					savePreferencesCheck(false);
+				}
+				Uri uri = Uri.parse("http://search.naver.com/search.naver?where=nexearch&query="+markerTitle+"&ie=utf8");
+				
+	        	Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+	        	startActivity(intent);
+            }
+        });
+ 
+        builder.create();
+        builder.show();
+    }
+    
+	// 값 불러오기
+	private boolean getPreferencesCheck() {
+		SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+		return pref.getBoolean("check",false);
+	}
+
+	// 값 저장하기
+	private void savePreferencesCheck(boolean b) {
+		SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+		SharedPreferences.Editor editor = pref.edit();
+
+		// Set the values
+		editor.putBoolean("check",b);
+		editor.commit();
+
+	}
 }

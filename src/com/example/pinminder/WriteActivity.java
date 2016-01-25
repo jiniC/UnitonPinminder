@@ -61,22 +61,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 
 
-/*
- * Copyright (C) 2015 Google Inc. All Rights Reserved.
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- */
-
 
 public class WriteActivity extends SampleActivityBase
 		implements OnClickListener, OnMapClickListener,GoogleApiClient.OnConnectionFailedListener {
@@ -212,7 +196,7 @@ public class WriteActivity extends SampleActivityBase
 			okBtn.setEnabled(false);
 			deleteBtn.setText("삭제");
 			
-			BitmapDescriptor b;
+			BitmapDescriptor b = null;
 			Dream dream = db.getDreamTodo(todoDB);
 			
 			LatLng moveLatLng = new LatLng(dream.getLat(), dream.getLon());
@@ -227,53 +211,38 @@ public class WriteActivity extends SampleActivityBase
 			
 			String c = dream.getCategory().toString();
 			category = c;
-			if(c.equals("음식")){
+			if(c.equals("음식")) {
 				cat1.setImageResource(R.drawable.writeicon1);
-				cat2.setImageResource(R.drawable.inactive2);
-				cat3.setImageResource(R.drawable.inactive3);
-				cat4.setImageResource(R.drawable.inactive4);
-				cat5.setImageResource(R.drawable.inactive5);
-				
 				b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon1);
-				mark = map.addMarker(new MarkerOptions().position(moveLatLng).icon(b));
-				
-			}else if(c.equals("관람")){
+			} else
 				cat1.setImageResource(R.drawable.inactive1);
-				cat2.setImageResource(R.drawable.writeicon2);
-				cat3.setImageResource(R.drawable.inactive3);
-				cat4.setImageResource(R.drawable.inactive4);
-				cat5.setImageResource(R.drawable.inactive5);
-				
+			
+			if(c.equals("관람")) {
+				cat1.setImageResource(R.drawable.writeicon2);
 				b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon2);
-				mark = map.addMarker(new MarkerOptions().position(moveLatLng).icon(b));
-			}else if(c.equals("활동")){
-				cat1.setImageResource(R.drawable.inactive1);
-				cat2.setImageResource(R.drawable.inactive2);
-				cat3.setImageResource(R.drawable.writeicon3);
-				cat4.setImageResource(R.drawable.inactive4);
-				cat5.setImageResource(R.drawable.inactive5);
-				
+			} else
+				cat1.setImageResource(R.drawable.inactive2);
+			
+			if(c.equals("활동")) {
 				b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon3);
-				mark = map.addMarker(new MarkerOptions().position(moveLatLng).icon(b));
-			}else if(c.equals("할 것")){
-				cat1.setImageResource(R.drawable.inactive1);
-				cat2.setImageResource(R.drawable.inactive2);
-				cat3.setImageResource(R.drawable.inactive3);
-				cat4.setImageResource(R.drawable.writeicon4);
-				cat5.setImageResource(R.drawable.inactive5);
-				
+				cat1.setImageResource(R.drawable.writeicon3);
+			} else
+				cat1.setImageResource(R.drawable.inactive3);
+			
+			if(c.equals("할 것")) {
 				b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon4);
-				mark = map.addMarker(new MarkerOptions().position(moveLatLng).icon(b));
-			}else{
-				cat1.setImageResource(R.drawable.inactive1);
-				cat2.setImageResource(R.drawable.inactive2);
-				cat3.setImageResource(R.drawable.inactive3);
-				cat4.setImageResource(R.drawable.inactive4);
-				cat5.setImageResource(R.drawable.writeicon5);
-				
+				cat1.setImageResource(R.drawable.writeicon4);
+			} else
+				cat1.setImageResource(R.drawable.inactive4);
+			
+			if(c.equals("기타")) {
 				b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon5);
+				cat1.setImageResource(R.drawable.writeicon5);
+			} else
+				cat1.setImageResource(R.drawable.inactive5);
+				
+			if(b != null)
 				mark = map.addMarker(new MarkerOptions().position(moveLatLng).icon(b));
-			}
 			
 			if (dream.getNoti() == 1) {
 				alarmBtn.setImageResource(R.drawable.check_none_select05);
@@ -299,16 +268,13 @@ public class WriteActivity extends SampleActivityBase
 				String location_s="";
 				String category_s="";
 				
-				if(todo.getBytes().length <= 0)
-				{
+				if(todo.getBytes().length <= 0) {
 					todo_s="'할 일' ";
 				}
-				if(location.getBytes().length <= 0)
-				{
+				if(location.getBytes().length <= 0) {
 					location_s="'지역' ";
 				}
-				if(category.getBytes().length <= 0)
-				{
+				if(category.getBytes().length <= 0) {
 					category_s="'카테고리' ";
 				}
 				
@@ -480,7 +446,7 @@ public class WriteActivity extends SampleActivityBase
 			lon = Float.parseFloat(split[1].substring(0, split[1].length() - 1));
 
 			BitmapDescriptor b;
-			if(category.equals("음식")){
+			if(category.equals(CommonValue.writeCategorys[0])){
 				b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon1);
 				mark = map.addMarker(new MarkerOptions().position(place.getLatLng()).title(place.getAddress().toString()).icon(b));
 			}
@@ -805,5 +771,7 @@ public class WriteActivity extends SampleActivityBase
 			return super.onOptionsItemSelected(item);
 		}
 	}
+	
+	
 
 }
