@@ -57,7 +57,7 @@ public class SplashActivity2 extends Activity {
 	        
         }
         else{
-        	apiSettingToast();
+//        	apiSettingToast();
         }
         
         
@@ -119,16 +119,7 @@ public class SplashActivity2 extends Activity {
         return super.onKeyDown(keyCode, event);
     }
     
-    //onoff 가능 알림
-    private void apiSettingToast(){
-		 LayoutInflater inflater = getLayoutInflater();
-        View toastLayout = inflater.inflate(R.layout.custom_toast, (ViewGroup) findViewById(R.id.custom_toast_layout));
-
-        Toast toast = new Toast(getApplicationContext());
-        toast.setDuration(Toast.LENGTH_LONG);
-        toast.setView(toastLayout);
-        toast.show();
-	}
+  
     
     //api 받아오기 여부
     private boolean getUsingApi(){
