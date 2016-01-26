@@ -739,9 +739,15 @@ containing a value of this type.
     }
     public static final class id {
         public static final int SingleProfile=0x7f0a0059;
+<<<<<<< HEAD
         public static final int action_location_found=0x7f0a0082;
         public static final int action_search=0x7f0a0081;
         public static final int action_settings=0x7f0a0080;
+=======
+        public static final int action_location_found=0x7f0a0080;
+        public static final int action_search=0x7f0a007f;
+        public static final int action_settings=0x7f0a007e;
+>>>>>>> f3094c25dd547fe1d7bca21e05a3b194b1c0c220
         public static final int addButton=0x7f0a0037;
         public static final int addtutorial=0x7f0a0046;
         public static final int adjust_height=0x7f0a0007;
@@ -754,6 +760,7 @@ containing a value of this type.
         public static final int auto=0x7f0a0004;
         public static final int autocomplete_places=0x7f0a004c;
         public static final int book_now=0x7f0a0018;
+<<<<<<< HEAD
         public static final int bottom=0x7f0a006d;
         public static final int btnShowLocation=0x7f0a002c;
         public static final int btn_click=0x7f0a0070;
@@ -761,6 +768,15 @@ containing a value of this type.
         public static final int btn_click_3=0x7f0a007d;
         public static final int btn_click_4=0x7f0a0069;
         public static final int btn_click_5=0x7f0a0067;
+=======
+        public static final int bottom=0x7f0a006b;
+        public static final int btnShowLocation=0x7f0a002c;
+        public static final int btn_click=0x7f0a006e;
+        public static final int btn_click_2=0x7f0a007d;
+        public static final int btn_click_3=0x7f0a007b;
+        public static final int btn_click_4=0x7f0a0067;
+        public static final int btn_click_5=0x7f0a0065;
+>>>>>>> f3094c25dd547fe1d7bca21e05a3b194b1c0c220
         public static final int button1=0x7f0a003a;
         public static final int buyButton=0x7f0a0014;
         public static final int buy_now=0x7f0a0019;
@@ -773,11 +789,19 @@ containing a value of this type.
         public static final int cat3=0x7f0a0050;
         public static final int cat4=0x7f0a0051;
         public static final int cat5=0x7f0a0052;
+<<<<<<< HEAD
         public static final int cate1=0x7f0a0061;
         public static final int cate2=0x7f0a0062;
         public static final int cate3=0x7f0a0063;
         public static final int cate4=0x7f0a0064;
         public static final int cate5=0x7f0a0065;
+=======
+        public static final int cate1=0x7f0a005f;
+        public static final int cate2=0x7f0a0060;
+        public static final int cate3=0x7f0a0061;
+        public static final int cate4=0x7f0a0062;
+        public static final int cate5=0x7f0a0063;
+>>>>>>> f3094c25dd547fe1d7bca21e05a3b194b1c0c220
         public static final int checkbox_ask=0x7f0a003b;
         public static final int classic=0x7f0a0022;
         public static final int cmn_list_view=0x7f0a0045;
@@ -798,13 +822,19 @@ containing a value of this type.
         public static final int google_wallet_monochrome=0x7f0a0025;
         public static final int gpsButton=0x7f0a0039;
         public static final int grayscale=0x7f0a0026;
+<<<<<<< HEAD
         public static final int grid_image=0x7f0a006a;
         public static final int grid_text=0x7f0a006b;
+=======
+        public static final int grid_image=0x7f0a0068;
+        public static final int grid_text=0x7f0a0069;
+>>>>>>> f3094c25dd547fe1d7bca21e05a3b194b1c0c220
         public static final int holo_dark=0x7f0a000e;
         public static final int holo_light=0x7f0a000f;
         public static final int hybrid=0x7f0a000a;
         public static final int icon_only=0x7f0a0001;
         public static final int imageView1=0x7f0a002b;
+<<<<<<< HEAD
         public static final int iv_five=0x7f0a0066;
         public static final int iv_four=0x7f0a0068;
         public static final int iv_one=0x7f0a006f;
@@ -813,6 +843,16 @@ containing a value of this type.
         public static final int light=0x7f0a0006;
         public static final int list_display_view_container=0x7f0a007b;
         public static final int ll_title_layout=0x7f0a006e;
+=======
+        public static final int iv_five=0x7f0a0064;
+        public static final int iv_four=0x7f0a0066;
+        public static final int iv_one=0x7f0a006d;
+        public static final int iv_three=0x7f0a007a;
+        public static final int iv_two=0x7f0a007c;
+        public static final int light=0x7f0a0006;
+        public static final int list_display_view_container=0x7f0a0079;
+        public static final int ll_title_layout=0x7f0a006c;
+>>>>>>> f3094c25dd547fe1d7bca21e05a3b194b1c0c220
         public static final int loc_checkbox=0x7f0a0031;
         public static final int loc_seekbar=0x7f0a0032;
         public static final int logoBtn=0x7f0a003d;
@@ -832,6 +872,7 @@ containing a value of this type.
         public static final int normal=0x7f0a000b;
         public static final int noti_checkbox=0x7f0a0030;
         public static final int okBtn=0x7f0a0058;
+<<<<<<< HEAD
         public static final int pager=0x7f0a006c;
         public static final int place_autocomplete_clear_button=0x7f0a0073;
         public static final int place_autocomplete_powered_by_google=0x7f0a0075;
@@ -841,6 +882,17 @@ containing a value of this type.
         public static final int place_autocomplete_search_button=0x7f0a0071;
         public static final int place_autocomplete_search_input=0x7f0a0072;
         public static final int place_autocomplete_separator=0x7f0a0074;
+=======
+        public static final int pager=0x7f0a006a;
+        public static final int place_autocomplete_clear_button=0x7f0a0071;
+        public static final int place_autocomplete_powered_by_google=0x7f0a0073;
+        public static final int place_autocomplete_prediction_primary_text=0x7f0a0075;
+        public static final int place_autocomplete_prediction_secondary_text=0x7f0a0076;
+        public static final int place_autocomplete_progress=0x7f0a0074;
+        public static final int place_autocomplete_search_button=0x7f0a006f;
+        public static final int place_autocomplete_search_input=0x7f0a0070;
+        public static final int place_autocomplete_separator=0x7f0a0072;
+>>>>>>> f3094c25dd547fe1d7bca21e05a3b194b1c0c220
         public static final int production=0x7f0a0010;
         public static final int pushButton=0x7f0a0038;
         public static final int push_btn=0x7f0a002d;
@@ -852,17 +904,28 @@ containing a value of this type.
         public static final int selectionDetails=0x7f0a0015;
         public static final int settingImg=0x7f0a002a;
         public static final int slide=0x7f0a0029;
+<<<<<<< HEAD
         public static final int splash_icon=0x7f0a0079;
         public static final int splash_title=0x7f0a007a;
+=======
+        public static final int splash_icon=0x7f0a0077;
+        public static final int splash_title=0x7f0a0078;
+>>>>>>> f3094c25dd547fe1d7bca21e05a3b194b1c0c220
         public static final int standard=0x7f0a0002;
         public static final int strict_sandbox=0x7f0a0012;
         public static final int terrain=0x7f0a000d;
         public static final int test=0x7f0a0013;
+<<<<<<< HEAD
         public static final int textView1=0x7f0a005f;
         public static final int textView2=0x7f0a0060;
         public static final int todoEt=0x7f0a0049;
         public static final int todolist_addbtn=0x7f0a0047;
         public static final int top_confirm=0x7f0a0083;
+=======
+        public static final int todoEt=0x7f0a0049;
+        public static final int todolist_addbtn=0x7f0a0047;
+        public static final int top_confirm=0x7f0a0081;
+>>>>>>> f3094c25dd547fe1d7bca21e05a3b194b1c0c220
         public static final int transparent_image=0x7f0a004d;
         public static final int tutorialBtn=0x7f0a003f;
         public static final int tvLabel1=0x7f0a0033;

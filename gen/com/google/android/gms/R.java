@@ -196,6 +196,7 @@ public final class R {
 		public static final int monochrome = 0x7f0a0027;
 		public static final int none = 0x7f0a0009;
 		public static final int normal = 0x7f0a000b;
+<<<<<<< HEAD
 		public static final int place_autocomplete_clear_button = 0x7f0a0073;
 		public static final int place_autocomplete_powered_by_google = 0x7f0a0075;
 		public static final int place_autocomplete_prediction_primary_text = 0x7f0a0077;
@@ -204,6 +205,16 @@ public final class R {
 		public static final int place_autocomplete_search_button = 0x7f0a0071;
 		public static final int place_autocomplete_search_input = 0x7f0a0072;
 		public static final int place_autocomplete_separator = 0x7f0a0074;
+=======
+		public static final int place_autocomplete_clear_button = 0x7f0a0071;
+		public static final int place_autocomplete_powered_by_google = 0x7f0a0073;
+		public static final int place_autocomplete_prediction_primary_text = 0x7f0a0075;
+		public static final int place_autocomplete_prediction_secondary_text = 0x7f0a0076;
+		public static final int place_autocomplete_progress = 0x7f0a0074;
+		public static final int place_autocomplete_search_button = 0x7f0a006f;
+		public static final int place_autocomplete_search_input = 0x7f0a0070;
+		public static final int place_autocomplete_separator = 0x7f0a0072;
+>>>>>>> f3094c25dd547fe1d7bca21e05a3b194b1c0c220
 		public static final int production = 0x7f0a0010;
 		public static final int sandbox = 0x7f0a0011;
 		public static final int satellite = 0x7f0a000c;
