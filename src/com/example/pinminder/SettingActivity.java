@@ -1,6 +1,9 @@
 package com.example.pinminder;
 
+import com.example.pinminder.list.SwipeActivity;
+
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,6 +13,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Switch;
+import android.widget.TextView;
 
 public class SettingActivity extends Activity {
 	
@@ -23,12 +27,23 @@ public class SettingActivity extends Activity {
 		Button movieBtn = (Button) findViewById(R.id.movieBtn);
 		Switch dataSwitch = (Switch) findViewById(R.id.dataSwitch);
 		
+		
+
+		final Dialog dialog = new Dialog(this);
+		dialog.setContentView(R.layout.dialog_dataonoff_view);
+		dialog.setTitle("Custom Dialog");
+		
+		final TextView textView2 = (TextView) dialog.findViewById(R.id.textView2);
+		
+		
+		
 		logoBtn.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				// 첫화면으로 돌아가기
+				Intent it = new Intent(SettingActivity.this, SwipeActivity.class);
+				startActivity(it);
 			}
 		});
 		
@@ -50,7 +65,8 @@ public class SettingActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				
+				Intent it = new Intent(SettingActivity.this, ViewPagerActivity.class);
+				startActivity(it);
 			}
 		});
 		
@@ -59,7 +75,8 @@ public class SettingActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				
+				Intent it=new Intent(Intent.ACTION_VIEW, Uri.parse("https://youtu.be/7z0ETQUgYDQ")); 
+				  startActivity(it);
 			}
 		});
 		
@@ -69,10 +86,12 @@ public class SettingActivity extends Activity {
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				// TODO Auto-generated method stub
 				if(isChecked) {
-					// 다이얼로그 창
+					textView2.setText("지역데이터를 받으시겠습니까?");
+					dialog.show();
 				}
 				else {
-					// 다이얼로그 창
+					textView2.setText("지역데이터를 받지 않으시겠습니까?");
+					dialog.show();
 				}
 			}
 		});
