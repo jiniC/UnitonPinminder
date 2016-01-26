@@ -213,23 +213,26 @@ public class PlaceAutocompleteAdapter extends ArrayAdapter<PlaceAutocompleteAdap
 
 			Iterator<AutocompletePrediction> iterator = autocompletePredictions.iterator();
 			ArrayList resultList = new ArrayList<Object>(autocompletePredictions.getCount());
-			while (iterator.hasNext()) {
-				AutocompletePrediction prediction = iterator.next();
-
-				if (getConcisePrediction(prediction.getDescription()).length() == 0)
-					continue;
-
-				resultList.add(new PlaceAutocomplete(prediction.getPlaceId(),
-						getConcisePrediction(prediction.getDescription())));
-				// Get the details of this prediction and copy it into a new
-				// PlaceAutocomplete object.
-				// resultList.add(new PlaceAutocomplete(prediction.getPlaceId(),
-				// prediction.getDescription()));
+			try{
+				while (iterator.hasNext()) {
+					AutocompletePrediction prediction = iterator.next();
+	
+					if (getConcisePrediction(prediction.getDescription()).length() == 0)
+						continue;
+	
+					resultList.add(new PlaceAutocomplete(prediction.getPlaceId(),
+							getConcisePrediction(prediction.getDescription())));
+					// Get the details of this prediction and copy it into a new
+					// PlaceAutocomplete object.
+					// resultList.add(new PlaceAutocomplete(prediction.getPlaceId(),
+					// prediction.getDescription()));
+				}
+	
+				// Release the buffer now that all data has been copied.
+				autocompletePredictions.release();
+			}catch(Exception e){
+				e.printStackTrace();
 			}
-
-			// Release the buffer now that all data has been copied.
-			autocompletePredictions.release();
-
 			return resultList;
 		}
 		Log.e(TAG, "Google API client is not connected for autocomplete query.");
