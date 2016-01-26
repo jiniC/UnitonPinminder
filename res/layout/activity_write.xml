@@ -236,7 +236,7 @@
             <LinearLayout
                 android:id="@+id/r"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="match_parent"
                 android:background="@drawable/blue_section" >
 
                 <EditText
@@ -246,8 +246,6 @@
                     android:layout_gravity="center"
                     android:layout_margin="15dp"
                     android:background="#00000000"
-                    android:ems="10"
-                    android:maxLines="3"
                     android:textColor="#ffffff" >
                 </EditText>
             </LinearLayout>
