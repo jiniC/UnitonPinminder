@@ -139,7 +139,7 @@ public class SwipeActivity extends Activity {
 		 */
 		LayoutInflater inflater = (LayoutInflater) getActionBar().getThemedContext()
 				.getSystemService(LAYOUT_INFLATER_SERVICE);
-		View view = inflater.inflate(R.layout.actionbar, null);
+		View view = inflater.inflate(R.layout.main_actionbar, null);
 		
 		ImageView settingImageView = (ImageView)view.findViewById(R.id.settingImg);
 		
@@ -160,6 +160,9 @@ public class SwipeActivity extends Activity {
 		final ListViewSwipeGesture touchListener = new ListViewSwipeGesture(cmn_list_view, swipeListener, this);
 		touchListener.SwipeType = ListViewSwipeGesture.Double; // Set two
 		
+		
+		
+		
 		settingImageView.setOnClickListener(new View.OnClickListener() {
 		    @Override
 		    public void onClick(View v) {
@@ -168,6 +171,9 @@ public class SwipeActivity extends Activity {
 		    	Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_SHORT).show();
 		    }
 		});
+		
+		
+		
 		
 		
 		// options at
