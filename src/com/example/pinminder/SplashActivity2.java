@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.pinminder.api.ApiManager;
+import com.example.pinminder.api.NullApiManager;
 import com.example.pinminder.api.SeoulApiManager;
 import com.example.pinminder.gps.GpsInfo;
 
@@ -47,11 +48,11 @@ public class SplashActivity2 extends Activity {
         
 
         if(getUsingApi() == true){
-	        if(getMylogcation().equals("서울특별시")){
+	        if(getMylogcation().equals("서울특별시") || getMylogcation().equals("Seoul")){
 	        	apiManager = new SeoulApiManager(getApplicationContext());
 	        }
 	        else{
-	        	
+	        	apiManager = new NullApiManager();
 	        }
 	        apiManager.getApi();
 	        
@@ -81,7 +82,11 @@ public class SplashActivity2 extends Activity {
                 if(i == imageArray.length)
                 {
                 	if(getUsingApi() == true){
-                		finishApi = apiManager.getFinishApi();
+                		try {
+                			finishApi = apiManager.getFinishApi();
+						} catch (Exception e) {
+							finishApi = 0;
+						}
                 	}
                 	if( finishApi == 6 || getUsingApi() == false){
 	                	SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);

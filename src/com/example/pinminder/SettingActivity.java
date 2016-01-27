@@ -5,6 +5,7 @@ import com.example.pinminder.list.SwipeActivity;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -28,12 +29,12 @@ public class SettingActivity extends Activity {
 		Switch dataSwitch = (Switch) findViewById(R.id.dataSwitch);
 		
 		
-
-		final Dialog dialog = new Dialog(this);
-		dialog.setContentView(R.layout.dialog_dataonoff_view);
-		dialog.setTitle("Custom Dialog");
-		
-		final TextView textView2 = (TextView) dialog.findViewById(R.id.textView2);
+		if(getUsingApi() == true){
+			dataSwitch.setChecked(true);
+		}
+		else{
+			dataSwitch.setChecked(false);
+		}
 		
 		
 		
@@ -41,7 +42,6 @@ public class SettingActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				Intent it = new Intent(SettingActivity.this, SwipeActivity.class);
 				startActivity(it);
 			}
@@ -51,7 +51,6 @@ public class SettingActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				Uri uri = Uri.parse("mailto:sksms4687@naver.com");
 				Intent it = new Intent(Intent.ACTION_SENDTO, uri);
 				startActivity(Intent.createChooser(it, "Choose an Email client"));
@@ -64,7 +63,6 @@ public class SettingActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				Intent it = new Intent(SettingActivity.this, ViewPagerActivity.class);
 				startActivity(it);
 			}
@@ -74,7 +72,6 @@ public class SettingActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				Intent it=new Intent(Intent.ACTION_VIEW, Uri.parse("https://youtu.be/7z0ETQUgYDQ")); 
 				  startActivity(it);
 			}
@@ -84,17 +81,33 @@ public class SettingActivity extends Activity {
 
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				// TODO Auto-generated method stub
-				if(isChecked) {
-					textView2.setText("지역데이터를 받으시겠습니까?");
-					dialog.show();
+				if(getUsingApi() == true){
+					saveUsingApi(false);
 				}
-				else {
-					textView2.setText("지역데이터를 받지 않으시겠습니까?");
-					dialog.show();
+				else{
+					saveUsingApi(true);
 				}
 			}
 		});
 
 	}
+	
+	
+	
+	// api 받아오기 여부
+	private boolean getUsingApi() {
+		SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+		return pref.getBoolean("usingApi", false);
+
+	}
+	
+	 // api 받아오기 여부 저장하기
+    private void saveUsingApi(Boolean value){
+        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean("usingApi", value);
+        editor.commit();
+    }
+		
+		
 }

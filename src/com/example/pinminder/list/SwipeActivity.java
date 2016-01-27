@@ -111,11 +111,13 @@ public class SwipeActivity extends Activity {
 		setContentView(R.layout.activity_swipe);
 
 		Intent alarmIntent = new Intent(SwipeActivity.this, AlarmReceiver.class);
-		pendingIntent = PendingIntent.getBroadcast(SwipeActivity.this, 0, alarmIntent, 0);
+		pendingIntent = PendingIntent.getBroadcast(SwipeActivity.this, 0,
+				alarmIntent, 0);
 		startAt10();
 		db = new MyDB(getApplicationContext());
 
-		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
+				.getMap();
 
 		// testApi();
 		imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -137,45 +139,45 @@ public class SwipeActivity extends Activity {
 		 * actionBar.setDisplayShowTitleEnabled(false);
 		 * actionBar.setIcon(R.drawable.logo3);
 		 */
-		LayoutInflater inflater = (LayoutInflater) getActionBar().getThemedContext()
-				.getSystemService(LAYOUT_INFLATER_SERVICE);
+		LayoutInflater inflater = (LayoutInflater) getActionBar()
+				.getThemedContext().getSystemService(LAYOUT_INFLATER_SERVICE);
 		View view = inflater.inflate(R.layout.main_actionbar, null);
-		
-		ImageView settingImageView = (ImageView)view.findViewById(R.id.settingImg);
-		
-		ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
+
+		ImageView settingImageView = (ImageView) view
+				.findViewById(R.id.settingImg);
+
+		ActionBar.LayoutParams params = new ActionBar.LayoutParams(
+				ActionBar.LayoutParams.MATCH_PARENT,
 				ActionBar.LayoutParams.MATCH_PARENT, Gravity.LEFT);
 		getActionBar().setDisplayShowTitleEnabled(false);
-		getActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+		getActionBar().setIcon(
+				new ColorDrawable(getResources().getColor(
+						android.R.color.transparent)));
 		getActionBar().setDisplayShowCustomEnabled(true);
 		// getActionBar().setBackgroundDrawable(new
 		// ColorDrawable(Color.parseColor("#ffffff")));
-		getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.top_navi2));
+		getActionBar().setBackgroundDrawable(
+				getResources().getDrawable(R.drawable.top_navi2));
 		getActionBar().setCustomView(view, params);
 
 		cmn_list_view = (ListView) findViewById(R.id.cmn_list_view);
 		dummyLayer = (LinearLayout) findViewById(R.id.dummyLayout);
 		listdata = new ArrayList<Dream>();
 		InitializeValues();
-		final ListViewSwipeGesture touchListener = new ListViewSwipeGesture(cmn_list_view, swipeListener, this);
+		final ListViewSwipeGesture touchListener = new ListViewSwipeGesture(
+				cmn_list_view, swipeListener, this);
 		touchListener.SwipeType = ListViewSwipeGesture.Double; // Set two
-		
-		
-		
-		
+
 		settingImageView.setOnClickListener(new View.OnClickListener() {
-		    @Override
-		    public void onClick(View v) {
-		    	Intent i = new Intent(SwipeActivity.this, SettingActivity.class);
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(SwipeActivity.this, SettingActivity.class);
 				startActivity(i);
-		    	Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_SHORT).show();
-		    }
+				Toast.makeText(getApplicationContext(), "test",
+						Toast.LENGTH_SHORT).show();
+			}
 		});
-		
-		
-		
-		
-		
+
 		// options at
 		// background of
 		// list item
@@ -234,24 +236,25 @@ public class SwipeActivity extends Activity {
 		 */
 
 		chkGpsService();
-		
-	}
-	
-	  //onoff 가능 알림
-    private void apiSettingToast(){
-		 LayoutInflater inflater = getLayoutInflater();
-        View toastLayout = inflater.inflate(R.layout.custom_toast, (ViewGroup) findViewById(R.id.custom_toast_layout));
 
-        Toast toast = new Toast(getApplicationContext());
-        toast.setDuration(Toast.LENGTH_LONG);
-        toast.setView(toastLayout);
-        toast.show();
 	}
-	
-	
+
+	// onoff 가능 알림
+	private void apiSettingToast() {
+		LayoutInflater inflater = getLayoutInflater();
+		View toastLayout = inflater.inflate(R.layout.custom_toast,
+				(ViewGroup) findViewById(R.id.custom_toast_layout));
+
+		Toast toast = new Toast(getApplicationContext());
+		toast.setDuration(Toast.LENGTH_LONG);
+		toast.setView(toastLayout);
+		toast.show();
+	}
+
 	private boolean chkGpsService() {
 
-		String gps = android.provider.Settings.Secure.getString(getContentResolver(),
+		String gps = android.provider.Settings.Secure.getString(
+				getContentResolver(),
 				android.provider.Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
 
 		Log.d(gps, "aaaa");
@@ -262,31 +265,39 @@ public class SwipeActivity extends Activity {
 			AlertDialog.Builder gsDialog = new AlertDialog.Builder(this);
 			gsDialog.setTitle("위치 서비스 설정");
 			gsDialog.setMessage("PIN Minder 알림을 받기 위해서는 내 위치 정보가 필요합니다.\n단말기의 설정에서 '위치 서비스' 사용을 허용해주세요.");
-			
+
 			gsDialog.setOnDismissListener(new OnDismissListener() {
 				@Override
 				public void onDismiss(DialogInterface dialog) {
-					if(getUsingApi() == false){
-						apiSettingToast();					
+					if (getUsingApi() == false) {
+						apiSettingToast();
 					}
 				}
 			});
-			
-			gsDialog.setPositiveButton("설정하기", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					// GPS설정 화면으로 이동
-					Intent intent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-					intent.addCategory(Intent.CATEGORY_DEFAULT);
-					startActivity(intent);
-				}
-			}).setNegativeButton("취소", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					return;
-				}
-			}).create().show();
+
+			gsDialog.setPositiveButton("설정하기",
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int which) {
+							// GPS설정 화면으로 이동
+							Intent intent = new Intent(
+									android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+							intent.addCategory(Intent.CATEGORY_DEFAULT);
+							startActivity(intent);
+						}
+					})
+					.setNegativeButton("취소",
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int which) {
+									return;
+								}
+							}).create().show();
 			return false;
 
 		} else {
+			if (getUsingApi() == false) {
+				apiSettingToast();
+			}
 			return true;
 		}
 	}
@@ -319,9 +330,12 @@ public class SwipeActivity extends Activity {
 						id = R.drawable.mapicon5;
 					}
 
-					LatLng tempLatLng = new LatLng(dream.getLat(), dream.getLon());
-					Marker marker = map.addMarker(new MarkerOptions().position(tempLatLng).title(dream.getTodo())
-							.snippet(dream.getMemo()).icon(BitmapDescriptorFactory.fromResource(id)));
+					LatLng tempLatLng = new LatLng(dream.getLat(),
+							dream.getLon());
+					Marker marker = map.addMarker(new MarkerOptions()
+							.position(tempLatLng).title(dream.getTodo())
+							.snippet(dream.getMemo())
+							.icon(BitmapDescriptorFactory.fromResource(id)));
 
 					markerList.put(dream.getId(), marker);
 
@@ -331,8 +345,10 @@ public class SwipeActivity extends Activity {
 			Location location = gpsTracker.getLocation();
 			if (location != null) {
 
-				LatLng moveLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-				map.moveCamera(CameraUpdateFactory.newLatLngZoom(moveLatLng, 10));
+				LatLng moveLatLng = new LatLng(location.getLatitude(),
+						location.getLongitude());
+				map.moveCamera(CameraUpdateFactory
+						.newLatLngZoom(moveLatLng, 10));
 				map.animateCamera(CameraUpdateFactory.zoomTo(14), 2000, null);
 			}
 
@@ -344,23 +360,28 @@ public class SwipeActivity extends Activity {
 			 * .icon(BitmapDescriptorFactory
 			 * .fromResource(R.drawable.ic_launcher)));
 			 */
-		    
-		    map.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
-				
+
+			map.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
+
 				@Override
 				public void onInfoWindowClick(Marker marker) {
 					// TODO Auto-generated method stub
-					if(getPreferencesCheck()==true){
+					if (getPreferencesCheck() == true) {
 						// 구글 검색
-						//Uri uri = Uri.parse("http://www.google.com/#q="+marker.getTitle().toString());
+						// Uri uri =
+						// Uri.parse("http://www.google.com/#q="+marker.getTitle().toString());
 						// 네이버 검색
-						Uri uri = Uri.parse("http://search.naver.com/search.naver?where=nexearch&query="+marker.getTitle().toString()+"&ie=utf8");
-						
+						Uri uri = Uri
+								.parse("http://search.naver.com/search.naver?where=nexearch&query="
+										+ marker.getTitle().toString()
+										+ "&ie=utf8");
+
 						// 네이버 앱 바로 연동
-						// Uri uri = Uri.parse("naversearchapp://keywordsearch?mode=result&query="+marker.getTitle().toString()+"&version=10");
-			        	Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-			        	startActivity(intent);
-					}else{
+						// Uri uri =
+						// Uri.parse("naversearchapp://keywordsearch?mode=result&query="+marker.getTitle().toString()+"&version=10");
+						Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+						startActivity(intent);
+					} else {
 						showLoginDialog(marker.getTitle().toString());
 					}
 				}
@@ -486,30 +507,38 @@ public class SwipeActivity extends Activity {
 		// cmn_list_view.setAdapter(listAdapter);
 
 		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-		searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+		searchView = (SearchView) menu.findItem(R.id.action_search)
+				.getActionView();
 
-		searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+		searchView.setSearchableInfo(searchManager
+				.getSearchableInfo(getComponentName()));
 		searchView.setIconifiedByDefault(true);
 
-		int searchImgId = getResources().getIdentifier("android:id/search_button", null, null);
+		int searchImgId = getResources().getIdentifier(
+				"android:id/search_button", null, null);
 		ImageView v = (ImageView) searchView.findViewById(searchImgId);
 		v.setImageResource(R.drawable.search_icon);
 
-		int closeButtonId = getResources().getIdentifier("android:id/search_close_btn", null, null);
-		ImageView closeButtonImage = (ImageView) searchView.findViewById(closeButtonId);
+		int closeButtonId = getResources().getIdentifier(
+				"android:id/search_close_btn", null, null);
+		ImageView closeButtonImage = (ImageView) searchView
+				.findViewById(closeButtonId);
 		closeButtonImage.setImageResource(R.drawable.icon_close);
 
-		int id = searchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
+		int id = searchView.getContext().getResources()
+				.getIdentifier("android:id/search_src_text", null, null);
 		TextView textView = (TextView) searchView.findViewById(id);
 		textView.setTextColor(Color.BLACK);
 
-		int searchPlateId = searchView.getContext().getResources().getIdentifier("android:id/search_plate", null, null);
+		int searchPlateId = searchView.getContext().getResources()
+				.getIdentifier("android:id/search_plate", null, null);
 		View searchPlateView = searchView.findViewById(searchPlateId);
 		if (searchPlateView != null) {
-			searchPlateView.setBackgroundDrawable(getResources().getDrawable(R.drawable.search_line)); // depand
-																										// you
-																										// can
-																										// set
+			searchPlateView.setBackgroundDrawable(getResources().getDrawable(
+					R.drawable.search_line)); // depand
+												// you
+												// can
+												// set
 		}
 
 		// android.view.ViewGroup.LayoutParams params =
@@ -671,7 +700,8 @@ public class SwipeActivity extends Activity {
 		@Override
 		public void onDismiss(ListView listView, int[] reverseSortedPositions) {
 			// TODO Auto-generated method stub
-			Toast.makeText(getApplicationContext(), "Delete", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), "Delete",
+					Toast.LENGTH_SHORT).show();
 			for (int i : reverseSortedPositions) {
 				listdata.remove(i);
 				listAdapter.notifyDataSetChanged();
@@ -705,7 +735,8 @@ public class SwipeActivity extends Activity {
 		switch (requestCode) {
 		case (1): {
 			if (resultCode == Activity.RESULT_OK) {
-				ArrayList<String> newText = data.getStringArrayListExtra("filter");
+				ArrayList<String> newText = data
+						.getStringArrayListExtra("filter");
 
 				listdata.clear();
 				listdata.addAll(db.getDreamCate(newText));
@@ -768,18 +799,39 @@ public class SwipeActivity extends Activity {
 			serviceKey = URLEncoder.encode(key, "UTF-8");
 
 			String urlTour = " http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?"
-					+ "ServiceKey=" + key + "&arrange=B" + "&contentTypeId=12" + "&areaCode=1" + "&numOfRows=" + count
-					+ "&pageNo=1" + "&MobileOS=AND" + "&MobileApp=ohdoking" + "&_type=json";
+					+ "ServiceKey="
+					+ key
+					+ "&arrange=B"
+					+ "&contentTypeId=12"
+					+ "&areaCode=1"
+					+ "&numOfRows="
+					+ count
+					+ "&pageNo=1"
+					+ "&MobileOS=AND" + "&MobileApp=ohdoking" + "&_type=json";
 
 			String urlFestival = " http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?"
-					+ "ServiceKey=" + key + "&arrange=B" + "&contentTypeId=15" + "&areaCode=1" + "&numOfRows=60"
-					+ "&pageNo=1" + "&MobileOS=AND" + "&MobileApp=ohdoking" + "&_type=json";
+					+ "ServiceKey="
+					+ key
+					+ "&arrange=B"
+					+ "&contentTypeId=15"
+					+ "&areaCode=1"
+					+ "&numOfRows=60"
+					+ "&pageNo=1"
+					+ "&MobileOS=AND" + "&MobileApp=ohdoking" + "&_type=json";
 
 			String urlFood = " http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?"
-					+ "ServiceKey=" + key + "&arrange=B" + "&contentTypeId=39" + "&areaCode=1" + "&numOfRows=" + count
-					+ "&pageNo=1" + "&MobileOS=AND" + "&MobileApp=ohdoking" + "&_type=json";
+					+ "ServiceKey="
+					+ key
+					+ "&arrange=B"
+					+ "&contentTypeId=39"
+					+ "&areaCode=1"
+					+ "&numOfRows="
+					+ count
+					+ "&pageNo=1"
+					+ "&MobileOS=AND" + "&MobileApp=ohdoking" + "&_type=json";
 
-			JsonObjectRequest jsonRequestTour = new JsonObjectRequest(Request.Method.GET, urlTour, null,
+			JsonObjectRequest jsonRequestTour = new JsonObjectRequest(
+					Request.Method.GET, urlTour, null,
 					new Response.Listener<JSONObject>() {
 
 						@Override
@@ -799,7 +851,8 @@ public class SwipeActivity extends Activity {
 						}
 					});
 
-			JsonObjectRequest jsonRequestFestival = new JsonObjectRequest(Request.Method.GET, urlFestival, null,
+			JsonObjectRequest jsonRequestFestival = new JsonObjectRequest(
+					Request.Method.GET, urlFestival, null,
 					new Response.Listener<JSONObject>() {
 
 						@Override
@@ -818,7 +871,8 @@ public class SwipeActivity extends Activity {
 						}
 					});
 
-			JsonObjectRequest jsonRequestFood = new JsonObjectRequest(Request.Method.GET, urlFood, null,
+			JsonObjectRequest jsonRequestFood = new JsonObjectRequest(
+					Request.Method.GET, urlFood, null,
 					new Response.Listener<JSONObject>() {
 
 						@Override
@@ -849,7 +903,8 @@ public class SwipeActivity extends Activity {
 
 	void inputApiResult(JSONObject response) {
 		try {
-			response = response.getJSONObject("response").getJSONObject("body").getJSONObject("items");
+			response = response.getJSONObject("response").getJSONObject("body")
+					.getJSONObject("items");
 			JSONArray rowArray = response.getJSONArray("item");
 
 			for (int i = 0; i < rowArray.length(); i++) {
@@ -862,13 +917,16 @@ public class SwipeActivity extends Activity {
 					continue;
 				}
 				String zone = "대한민국";
-				String todo = new String(jresponse.getString("title").getBytes("8859_1"), Charset.forName("UTF-8"));
+				String todo = new String(jresponse.getString("title").getBytes(
+						"8859_1"), Charset.forName("UTF-8"));
 				double lat = Double.valueOf(jresponse.getString("mapy"));
 				double lon = Double.valueOf(jresponse.getString("mapx"));
 
-				String location = new String(jresponse.getString("addr1").getBytes("8859_1"), Charset.forName("UTF-8"));
+				String location = new String(jresponse.getString("addr1")
+						.getBytes("8859_1"), Charset.forName("UTF-8"));
 				String memo = "";
-				String category = checkCategory(jresponse.getString("cat2").toString());
+				String category = checkCategory(jresponse.getString("cat2")
+						.toString());
 				Integer noti = 1;
 
 				/*
@@ -877,7 +935,8 @@ public class SwipeActivity extends Activity {
 				 * Integer check, Integer noti)
 				 */
 
-				Dream d = new Dream(0, zone, todo, lat, lon, location, memo, category, 0, noti, 0);
+				Dream d = new Dream(0, zone, todo, lat, lon, location, memo,
+						category, 0, noti, 0);
 				Log.d(zone, "zone");
 				Log.d(location, "location");
 				db.addDream(d);
@@ -951,70 +1010,74 @@ public class SwipeActivity extends Activity {
 		// calendar.getTimeInMillis(),
 		// 1000 * 60 * 20, pendingIntent);
 
-		manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), interval, pendingIntent);
+		manager.setInexactRepeating(AlarmManager.RTC_WAKEUP,
+				calendar.getTimeInMillis(), interval, pendingIntent);
 
 	}
-	
-	 //api 받아오기 여부
-    private boolean getUsingApi(){
-        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
-        return pref.getBoolean("usingApi", false);    
-        
-    }
 
-	   /**로그인 다이얼로그를 표시한다.*/
-    public void showLoginDialog(String title) {
-    	final String markerTitle = title;
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(false);
- 
-        /**dialog.xml 읽어들이기*/
-        //Layout 리소스를 로드할 수 있는 객체
-        LayoutInflater inflater = getLayoutInflater();
- 
-        //"/res/layout/dialog.xml" 파일을 로드하기
-        //--> "OK"버튼이 눌러지면, 이 객체에 접근해서 포함된 EditText객체를 취득
-        final View view = inflater.inflate(R.layout.activity_search_dialog, null);
-        checkbox_ask = (CheckBox) view.findViewById(R.id.checkbox_ask);
+	// api 받아오기 여부
+	private boolean getUsingApi() {
+		SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+		return pref.getBoolean("usingApi", false);
+
+	}
+
+	/** 로그인 다이얼로그를 표시한다. */
+	public void showLoginDialog(String title) {
+		final String markerTitle = title;
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setCancelable(false);
+
+		/** dialog.xml 읽어들이기 */
+		// Layout 리소스를 로드할 수 있는 객체
+		LayoutInflater inflater = getLayoutInflater();
+
+		// "/res/layout/dialog.xml" 파일을 로드하기
+		// --> "OK"버튼이 눌러지면, 이 객체에 접근해서 포함된 EditText객체를 취득
+		final View view = inflater.inflate(R.layout.activity_search_dialog,
+				null);
+		checkbox_ask = (CheckBox) view.findViewById(R.id.checkbox_ask);
 		checkbox_ask.setChecked(false);
-		
-        //Dialog에 Message 대신, XML 레이아웃을 포함시킨다.
-        builder.setView(view);
- 
- 
-        /**취소버튼 처리*/
-        builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getApplicationContext(), "CANCEL 눌러짐", Toast.LENGTH_SHORT).show();
-            }
-        });
 
- 
-        /**확인버튼 처리*/
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-            	if(checkbox_ask.isChecked()){
+		// Dialog에 Message 대신, XML 레이아웃을 포함시킨다.
+		builder.setView(view);
+
+		/** 취소버튼 처리 */
+		builder.setNegativeButton("CANCEL",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						Toast.makeText(getApplicationContext(), "CANCEL 눌러짐",
+								Toast.LENGTH_SHORT).show();
+					}
+				});
+
+		/** 확인버튼 처리 */
+		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				if (checkbox_ask.isChecked()) {
 					savePreferencesCheck(true);
-				}else{
+				} else {
 					savePreferencesCheck(false);
 				}
-				Uri uri = Uri.parse("http://search.naver.com/search.naver?where=nexearch&query="+markerTitle+"&ie=utf8");
-				
-	        	Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-	        	startActivity(intent);
-            }
-        });
- 
-        builder.create();
-        builder.show();
-    }
-    
+				Uri uri = Uri
+						.parse("http://search.naver.com/search.naver?where=nexearch&query="
+								+ markerTitle + "&ie=utf8");
+
+				Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+				startActivity(intent);
+			}
+		});
+
+		builder.create();
+		builder.show();
+	}
+
 	// 값 불러오기
 	private boolean getPreferencesCheck() {
 		SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
-		return pref.getBoolean("check",false);
+		return pref.getBoolean("check", false);
 	}
 
 	// 값 저장하기
@@ -1023,7 +1086,7 @@ public class SwipeActivity extends Activity {
 		SharedPreferences.Editor editor = pref.edit();
 
 		// Set the values
-		editor.putBoolean("check",b);
+		editor.putBoolean("check", b);
 		editor.commit();
 
 	}
