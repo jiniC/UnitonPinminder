@@ -109,6 +109,8 @@ public class SwipeActivity extends Activity {
 
 	private PendingIntent pendingIntent;
 
+	private BackPressCloseHandler backPressCloseHandler;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -133,7 +135,7 @@ public class SwipeActivity extends Activity {
 		}
 
 		serviceStart();
-
+		backPressCloseHandler = new BackPressCloseHandler(this);
 		/*
 		 * final ActionBar actionBar = getActionBar();
 		 * actionBar.setBackgroundDrawable(new ColorDrawable(Color
@@ -656,7 +658,7 @@ public class SwipeActivity extends Activity {
 			searchView.onActionViewCollapsed();
 			dummyLayer.setVisibility(View.VISIBLE);
 		} else {
-			super.onBackPressed();
+			backPressCloseHandler.onBackPressed();
 		}
 	}
 
@@ -1107,5 +1109,37 @@ public class SwipeActivity extends Activity {
 		editor.putBoolean("check", b);
 		editor.commit();
 
+	}
+
+	class BackPressCloseHandler {
+		private long backKeyPressedTime = 0;
+		private Toast toast;
+
+		private Activity activity;
+
+
+		public BackPressCloseHandler(Activity context) {
+			this.activity = context;
+		}
+
+		public void onBackPressed() {
+			if (System.currentTimeMillis() > backKeyPressedTime + 2000) {
+				backKeyPressedTime = System.currentTimeMillis();
+				showGuide();
+				return;
+			}
+			if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {
+				activity.finish();
+				moveTaskToBack(true);// 본 Activity finish후 다른 Activity가 뜨는 걸 방지. finish();
+				System.exit(0);
+				android.os.Process.killProcess(android.os.Process.myPid());
+				toast.cancel();
+			}
+		}
+
+		private void showGuide() {
+			toast = Toast.makeText(activity, "\'뒤로\'버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT);
+			toast.show();
+		}
 	}
 }
