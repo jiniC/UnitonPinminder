@@ -48,11 +48,11 @@ public class SplashActivity2 extends Activity {
         
 
         if(getUsingApi() == true){
-	        if(getMylogcation().equals("서울특별시") || getMylogcation().equals("Seoul")){
-	        	apiManager = new SeoulApiManager(getApplicationContext());
-	        }
-	        else{
-	        	apiManager = new NullApiManager();
+        	if(getMylogcation() == null){
+        		apiManager = new NullApiManager();
+        	}
+	        else if(getMylogcation().equals("서울특별시") || getMylogcation().equals("Seoul")){
+	        	apiManager = new SeoulApiManager(getApplicationContext(),0);
 	        }
 	        apiManager.getApi();
 	        

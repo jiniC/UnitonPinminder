@@ -8,8 +8,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -25,9 +27,14 @@ public class SeoulApiManager implements ApiManager {
 	public MyDB db;
 	public int finishApi = 0;
 	private Context context;
+	//0 : splash, 1 : setting
+	public int where;
 	
-	public SeoulApiManager(Context context) {
+	ProgressDialog pDialog;
+	
+	public SeoulApiManager(Context context,int where) {
 		this.context = context;
+		this.where = where;
 		 db = new MyDB(context);
 	}
 	@Override
@@ -43,7 +50,14 @@ public class SeoulApiManager implements ApiManager {
 		String type = "C";
 		String type2 = "B";
 		
-		
+		if(where == 1 ){
+			
+			pDialog = new ProgressDialog(context);
+			pDialog.setMessage("잠시만 기다려주세요.");
+			pDialog.setCancelable(false);
+			showpDialog();
+			
+		}
 		db.deleteTable();
 		
 		try {
@@ -307,6 +321,9 @@ public class SeoulApiManager implements ApiManager {
 				e.printStackTrace();
 			}
          
+		 if(where == 1){
+			 hidepDialog();
+		 }
 
 	}
 	String checkCategory(String c){
@@ -329,6 +346,16 @@ public class SeoulApiManager implements ApiManager {
 	@Override
 	public int getFinishApi() {
 		return finishApi;
+	}
+	
+	private void showpDialog() {
+		if (!pDialog.isShowing())
+			pDialog.show();
+	}
+
+	private void hidepDialog() {
+		if (pDialog.isShowing())
+			pDialog.dismiss();
 	}
 
 }

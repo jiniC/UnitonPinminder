@@ -1,13 +1,26 @@
 package com.example.pinminder;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
+import com.example.pinminder.api.ApiManager;
+import com.example.pinminder.api.NullApiManager;
+import com.example.pinminder.api.SeoulApiManager;
+import com.example.pinminder.db.MyDB;
+import com.example.pinminder.gps.GpsInfo;
 import com.example.pinminder.list.SwipeActivity;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -18,10 +31,20 @@ import android.widget.TextView;
 
 public class SettingActivity extends Activity {
 	
+	MyDB myDB;
+	Intent retIntent;
+	
+	GpsInfo gpsInfo;
+	public ApiManager apiManager;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_setting);	
+		retIntent = new Intent();
+		
+		myDB = new MyDB(getApplicationContext());
+		
 		ImageButton logoBtn = (ImageButton) findViewById(R.id.logoBtn);
 		Button mailBtn = (Button) findViewById(R.id.mailBtn);
 		Button tutorialBtn = (Button) findViewById(R.id.tutorialBtn);
@@ -83,14 +106,64 @@ public class SettingActivity extends Activity {
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if(getUsingApi() == true){
 					saveUsingApi(false);
+					myDB.deleteTable();
+					retIntent.putExtra("usingApi", "false");
 				}
 				else{
 					saveUsingApi(true);
+					
+					if(getMylogcation() == null){
+		        		apiManager = new NullApiManager();
+		        	}
+			        else if(getMylogcation().equals("서울특별시") || getMylogcation().equals("Seoul")){
+			        	apiManager = new SeoulApiManager(SettingActivity.this,1);
+			        }
+			        apiManager.getApi();
 				}
 			}
 		});
 
 	}
+	
+	 private String getMylogcation(){
+	    	String cityName = null;
+	    	gpsInfo = new GpsInfo(getApplicationContext());
+	        // GPS 사용유무 가져오기
+	        if (gpsInfo.isGetLocation()) {
+
+	            double latitude = gpsInfo.getLatitude();
+	            double longitude = gpsInfo.getLongitude();
+	            
+	            /*---------- 도시명 가져오기 ----------- */
+	            Geocoder gcd = new Geocoder(getBaseContext(), Locale.getDefault());
+	            List<Address> addresses;
+	            try {
+	                addresses = gcd.getFromLocation(latitude,
+	                		longitude, 1);
+	                if (addresses.size() > 0)
+	                    System.out.println(addresses.get(0).getLocality());
+	                cityName = addresses.get(0).getAdminArea();
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	            }
+	 
+	            String s = longitude + "\n" + latitude + "\n\n당신의 현재 도시명 : "
+	                    + cityName;
+	            
+	            Log.i("ohdokingLocation",s);
+	             
+	        } else {
+	            // GPS 를 사용할수 없으므로
+	        	gpsInfo.showSettingsAlert();
+	        }
+			return cityName;
+	    }
+	 
+	 
+	 /**
+	  * SharedPrefernce
+	  * @return
+	  */
 	
 	
 	

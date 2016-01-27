@@ -80,6 +80,10 @@ import android.widget.Toast;
 public class SwipeActivity extends Activity {
 
 	// private ViewPager mPager;
+	
+	//
+	public final int SETTING_ACTIVITY = 11;
+	public final int DIALOG_ACTIVITY = 12;
 
 	private ListView cmn_list_view;
 	private ListAdapter listAdapter;
@@ -172,9 +176,7 @@ public class SwipeActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(SwipeActivity.this, SettingActivity.class);
-				startActivity(i);
-				Toast.makeText(getApplicationContext(), "test",
-						Toast.LENGTH_SHORT).show();
+				startActivityForResult(i,SETTING_ACTIVITY);
 			}
 		});
 
@@ -637,7 +639,7 @@ public class SwipeActivity extends Activity {
 		case R.id.action_location_found:
 
 			Intent i = new Intent(SwipeActivity.this, DialogActivity.class);
-			startActivityForResult(i, 1);
+			startActivityForResult(i, DIALOG_ACTIVITY);
 
 			return true;
 		default:
@@ -733,17 +735,33 @@ public class SwipeActivity extends Activity {
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		switch (requestCode) {
-		case (1): {
-			if (resultCode == Activity.RESULT_OK) {
-				ArrayList<String> newText = data
-						.getStringArrayListExtra("filter");
-
-				listdata.clear();
-				listdata.addAll(db.getDreamCate(newText));
-				listAdapter.notifyDataSetChanged();
+			case (DIALOG_ACTIVITY): {
+				if (resultCode == Activity.RESULT_OK) {
+					ArrayList<String> newText = data
+							.getStringArrayListExtra("filter");
+	
+					listdata.clear();
+					listdata.addAll(db.getDreamCate(newText));
+					listAdapter.notifyDataSetChanged();
+				}
+				break;
 			}
-			break;
-		}
+			case (SETTING_ACTIVITY): {
+				if (resultCode == Activity.RESULT_OK) {
+					
+				}
+//				String ret = data.getStringExtra("usingApi");
+				
+				
+				listdata.clear();
+				listdata.addAll(db.getAllDreams());
+				initMap();
+				if(db.getAllDreams().size() == 0){
+					map.clear();
+				}
+				listAdapter.notifyDataSetChanged();
+				break;
+			}
 		}
 	}
 
