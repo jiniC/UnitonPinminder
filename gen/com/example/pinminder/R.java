@@ -738,142 +738,101 @@ containing a value of this type.
         public static final int writeicon5=0x7f020085;
     }
     public static final class id {
-        public static final int SingleProfile=0x7f0a0059;
-<<<<<<< HEAD
+        public static final int SingleProfile=0x7f0a0058;
         public static final int action_location_found=0x7f0a0082;
         public static final int action_search=0x7f0a0081;
         public static final int action_settings=0x7f0a0080;
-=======
-        public static final int action_location_found=0x7f0a0080;
-        public static final int action_search=0x7f0a007f;
-        public static final int action_settings=0x7f0a007e;
->>>>>>> f3094c25dd547fe1d7bca21e05a3b194b1c0c220
-        public static final int addButton=0x7f0a0037;
-        public static final int addtutorial=0x7f0a0046;
+        public static final int addButton=0x7f0a0036;
+        public static final int addtutorial=0x7f0a0045;
         public static final int adjust_height=0x7f0a0007;
         public static final int adjust_width=0x7f0a0008;
-        public static final int alarmBtn=0x7f0a0053;
+        public static final int alarmBtn=0x7f0a0052;
         public static final int android_pay=0x7f0a0028;
         public static final int android_pay_dark=0x7f0a001f;
         public static final int android_pay_light=0x7f0a0020;
         public static final int android_pay_light_with_border=0x7f0a0021;
         public static final int auto=0x7f0a0004;
-        public static final int autocomplete_places=0x7f0a004c;
+        public static final int autocomplete_places=0x7f0a004b;
         public static final int book_now=0x7f0a0018;
-<<<<<<< HEAD
-        public static final int bottom=0x7f0a006d;
-        public static final int btnShowLocation=0x7f0a002c;
+        public static final int bottom=0x7f0a006c;
+        public static final int btnShowLocation=0x7f0a002b;
         public static final int btn_click=0x7f0a0070;
         public static final int btn_click_2=0x7f0a007f;
         public static final int btn_click_3=0x7f0a007d;
-        public static final int btn_click_4=0x7f0a0069;
-        public static final int btn_click_5=0x7f0a0067;
-=======
-        public static final int bottom=0x7f0a006b;
-        public static final int btnShowLocation=0x7f0a002c;
-        public static final int btn_click=0x7f0a006e;
-        public static final int btn_click_2=0x7f0a007d;
-        public static final int btn_click_3=0x7f0a007b;
-        public static final int btn_click_4=0x7f0a0067;
-        public static final int btn_click_5=0x7f0a0065;
->>>>>>> f3094c25dd547fe1d7bca21e05a3b194b1c0c220
-        public static final int button1=0x7f0a003a;
+        public static final int btn_click_4=0x7f0a0068;
+        public static final int btn_click_5=0x7f0a0066;
+        public static final int button1=0x7f0a0039;
         public static final int buyButton=0x7f0a0014;
         public static final int buy_now=0x7f0a0019;
         public static final int buy_with=0x7f0a001a;
         public static final int buy_with_google=0x7f0a001b;
-        public static final int cancelBtn=0x7f0a004a;
+        public static final int cancelBtn=0x7f0a0049;
         public static final int cast_notification_id=0x7f0a0000;
-        public static final int cat1=0x7f0a004e;
-        public static final int cat2=0x7f0a004f;
-        public static final int cat3=0x7f0a0050;
-        public static final int cat4=0x7f0a0051;
-        public static final int cat5=0x7f0a0052;
-<<<<<<< HEAD
-        public static final int cate1=0x7f0a0061;
-        public static final int cate2=0x7f0a0062;
-        public static final int cate3=0x7f0a0063;
-        public static final int cate4=0x7f0a0064;
-        public static final int cate5=0x7f0a0065;
-=======
-        public static final int cate1=0x7f0a005f;
-        public static final int cate2=0x7f0a0060;
-        public static final int cate3=0x7f0a0061;
-        public static final int cate4=0x7f0a0062;
-        public static final int cate5=0x7f0a0063;
->>>>>>> f3094c25dd547fe1d7bca21e05a3b194b1c0c220
-        public static final int checkbox_ask=0x7f0a003b;
+        public static final int cat1=0x7f0a004d;
+        public static final int cat2=0x7f0a004e;
+        public static final int cat3=0x7f0a004f;
+        public static final int cat4=0x7f0a0050;
+        public static final int cat5=0x7f0a0051;
+        public static final int cate1=0x7f0a0060;
+        public static final int cate2=0x7f0a0061;
+        public static final int cate3=0x7f0a0062;
+        public static final int cate4=0x7f0a0063;
+        public static final int cate5=0x7f0a0064;
+        public static final int checkbox_ask=0x7f0a003a;
         public static final int classic=0x7f0a0022;
-        public static final int cmn_list_view=0x7f0a0045;
-        public static final int custom_toast_image=0x7f0a005d;
-        public static final int custom_toast_layout=0x7f0a005c;
-        public static final int custom_toast_message=0x7f0a005e;
+        public static final int cmn_list_view=0x7f0a0044;
+        public static final int custom_toast_image=0x7f0a005c;
+        public static final int custom_toast_layout=0x7f0a005b;
+        public static final int custom_toast_message=0x7f0a005d;
         public static final int dark=0x7f0a0005;
-        public static final int dataSwitch=0x7f0a0041;
-        public static final int deleteBtn=0x7f0a0057;
+        public static final int dataSwitch=0x7f0a0040;
+        public static final int deleteBtn=0x7f0a0056;
         public static final int donate_with=0x7f0a001c;
         public static final int donate_with_google=0x7f0a001d;
-        public static final int dummyLayout=0x7f0a0042;
-        public static final int filterButton=0x7f0a0036;
-        public static final int filter_place=0x7f0a002f;
-        public static final int filter_word=0x7f0a002e;
+        public static final int dummyLayout=0x7f0a0041;
+        public static final int filterButton=0x7f0a0035;
+        public static final int filter_place=0x7f0a002e;
+        public static final int filter_word=0x7f0a002d;
         public static final int google_wallet_classic=0x7f0a0023;
         public static final int google_wallet_grayscale=0x7f0a0024;
         public static final int google_wallet_monochrome=0x7f0a0025;
-        public static final int gpsButton=0x7f0a0039;
+        public static final int gpsButton=0x7f0a0038;
         public static final int grayscale=0x7f0a0026;
-<<<<<<< HEAD
-        public static final int grid_image=0x7f0a006a;
-        public static final int grid_text=0x7f0a006b;
-=======
-        public static final int grid_image=0x7f0a0068;
-        public static final int grid_text=0x7f0a0069;
->>>>>>> f3094c25dd547fe1d7bca21e05a3b194b1c0c220
+        public static final int grid_image=0x7f0a0069;
+        public static final int grid_text=0x7f0a006a;
         public static final int holo_dark=0x7f0a000e;
         public static final int holo_light=0x7f0a000f;
         public static final int hybrid=0x7f0a000a;
         public static final int icon_only=0x7f0a0001;
-        public static final int imageView1=0x7f0a002b;
-<<<<<<< HEAD
-        public static final int iv_five=0x7f0a0066;
-        public static final int iv_four=0x7f0a0068;
+        public static final int imageView1=0x7f0a002a;
+        public static final int iv_five=0x7f0a0065;
+        public static final int iv_four=0x7f0a0067;
         public static final int iv_one=0x7f0a006f;
         public static final int iv_three=0x7f0a007c;
         public static final int iv_two=0x7f0a007e;
         public static final int light=0x7f0a0006;
         public static final int list_display_view_container=0x7f0a007b;
-        public static final int ll_title_layout=0x7f0a006e;
-=======
-        public static final int iv_five=0x7f0a0064;
-        public static final int iv_four=0x7f0a0066;
-        public static final int iv_one=0x7f0a006d;
-        public static final int iv_three=0x7f0a007a;
-        public static final int iv_two=0x7f0a007c;
-        public static final int light=0x7f0a0006;
-        public static final int list_display_view_container=0x7f0a0079;
-        public static final int ll_title_layout=0x7f0a006c;
->>>>>>> f3094c25dd547fe1d7bca21e05a3b194b1c0c220
-        public static final int loc_checkbox=0x7f0a0031;
-        public static final int loc_seekbar=0x7f0a0032;
-        public static final int logoBtn=0x7f0a003d;
+        public static final int ll_title_layout=0x7f0a006d;
+        public static final int loc_checkbox=0x7f0a0030;
+        public static final int loc_seekbar=0x7f0a0031;
+        public static final int logoBtn=0x7f0a003c;
         public static final int logo_only=0x7f0a001e;
-        public static final int mailBtn=0x7f0a003e;
-        public static final int mainScrollView=0x7f0a0048;
-        public static final int map=0x7f0a0043;
-        public static final int map_under=0x7f0a0044;
+        public static final int mailBtn=0x7f0a003d;
+        public static final int mainScrollView=0x7f0a0047;
+        public static final int map=0x7f0a0042;
+        public static final int map_under=0x7f0a0043;
         public static final int match_parent=0x7f0a0016;
-        public static final int mem_info_txt_id=0x7f0a005b;
-        public static final int mem_photo_img_id=0x7f0a005a;
-        public static final int memoBtn=0x7f0a0054;
-        public static final int memoEt=0x7f0a0056;
+        public static final int mem_info_txt_id=0x7f0a005a;
+        public static final int mem_photo_img_id=0x7f0a0059;
+        public static final int memoBtn=0x7f0a0053;
+        public static final int memoEt=0x7f0a0055;
         public static final int monochrome=0x7f0a0027;
-        public static final int movieBtn=0x7f0a0040;
+        public static final int movieBtn=0x7f0a003f;
         public static final int none=0x7f0a0009;
         public static final int normal=0x7f0a000b;
-        public static final int noti_checkbox=0x7f0a0030;
-        public static final int okBtn=0x7f0a0058;
-<<<<<<< HEAD
-        public static final int pager=0x7f0a006c;
+        public static final int noti_checkbox=0x7f0a002f;
+        public static final int okBtn=0x7f0a0057;
+        public static final int pager=0x7f0a006b;
         public static final int place_autocomplete_clear_button=0x7f0a0073;
         public static final int place_autocomplete_powered_by_google=0x7f0a0075;
         public static final int place_autocomplete_prediction_primary_text=0x7f0a0077;
@@ -882,55 +841,33 @@ containing a value of this type.
         public static final int place_autocomplete_search_button=0x7f0a0071;
         public static final int place_autocomplete_search_input=0x7f0a0072;
         public static final int place_autocomplete_separator=0x7f0a0074;
-=======
-        public static final int pager=0x7f0a006a;
-        public static final int place_autocomplete_clear_button=0x7f0a0071;
-        public static final int place_autocomplete_powered_by_google=0x7f0a0073;
-        public static final int place_autocomplete_prediction_primary_text=0x7f0a0075;
-        public static final int place_autocomplete_prediction_secondary_text=0x7f0a0076;
-        public static final int place_autocomplete_progress=0x7f0a0074;
-        public static final int place_autocomplete_search_button=0x7f0a006f;
-        public static final int place_autocomplete_search_input=0x7f0a0070;
-        public static final int place_autocomplete_separator=0x7f0a0072;
->>>>>>> f3094c25dd547fe1d7bca21e05a3b194b1c0c220
         public static final int production=0x7f0a0010;
-        public static final int pushButton=0x7f0a0038;
-        public static final int push_btn=0x7f0a002d;
-        public static final int r=0x7f0a0055;
-        public static final int regionBtn=0x7f0a004b;
-        public static final int relativeLayout2=0x7f0a003c;
+        public static final int pushButton=0x7f0a0037;
+        public static final int push_btn=0x7f0a002c;
+        public static final int r=0x7f0a0054;
+        public static final int regionBtn=0x7f0a004a;
+        public static final int relativeLayout2=0x7f0a003b;
         public static final int sandbox=0x7f0a0011;
         public static final int satellite=0x7f0a000c;
         public static final int selectionDetails=0x7f0a0015;
-        public static final int settingImg=0x7f0a002a;
+        public static final int settingImg=0x7f0a006e;
         public static final int slide=0x7f0a0029;
-<<<<<<< HEAD
         public static final int splash_icon=0x7f0a0079;
         public static final int splash_title=0x7f0a007a;
-=======
-        public static final int splash_icon=0x7f0a0077;
-        public static final int splash_title=0x7f0a0078;
->>>>>>> f3094c25dd547fe1d7bca21e05a3b194b1c0c220
         public static final int standard=0x7f0a0002;
         public static final int strict_sandbox=0x7f0a0012;
         public static final int terrain=0x7f0a000d;
         public static final int test=0x7f0a0013;
-<<<<<<< HEAD
-        public static final int textView1=0x7f0a005f;
-        public static final int textView2=0x7f0a0060;
-        public static final int todoEt=0x7f0a0049;
-        public static final int todolist_addbtn=0x7f0a0047;
+        public static final int textView1=0x7f0a005e;
+        public static final int textView2=0x7f0a005f;
+        public static final int todoEt=0x7f0a0048;
+        public static final int todolist_addbtn=0x7f0a0046;
         public static final int top_confirm=0x7f0a0083;
-=======
-        public static final int todoEt=0x7f0a0049;
-        public static final int todolist_addbtn=0x7f0a0047;
-        public static final int top_confirm=0x7f0a0081;
->>>>>>> f3094c25dd547fe1d7bca21e05a3b194b1c0c220
-        public static final int transparent_image=0x7f0a004d;
-        public static final int tutorialBtn=0x7f0a003f;
-        public static final int tvLabel1=0x7f0a0033;
-        public static final int tvLabel3=0x7f0a0034;
-        public static final int tvResult=0x7f0a0035;
+        public static final int transparent_image=0x7f0a004c;
+        public static final int tutorialBtn=0x7f0a003e;
+        public static final int tvLabel1=0x7f0a0032;
+        public static final int tvLabel3=0x7f0a0033;
+        public static final int tvResult=0x7f0a0034;
         public static final int wide=0x7f0a0003;
         public static final int wrap_content=0x7f0a0017;
     }
@@ -957,17 +894,18 @@ containing a value of this type.
         public static final int four=0x7f030010;
         public static final int grid_single=0x7f030011;
         public static final int main=0x7f030012;
-        public static final int one=0x7f030013;
-        public static final int place_autocomplete_fragment=0x7f030014;
-        public static final int place_autocomplete_item_powered_by_google=0x7f030015;
-        public static final int place_autocomplete_item_prediction=0x7f030016;
-        public static final int place_autocomplete_progress=0x7f030017;
-        public static final int splash_activity=0x7f030018;
-        public static final int splash_activity2=0x7f030019;
-        public static final int test_layout=0x7f03001a;
-        public static final int three=0x7f03001b;
-        public static final int top_navi=0x7f03001c;
-        public static final int two=0x7f03001d;
+        public static final int main_actionbar=0x7f030013;
+        public static final int one=0x7f030014;
+        public static final int place_autocomplete_fragment=0x7f030015;
+        public static final int place_autocomplete_item_powered_by_google=0x7f030016;
+        public static final int place_autocomplete_item_prediction=0x7f030017;
+        public static final int place_autocomplete_progress=0x7f030018;
+        public static final int splash_activity=0x7f030019;
+        public static final int splash_activity2=0x7f03001a;
+        public static final int test_layout=0x7f03001b;
+        public static final int three=0x7f03001c;
+        public static final int top_navi=0x7f03001d;
+        public static final int two=0x7f03001e;
     }
     public static final class menu {
         public static final int android_gpstracking=0x7f0d0000;
