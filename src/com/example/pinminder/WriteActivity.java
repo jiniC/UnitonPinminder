@@ -54,6 +54,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
@@ -362,7 +363,6 @@ public class WriteActivity extends SampleActivityBase
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				if (memoid == 0) {
-					//r.setBackgroundResource(R.drawable.white_section);
 					r.startAnimation(slideUp_animation);
 					
 					/*변경하고 싶은 레이아웃의 파라미터 값을 가져 옴*/
@@ -374,16 +374,16 @@ public class WriteActivity extends SampleActivityBase
 					memoBtn.setImageResource(R.drawable.icon_02);
 					memoid = 1;
 				} else {
-					r.setBackgroundResource(R.drawable.blue_section);
 					r.startAnimation(animation);
-					r.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-
+					r.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
 					memoBtn.setImageResource(R.drawable.icon_01);
 					memoid = 0;
 				}
 			}
 		});
+
+		
 		regionBtn.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -395,8 +395,24 @@ public class WriteActivity extends SampleActivityBase
 		
 		// MapFragment in ScrollView
 		mainScrollView = (ScrollView) findViewById(R.id.mainScrollView);
+		
+		memoEt.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View view, MotionEvent event) {
+			// TODO Auto-generated method stub
+	            view.getParent().requestDisallowInterceptTouchEvent(true);
+	            switch (event.getAction()&MotionEvent.ACTION_MASK){
+	            case MotionEvent.ACTION_UP:
+	                view.getParent().requestDisallowInterceptTouchEvent(false);
+	                break;
+	            }
+		        
+		        return false;
+			}
+		});
+		
 		transparentImageView = (ImageView) findViewById(R.id.transparent_image);
-
 		transparentImageView.setOnTouchListener(new View.OnTouchListener() {
 
 		    @Override
