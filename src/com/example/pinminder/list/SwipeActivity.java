@@ -52,6 +52,7 @@ import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.AvoidXfermode.Mode;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.net.Uri;
@@ -62,8 +63,10 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -76,6 +79,8 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import android.graphics.PorterDuff;
 
 public class SwipeActivity extends Activity {
 
@@ -179,6 +184,28 @@ public class SwipeActivity extends Activity {
 			public void onClick(View v) {
 				Intent i = new Intent(SwipeActivity.this, SettingActivity.class);
 				startActivityForResult(i,SETTING_ACTIVITY);
+			}
+		});
+		
+		settingImageView.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				ImageView view = (ImageView)v;
+				switch (event.getAction()) {
+	                case MotionEvent.ACTION_DOWN: {
+//	                    view.getDrawable().setColorFilter(,PorterDuff.Mode.SRC_OVER);
+	                    view.setBackgroundColor(0xffffe4e1);
+	                    break;
+	                }
+	                case MotionEvent.ACTION_UP:{
+//	                	view.getDrawable().setColorFilter(0x00000000,PorterDuff.Mode.SRC_OVER);
+	                	view.setBackgroundColor(0x00000000);
+	                    break;
+	                }
+                }
+                return false;
+				
 			}
 		});
 

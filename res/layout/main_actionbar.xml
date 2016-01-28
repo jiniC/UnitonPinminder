@@ -4,34 +4,19 @@
     android:layout_height="match_parent"
     android:orientation="horizontal" >
 
-     <ImageView
+     <ImageView 
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="50px"
-        android:layout_weight="0.5"
-        android:layout_gravity="left|center"
+        android:layout_weight="1.5"
+        android:layout_gravity="center"
+        android:background="@color/white"
         android:gravity="left"
         android:id="@+id/settingImg"
         android:src="@drawable/setting"/>
      <ImageView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30px"
-        android:layout_weight="0.5"
-        android:layout_gravity="left|center"
-        android:gravity="left"/>
-      <ImageView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30px"
-        android:layout_weight="0.5"
-        android:layout_gravity="left|center"
-        android:gravity="left"/>
-       <ImageView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30px"
-        android:layout_weight="0.5"
+        android:layout_weight="1.6"
         android:layout_gravity="left|center"
         android:gravity="left"/>
     <ImageView
