@@ -52,6 +52,7 @@ import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.AvoidXfermode.Mode;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.net.Uri;
@@ -62,8 +63,10 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -77,9 +80,15 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import android.graphics.PorterDuff;
+
 public class SwipeActivity extends Activity {
 
 	// private ViewPager mPager;
+	
+	//
+	public final int SETTING_ACTIVITY = 11;
+	public final int DIALOG_ACTIVITY = 12;
 
 	private ListView cmn_list_view;
 	private ListAdapter listAdapter;
@@ -174,9 +183,29 @@ public class SwipeActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(SwipeActivity.this, SettingActivity.class);
-				startActivity(i);
-				Toast.makeText(getApplicationContext(), "test",
-						Toast.LENGTH_SHORT).show();
+				startActivityForResult(i,SETTING_ACTIVITY);
+			}
+		});
+		
+		settingImageView.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				ImageView view = (ImageView)v;
+				switch (event.getAction()) {
+	                case MotionEvent.ACTION_DOWN: {
+//	                    view.getDrawable().setColorFilter(,PorterDuff.Mode.SRC_OVER);
+	                    view.setBackgroundColor(0xffffe4e1);
+	                    break;
+	                }
+	                case MotionEvent.ACTION_UP:{
+//	                	view.getDrawable().setColorFilter(0x00000000,PorterDuff.Mode.SRC_OVER);
+	                	view.setBackgroundColor(0x00000000);
+	                    break;
+	                }
+                }
+                return false;
+				
 			}
 		});
 
@@ -639,7 +668,7 @@ public class SwipeActivity extends Activity {
 		case R.id.action_location_found:
 
 			Intent i = new Intent(SwipeActivity.this, DialogActivity.class);
-			startActivityForResult(i, 1);
+			startActivityForResult(i, DIALOG_ACTIVITY);
 
 			return true;
 		default:
@@ -735,17 +764,33 @@ public class SwipeActivity extends Activity {
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		switch (requestCode) {
-		case (1): {
-			if (resultCode == Activity.RESULT_OK) {
-				ArrayList<String> newText = data
-						.getStringArrayListExtra("filter");
-
-				listdata.clear();
-				listdata.addAll(db.getDreamCate(newText));
-				listAdapter.notifyDataSetChanged();
+			case (DIALOG_ACTIVITY): {
+				if (resultCode == Activity.RESULT_OK) {
+					ArrayList<String> newText = data
+							.getStringArrayListExtra("filter");
+	
+					listdata.clear();
+					listdata.addAll(db.getDreamCate(newText));
+					listAdapter.notifyDataSetChanged();
+				}
+				break;
 			}
-			break;
-		}
+			case (SETTING_ACTIVITY): {
+				if (resultCode == Activity.RESULT_OK) {
+					
+				}
+//				String ret = data.getStringExtra("usingApi");
+				
+				
+				listdata.clear();
+				listdata.addAll(db.getAllDreams());
+				initMap();
+				if(db.getAllDreams().size() == 0){
+					map.clear();
+				}
+				listAdapter.notifyDataSetChanged();
+				break;
+			}
 		}
 	}
 
