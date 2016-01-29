@@ -127,7 +127,7 @@ public class SettingActivity extends Activity {
 	
 	 private String getMylogcation(){
 	    	String cityName = null;
-	    	gpsInfo = new GpsInfo(getApplicationContext());
+	    	gpsInfo = new GpsInfo(SettingActivity.this);
 	        // GPS 사용유무 가져오기
 	        if (gpsInfo.isGetLocation()) {
 
@@ -154,7 +154,7 @@ public class SettingActivity extends Activity {
 	             
 	        } else {
 	            // GPS 를 사용할수 없으므로
-	        	gpsInfo.showSettingsAlert();
+//	        	gpsInfo.showSettingsAlert();
 	        }
 			return cityName;
 	    }
