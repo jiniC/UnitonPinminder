@@ -162,7 +162,7 @@ public class SplashActivity2 extends Activity {
              
         } else {
             // GPS 를 사용할수 없으므로
-        	gpsInfo.showSettingsAlert();
+//        	gpsInfo.showSettingsAlert();
         }
 		return cityName;
     }
