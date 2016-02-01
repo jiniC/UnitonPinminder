@@ -129,6 +129,8 @@ public class SwipeActivity extends Activity {
 
 		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
 				.getMap();
+		
+		map.setMyLocationEnabled(true);
 
 		// testApi();
 		imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
