@@ -511,50 +511,51 @@ containing a value of this type.
         public static final int zOrderOnTop=0x7f010017;
     }
     public static final class color {
-        public static final int accent=0x7f090031;
-        public static final int accent_pressed=0x7f090032;
-        public static final int black=0x7f09002b;
+        public static final int accent=0x7f090032;
+        public static final int accent_pressed=0x7f090033;
+        public static final int black=0x7f09002c;
         public static final int common_action_bar_splitter=0x7f090008;
-        public static final int common_google_signin_btn_text_dark=0x7f090033;
+        public static final int common_google_signin_btn_text_dark=0x7f090034;
         /**  Google Sign-in Button Colors 
          */
         public static final int common_google_signin_btn_text_dark_default=0x7f090009;
         public static final int common_google_signin_btn_text_dark_disabled=0x7f09000b;
         public static final int common_google_signin_btn_text_dark_focused=0x7f09000c;
         public static final int common_google_signin_btn_text_dark_pressed=0x7f09000a;
-        public static final int common_google_signin_btn_text_light=0x7f090034;
+        public static final int common_google_signin_btn_text_light=0x7f090035;
         public static final int common_google_signin_btn_text_light_default=0x7f09000d;
         public static final int common_google_signin_btn_text_light_disabled=0x7f09000f;
         public static final int common_google_signin_btn_text_light_focused=0x7f090010;
         public static final int common_google_signin_btn_text_light_pressed=0x7f09000e;
-        public static final int common_plus_signin_btn_text_dark=0x7f090035;
+        public static final int common_plus_signin_btn_text_dark=0x7f090036;
         /**  Google Plus Sign-in Button Colors 
          */
         public static final int common_plus_signin_btn_text_dark_default=0x7f090000;
         public static final int common_plus_signin_btn_text_dark_disabled=0x7f090002;
         public static final int common_plus_signin_btn_text_dark_focused=0x7f090003;
         public static final int common_plus_signin_btn_text_dark_pressed=0x7f090001;
-        public static final int common_plus_signin_btn_text_light=0x7f090036;
+        public static final int common_plus_signin_btn_text_light=0x7f090037;
         public static final int common_plus_signin_btn_text_light_default=0x7f090004;
         public static final int common_plus_signin_btn_text_light_disabled=0x7f090006;
         public static final int common_plus_signin_btn_text_light_focused=0x7f090007;
         public static final int common_plus_signin_btn_text_light_pressed=0x7f090005;
         public static final int genre=0x7f090024;
+        public static final int gray=0x7f09002b;
         public static final int list_divider=0x7f090026;
         public static final int list_row_end_color=0x7f090028;
         public static final int list_row_hover_end_color=0x7f09002a;
         public static final int list_row_hover_start_color=0x7f090029;
         public static final int list_row_start_color=0x7f090027;
-        public static final int navy=0x7f09002d;
+        public static final int navy=0x7f09002e;
         public static final int place_autocomplete_prediction_primary_text=0x7f090013;
         public static final int place_autocomplete_prediction_primary_text_highlight=0x7f090014;
         public static final int place_autocomplete_prediction_secondary_text=0x7f090015;
         public static final int place_autocomplete_search_hint=0x7f090012;
         public static final int place_autocomplete_search_text=0x7f090011;
         public static final int place_autocomplete_separator=0x7f090016;
-        public static final int primary=0x7f09002e;
-        public static final int primary_dark=0x7f09002f;
-        public static final int ripple=0x7f090030;
+        public static final int primary=0x7f09002f;
+        public static final int primary_dark=0x7f090030;
+        public static final int ripple=0x7f090031;
         public static final int wallet_bright_foreground_disabled_holo_light=0x7f09001c;
         /** 
          Wallet colors to support consistent Wallet fragment holo dark UI in client application
@@ -573,9 +574,9 @@ containing a value of this type.
         public static final int wallet_hint_foreground_holo_light=0x7f09001e;
         public static final int wallet_holo_blue_light=0x7f090022;
         public static final int wallet_link_text_light=0x7f090023;
-        public static final int wallet_primary_text_holo_light=0x7f090037;
-        public static final int wallet_secondary_text_holo_dark=0x7f090038;
-        public static final int white=0x7f09002c;
+        public static final int wallet_primary_text_holo_light=0x7f090038;
+        public static final int wallet_secondary_text_holo_dark=0x7f090039;
+        public static final int white=0x7f09002d;
         public static final int year=0x7f090025;
     }
     public static final class dimen {

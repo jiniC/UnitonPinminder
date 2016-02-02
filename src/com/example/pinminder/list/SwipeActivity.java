@@ -195,7 +195,7 @@ public class SwipeActivity extends Activity {
 				switch (event.getAction()) {
 	                case MotionEvent.ACTION_DOWN: {
 //	                    view.getDrawable().setColorFilter(,PorterDuff.Mode.SRC_OVER);
-	                    view.setBackgroundColor(0xffffe4e1);
+	                    view.setBackgroundColor(0xffeaeaea);
 	                    break;
 	                }
 	                case MotionEvent.ACTION_UP:{
