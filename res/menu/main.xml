@@ -10,7 +10,7 @@
 
     <!-- 필터버튼 -->
     <item android:id="@+id/action_location_found"
-          android:icon="@drawable/what_icon"
+          android:icon="@drawable/filter"
           android:title="action_location_found"
           android:orderInCategory="2"
           android:showAsAction="ifRoom" />

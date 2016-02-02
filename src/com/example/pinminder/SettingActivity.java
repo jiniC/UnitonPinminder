@@ -11,19 +11,21 @@ import com.example.pinminder.db.MyDB;
 import com.example.pinminder.gps.GpsInfo;
 import com.example.pinminder.list.SwipeActivity;
 
+import android.app.ActionBar;
 import android.app.Activity;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Switch;
@@ -44,13 +46,18 @@ public class SettingActivity extends Activity {
 		retIntent = new Intent();
 		
 		myDB = new MyDB(getApplicationContext());
-		
+			
 		ImageButton logoBtn = (ImageButton) findViewById(R.id.logoBtn);
-		Button mailBtn = (Button) findViewById(R.id.mailBtn);
-		Button tutorialBtn = (Button) findViewById(R.id.tutorialBtn);
-		Button movieBtn = (Button) findViewById(R.id.movieBtn);
+		ImageButton mailBtn = (ImageButton) findViewById(R.id.mailBtn);
+		ImageButton tutorialBtn = (ImageButton) findViewById(R.id.tutorialBtn);
+		ImageButton movieBtn = (ImageButton) findViewById(R.id.movieBtn);
 		Switch dataSwitch = (Switch) findViewById(R.id.dataSwitch);
 		
+		TextView tv_currentVersion = (TextView) findViewById(R.id.tv_currentVersion);
+		TextView tv_newestVersion = (TextView) findViewById(R.id.tv_newestVersion);		
+		
+		tv_currentVersion.setText("v 1.0");
+		tv_newestVersion.setText("v 1.0");
 		
 		if(getUsingApi() == true){
 			dataSwitch.setChecked(true);
@@ -59,7 +66,33 @@ public class SettingActivity extends Activity {
 			dataSwitch.setChecked(false);
 		}
 		
+
+		LayoutInflater inflater = (LayoutInflater) getActionBar()
+				.getThemedContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+		View view = inflater.inflate(R.layout.setting_actionbar, null);
+
+		ImageButton iv_back = (ImageButton) view
+				.findViewById(R.id.iv_back);
+
+		ActionBar.LayoutParams params = new ActionBar.LayoutParams(
+				ActionBar.LayoutParams.MATCH_PARENT,
+				ActionBar.LayoutParams.MATCH_PARENT,Gravity.LEFT);
+		getActionBar().setDisplayShowTitleEnabled(false);
+		getActionBar().setIcon(
+				new ColorDrawable(getResources().getColor(
+						android.R.color.transparent)));
+		getActionBar().setDisplayShowCustomEnabled(true);
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
+		getActionBar().setCustomView(view, params);
 		
+		iv_back.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				finish();
+			}
+		});
 		
 		logoBtn.setOnClickListener(new OnClickListener() {
 			
@@ -120,7 +153,9 @@ public class SettingActivity extends Activity {
 			        }
 			        apiManager.getApi();
 				}
+				
 			}
+			
 		});
 
 	}

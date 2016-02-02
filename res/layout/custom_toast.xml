@@ -11,7 +11,7 @@
         android:id="@+id/custom_toast_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/setting" />
+        android:src="@drawable/settingicon" />
 
     <TextView
         android:id="@+id/custom_toast_message"

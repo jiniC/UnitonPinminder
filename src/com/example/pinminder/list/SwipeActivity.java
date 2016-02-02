@@ -167,8 +167,6 @@ public class SwipeActivity extends Activity {
 				new ColorDrawable(getResources().getColor(
 						android.R.color.transparent)));
 		getActionBar().setDisplayShowCustomEnabled(true);
-		// getActionBar().setBackgroundDrawable(new
-		// ColorDrawable(Color.parseColor("#ffffff")));
 		getActionBar().setBackgroundDrawable(
 				getResources().getDrawable(R.drawable.top_navi2));
 		getActionBar().setCustomView(view, params);
