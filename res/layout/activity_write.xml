@@ -219,7 +219,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:background="#00000000"
-                    android:src="@drawable/icon_02" />
+                    android:src="@drawable/icon_01" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -232,7 +232,7 @@
             <LinearLayout
                 android:id="@+id/r"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="match_parent"
                 android:background="@drawable/blue_section" >
 
                 <EditText

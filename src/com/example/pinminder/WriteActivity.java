@@ -94,7 +94,7 @@ public class WriteActivity extends SampleActivityBase
 	private int check, noti = 0;
 
 	private int id;
-	private int memoid = 1;
+	private int memoid = 0;
 
 	Marker mark;
 	
