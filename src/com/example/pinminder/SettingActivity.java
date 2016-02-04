@@ -34,6 +34,7 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 public class SettingActivity extends Activity {
 
@@ -61,7 +62,7 @@ public class SettingActivity extends Activity {
 		ImageButton mailBtn = (ImageButton) findViewById(R.id.mailBtn);
 		ImageButton tutorialBtn = (ImageButton) findViewById(R.id.tutorialBtn);
 		ImageButton movieBtn = (ImageButton) findViewById(R.id.movieBtn);
-		Switch dataSwitch = (Switch) findViewById(R.id.dataSwitch);
+		ToggleButton dataSwitch = (ToggleButton) findViewById(R.id.dataSwitch);
 
 		TextView tv_currentVersion = (TextView) findViewById(R.id.tv_currentVersion);
 		TextView tv_newestVersion = (TextView) findViewById(R.id.tv_newestVersion);
