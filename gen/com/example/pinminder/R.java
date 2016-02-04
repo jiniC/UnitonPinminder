@@ -718,6 +718,7 @@ containing a value of this type.
         public static final int modify=0x7f02006d;
         public static final int next=0x7f02006e;
         public static final int no_list=0x7f02006f;
+<<<<<<< HEAD
         public static final int places_ic_clear=0x7f020070;
         public static final int places_ic_search=0x7f020071;
         public static final int plusbtn=0x7f020072;
@@ -738,6 +739,28 @@ containing a value of this type.
         public static final int textbox=0x7f020081;
         public static final int todolist_addbtn=0x7f020082;
         public static final int toggle_selector=0x7f020083;
+=======
+        public static final int off=0x7f020070;
+        public static final int on=0x7f020071;
+        public static final int places_ic_clear=0x7f020072;
+        public static final int places_ic_search=0x7f020073;
+        public static final int plusbtn=0x7f020074;
+        public static final int powered_by_google_dark=0x7f020075;
+        public static final int powered_by_google_light=0x7f020076;
+        public static final int progress_bg=0x7f020077;
+        public static final int red_button=0x7f020078;
+        public static final int search_icon=0x7f020079;
+        public static final int search_line=0x7f02007a;
+        public static final int setting1=0x7f02007b;
+        public static final int setting2=0x7f02007c;
+        public static final int setting3=0x7f02007d;
+        public static final int setting4=0x7f02007e;
+        public static final int setting_logo=0x7f02007f;
+        public static final int settingicon=0x7f020080;
+        public static final int switch_thumb=0x7f020081;
+        public static final int textbox=0x7f020082;
+        public static final int todolist_addbtn=0x7f020083;
+>>>>>>> 2249328805e5df69aa398acff27936f65ce47b15
         public static final int top_confirm_icon=0x7f020084;
         public static final int top_navi=0x7f020085;
         public static final int top_navi2=0x7f020086;
