@@ -12,6 +12,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 
 import com.example.pinminder.activities.SampleActivityBase;
 import com.example.pinminder.db.MyDB;
@@ -38,10 +41,12 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.app.ActionBar;
 import android.app.ActionBar.LayoutParams;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -119,6 +124,8 @@ public class WriteActivity extends SampleActivityBase
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		
 
 		// Construct a GoogleApiClient for the {@link Places#GEO_DATA_API} using
 		// AutoManage
@@ -471,6 +478,28 @@ public class WriteActivity extends SampleActivityBase
 		// 호출
 		todoEt.addTextChangedListener(watcher);
 		mAutocompleteView.addTextChangedListener(watcher);
+		
+		
+		//공유하기가 됬을때 읽는곳!!
+		
+		Intent intent2 = getIntent();
+		String action = intent2.getAction();
+		String type = intent2.getType();
+
+		// 인텐트 정보가 있는 경우 실행
+		if (Intent.ACTION_SEND.equals(action) && type != null) {
+			if ("text/plain".equals(type)) {
+				String sharedText = intent2.getStringExtra(Intent.EXTRA_TEXT); // 가져온 인텐트의 텍스트 정보
+
+				if(isVaildUrl(sharedText) == true){
+					new ContentUrlTask(sharedText).execute(null,null,null);
+				}
+			}
+			
+			
+		}
+		
+		
 	}
 
 	/**
@@ -890,6 +919,80 @@ public class WriteActivity extends SampleActivityBase
 		
 	}
 	
+	// url check
+	public boolean isVaildUrl(String url) {
+		String reg = "^"
+				+
+				// protocol identifier
+				"(?:(?:https?|ftp)://)"
+				+
+				// user:pass authentication
+				"(?:\\S+(?::\\S*)?@)?"
+				+ "(?:"
+				+
+				// IP address exclusion
+				// private & local networks
+				"(?!(?:10|127)(?:\\.\\d{1,3}){3})"
+				+ "(?!(?:169\\.254|192\\.168)(?:\\.\\d{1,3}){2})"
+				+ "(?!172\\.(?:1[6-9]|2\\d|3[0-1])(?:\\.\\d{1,3}){2})"
+				+
+				// IP address dotted notation octets
+				// excludes loopback network 0.0.0.0
+				// excludes reserved space >= 224.0.0.0
+				// excludes network & broacast addresses
+				// (first & last IP address of each class)
+				"(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])"
+				+ "(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}"
+				+ "(?:\\.(?:[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))" + "|"
+				+
+				// host name
+				"(?:(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)"
+				+
+				// domain name
+				"(?:\\.(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)*"
+				+
+				// TLD identifier
+				"(?:\\.(?:[a-z\\u00a1-\\uffff]{2,}))" + ")" +
+				// port number
+				"(?::\\d{2,5})?" +
+				// resource path
+				"(?:/?\\S*)?" + "$";
+
+		return url.matches(reg);
+	}
+	
+	
+	private class ContentUrlTask extends AsyncTask<Void, Void, Void> {
+
+		Document doc = null;
+		Elements newsHeadlines;
+		String url;
+		
+		public ContentUrlTask(String url) {
+			this.url = url;
+		}
+		@Override
+		protected Void doInBackground(Void... params) {
+			try {
+				doc = Jsoup.connect(url).get();
+				newsHeadlines = doc.select("title");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(Void result) {
+			super.onPostExecute(result);
+			todoEt.setText(newsHeadlines.get(0).text());
+			memoEt.setText(url);
+			
+		}
+
+	}
 	
 
 }

@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.view.View;
 
@@ -18,8 +19,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.pinminder.R;
 import com.example.pinminder.SplashActivity2;
 import com.example.pinminder.db.MyDB;
+import com.example.pinminder.dialog.CustomProgressDialog;
 import com.example.pinminder.dto.Dream;
 
 public class SeoulApiManager implements ApiManager {
@@ -30,7 +33,7 @@ public class SeoulApiManager implements ApiManager {
 	//0 : splash, 1 : setting
 	public int where;
 	
-	ProgressDialog pDialog;
+	CustomProgressDialog pDialog;
 	
 	public SeoulApiManager(Context context,int where) {
 		this.context = context;
@@ -52,9 +55,8 @@ public class SeoulApiManager implements ApiManager {
 		
 		if(where == 1 ){
 			
-			pDialog = new ProgressDialog(context);
-			pDialog.setMessage("잠시만 기다려주세요.");
-			pDialog.setCancelable(false);
+			pDialog = new CustomProgressDialog(context);
+			pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 			showpDialog();
 			
 		}
