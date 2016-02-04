@@ -69,6 +69,7 @@
         android:background="#000000" />
 
     <RelativeLayout
+        android:id="@+id/layout_mail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp" >
@@ -108,7 +109,8 @@
         android:layout_height="0.1dp"
         android:background="#000000" />
 
-    <RelativeLayout
+    <RelativeLayout        
+        android:id="@+id/layout_tutorial"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp" >
@@ -148,7 +150,8 @@
         android:layout_height="0.1dp"
         android:background="#000000" />
 
-    <RelativeLayout
+    <RelativeLayout        
+        android:id="@+id/layout_movie"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp" >
@@ -188,7 +191,8 @@
         android:layout_height="0.1dp"
         android:background="#000000" />
 
-    <RelativeLayout
+    <RelativeLayout        
+        android:id="@+id/layout_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp" >
