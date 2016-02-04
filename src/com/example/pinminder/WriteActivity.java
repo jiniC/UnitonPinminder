@@ -494,6 +494,9 @@ public class WriteActivity extends SampleActivityBase
 				if(isVaildUrl(sharedText) == true){
 					new ContentUrlTask(sharedText).execute(null,null,null);
 				}
+				else{
+					memoEt.setText(sharedText);
+				}
 			}
 			
 			
