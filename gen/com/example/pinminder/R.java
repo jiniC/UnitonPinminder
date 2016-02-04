@@ -9,8 +9,10 @@ package com.example.pinminder;
 
 public final class R {
     public static final class anim {
-        public static final int slide_down=0x7f040000;
-        public static final int slide_up=0x7f040001;
+        public static final int animatio=0x7f040000;
+        public static final int custom_progress_interminate=0x7f040001;
+        public static final int slide_down=0x7f040002;
+        public static final int slide_up=0x7f040003;
     }
     public static final class attr {
         /** 
@@ -723,32 +725,33 @@ containing a value of this type.
         public static final int plusbtn=0x7f020074;
         public static final int powered_by_google_dark=0x7f020075;
         public static final int powered_by_google_light=0x7f020076;
-        public static final int red_button=0x7f020077;
-        public static final int search_icon=0x7f020078;
-        public static final int search_line=0x7f020079;
-        public static final int setting1=0x7f02007a;
-        public static final int setting2=0x7f02007b;
-        public static final int setting3=0x7f02007c;
-        public static final int setting4=0x7f02007d;
-        public static final int setting_logo=0x7f02007e;
-        public static final int settingicon=0x7f02007f;
-        public static final int switch_thumb=0x7f020080;
-        public static final int textbox=0x7f020081;
-        public static final int todolist_addbtn=0x7f020082;
-        public static final int top_confirm_icon=0x7f020083;
-        public static final int top_navi=0x7f020084;
-        public static final int top_navi2=0x7f020085;
-        public static final int tutorial_01=0x7f020086;
-        public static final int tutorial_02=0x7f020087;
-        public static final int tutorial_03=0x7f020088;
-        public static final int what_icon=0x7f020089;
-        public static final int white_button=0x7f02008a;
-        public static final int white_section=0x7f02008b;
-        public static final int writeicon1=0x7f02008c;
-        public static final int writeicon2=0x7f02008d;
-        public static final int writeicon3=0x7f02008e;
-        public static final int writeicon4=0x7f02008f;
-        public static final int writeicon5=0x7f020090;
+        public static final int progress_bg=0x7f020077;
+        public static final int red_button=0x7f020078;
+        public static final int search_icon=0x7f020079;
+        public static final int search_line=0x7f02007a;
+        public static final int setting1=0x7f02007b;
+        public static final int setting2=0x7f02007c;
+        public static final int setting3=0x7f02007d;
+        public static final int setting4=0x7f02007e;
+        public static final int setting_logo=0x7f02007f;
+        public static final int settingicon=0x7f020080;
+        public static final int switch_thumb=0x7f020081;
+        public static final int textbox=0x7f020082;
+        public static final int todolist_addbtn=0x7f020083;
+        public static final int top_confirm_icon=0x7f020084;
+        public static final int top_navi=0x7f020085;
+        public static final int top_navi2=0x7f020086;
+        public static final int tutorial_01=0x7f020087;
+        public static final int tutorial_02=0x7f020088;
+        public static final int tutorial_03=0x7f020089;
+        public static final int what_icon=0x7f02008a;
+        public static final int white_button=0x7f02008b;
+        public static final int white_section=0x7f02008c;
+        public static final int writeicon1=0x7f02008d;
+        public static final int writeicon2=0x7f02008e;
+        public static final int writeicon3=0x7f02008f;
+        public static final int writeicon4=0x7f020090;
+        public static final int writeicon5=0x7f020091;
     }
     public static final class id {
         public static final int SingleProfile=0x7f0a0061;
@@ -909,27 +912,28 @@ containing a value of this type.
         public static final int activity_test=0x7f030008;
         public static final int activity_write=0x7f030009;
         public static final int basic_layout=0x7f03000a;
-        public static final int custom_toast=0x7f03000b;
-        public static final int dialg_delete_view=0x7f03000c;
-        public static final int dialog_dataonoff_view=0x7f03000d;
-        public static final int dialog_view=0x7f03000e;
-        public static final int five=0x7f03000f;
-        public static final int four=0x7f030010;
-        public static final int grid_single=0x7f030011;
-        public static final int main=0x7f030012;
-        public static final int main_actionbar=0x7f030013;
-        public static final int one=0x7f030014;
-        public static final int place_autocomplete_fragment=0x7f030015;
-        public static final int place_autocomplete_item_powered_by_google=0x7f030016;
-        public static final int place_autocomplete_item_prediction=0x7f030017;
-        public static final int place_autocomplete_progress=0x7f030018;
-        public static final int setting_actionbar=0x7f030019;
-        public static final int splash_activity=0x7f03001a;
-        public static final int splash_activity2=0x7f03001b;
-        public static final int test_layout=0x7f03001c;
-        public static final int three=0x7f03001d;
-        public static final int top_navi=0x7f03001e;
-        public static final int two=0x7f03001f;
+        public static final int custom_progress_dialog=0x7f03000b;
+        public static final int custom_toast=0x7f03000c;
+        public static final int dialg_delete_view=0x7f03000d;
+        public static final int dialog_dataonoff_view=0x7f03000e;
+        public static final int dialog_view=0x7f03000f;
+        public static final int five=0x7f030010;
+        public static final int four=0x7f030011;
+        public static final int grid_single=0x7f030012;
+        public static final int main=0x7f030013;
+        public static final int main_actionbar=0x7f030014;
+        public static final int one=0x7f030015;
+        public static final int place_autocomplete_fragment=0x7f030016;
+        public static final int place_autocomplete_item_powered_by_google=0x7f030017;
+        public static final int place_autocomplete_item_prediction=0x7f030018;
+        public static final int place_autocomplete_progress=0x7f030019;
+        public static final int setting_actionbar=0x7f03001a;
+        public static final int splash_activity=0x7f03001b;
+        public static final int splash_activity2=0x7f03001c;
+        public static final int test_layout=0x7f03001d;
+        public static final int three=0x7f03001e;
+        public static final int top_navi=0x7f03001f;
+        public static final int two=0x7f030020;
     }
     public static final class menu {
         public static final int android_gpstracking=0x7f0d0000;
