@@ -31,6 +31,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -50,6 +51,12 @@ public class SettingActivity extends Activity {
 
 		myDB = new MyDB(getApplicationContext());
 
+		RelativeLayout layout_mail = (RelativeLayout) findViewById(R.id.layout_mail);
+		RelativeLayout layout_tutorial = (RelativeLayout) findViewById(R.id.layout_tutorial);
+		RelativeLayout layout_data = (RelativeLayout) findViewById(R.id.layout_data);
+		RelativeLayout layout_movie = (RelativeLayout) findViewById(R.id.layout_movie);
+		
+		
 		ImageButton logoBtn = (ImageButton) findViewById(R.id.logoBtn);
 		ImageButton mailBtn = (ImageButton) findViewById(R.id.mailBtn);
 		ImageButton tutorialBtn = (ImageButton) findViewById(R.id.tutorialBtn);
@@ -94,6 +101,38 @@ public class SettingActivity extends Activity {
 		getActionBar().setDisplayShowCustomEnabled(true);
 		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
 		getActionBar().setCustomView(view, params);
+		
+		layout_mail.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Uri uri = Uri.parse("mailto:sksms4687@naver.com");
+				Intent it = new Intent(Intent.ACTION_SENDTO, uri);
+				startActivity(Intent.createChooser(it, "Choose an Email client"));				
+			}
+		});
+		
+		layout_tutorial.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent it = new Intent(SettingActivity.this, ViewPagerActivity.class);
+				startActivity(it);			
+			}
+		});
+		
+		layout_movie.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent it = new Intent(Intent.ACTION_VIEW, Uri.parse("https://youtu.be/7z0ETQUgYDQ"));
+				startActivity(it);		
+			}
+		});
+		
 
 		iv_back.setOnClickListener(new OnClickListener() {
 
