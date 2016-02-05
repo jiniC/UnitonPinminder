@@ -301,7 +301,7 @@ public class SwipeActivity extends Activity {
 				@Override
 				public void onDismiss(DialogInterface dialog) {
 					if (getUsingApi() == false) {
-						apiSettingToast();
+						Toast.makeText(getApplicationContext(), "우리지역 공공데이터 받아오기는 설정에서  ON/OFF 하실 수 있습니다.",Toast.LENGTH_LONG).show();
 					}
 				}
 			});
@@ -327,7 +327,7 @@ public class SwipeActivity extends Activity {
 
 		} else {
 			if (getUsingApi() == false) {
-				apiSettingToast();
+				Toast.makeText(getApplicationContext(), "우리지역 공공데이터 받아오기는 설정에서  ON/OFF 하실 수 있습니다.",Toast.LENGTH_LONG).show();
 			}
 			return true;
 		}

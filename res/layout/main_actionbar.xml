@@ -19,9 +19,10 @@
         android:layout_weight="1.6"
         android:layout_gravity="left|center"
         android:gravity="left"/>
+     
     <ImageView
         android:id="@+id/imageView1"
-        android:layout_weight="2"
+        android:layout_weight="1.7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
