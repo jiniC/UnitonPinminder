@@ -62,9 +62,9 @@ public class SplashActivity2 extends Activity {
         }
         
         
-        final int[] imageArray = { R.drawable.loading_01, 
-        		R.drawable.loading_02,
-        		R.drawable.loading_01,
+        final int[] imageArray = { R.drawable.loading_app_1, 
+        		R.drawable.loading_app_2,
+        		R.drawable.loading_app_3,
         };
         
         

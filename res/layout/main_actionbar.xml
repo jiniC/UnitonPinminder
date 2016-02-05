@@ -26,6 +26,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="right"
-        android:src="@drawable/logo5" />
+        android:src="@drawable/new_logo" />
 
 </LinearLayout>
