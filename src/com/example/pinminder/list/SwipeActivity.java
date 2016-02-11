@@ -296,7 +296,7 @@ public class SwipeActivity extends Activity {
 			AlertDialog.Builder gsDialog = new AlertDialog.Builder(this);
 			gsDialog.setTitle("위치 서비스 설정");
 			gsDialog.setMessage("PIN Minder 알림을 받기 위해서는 내 위치 정보가 필요합니다.\n단말기의 설정에서 '위치 서비스' 사용을 허용해주세요.");
-
+			
 			gsDialog.setOnDismissListener(new OnDismissListener() {
 				@Override
 				public void onDismiss(DialogInterface dialog) {
@@ -1069,38 +1069,28 @@ public class SwipeActivity extends Activity {
 
 	}
 
-	/** 로그인 다이얼로그를 표시한다. */
 	public void showLoginDialog(String title) {
 		final String markerTitle = title;
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setCancelable(false);
 
-		/** dialog.xml 읽어들이기 */
-		// Layout 리소스를 로드할 수 있는 객체
 		LayoutInflater inflater = getLayoutInflater();
 
-		// "/res/layout/dialog.xml" 파일을 로드하기
-		// --> "OK"버튼이 눌러지면, 이 객체에 접근해서 포함된 EditText객체를 취득
-		final View view = inflater.inflate(R.layout.activity_search_dialog,
-				null);
+		final View view = inflater.inflate(R.layout.activity_search_dialog,null);
 		checkbox_ask = (CheckBox) view.findViewById(R.id.checkbox_ask);
 		checkbox_ask.setChecked(false);
 
-		// Dialog에 Message 대신, XML 레이아웃을 포함시킨다.
 		builder.setView(view);
 
 		/** 취소버튼 처리 */
-		builder.setNegativeButton("CANCEL",
+		builder.setNegativeButton("취소",
 				new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						Toast.makeText(getApplicationContext(), "CANCEL 눌러짐",
-								Toast.LENGTH_SHORT).show();
 					}
 				});
 
 		/** 확인버튼 처리 */
-		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+		builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				if (checkbox_ask.isChecked()) {

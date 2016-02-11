@@ -58,6 +58,7 @@
                 android:id="@+id/tv_newestVersion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#ff0000"
                 android:text="TextView" />
         </LinearLayout>
     </LinearLayout>
@@ -218,8 +219,8 @@
 
         <ToggleButton
             android:id="@+id/dataSwitch"
-            android:layout_width="45dp"
-            android:layout_height="30dp"
+            android:layout_width="35dp"
+            android:layout_height="21dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:layout_centerVertical="true"

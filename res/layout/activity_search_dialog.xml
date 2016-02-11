@@ -5,17 +5,33 @@
     android:layout_margin="20dp"
     android:orientation="vertical" >
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginBottom="15dp"
+        android:background="#2979FF" />
+
     <TextView
-        android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="핀 위의 창을 클릭하시면 \n네이버 검색창으로 이동합니다." />
-
+        android:textAlignment="center"
+        android:layout_gravity="center"
+        android:text="핀 위의 창을 클릭하시면" />
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_gravity="center"
+        android:text="네이버 검색창으로 이동합니다." />
+    
     <CheckBox
         android:id="@+id/checkbox_ask"
-        android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="10dp"
+        android:layout_margin="5dp"
         android:text="다시 물어보지 않기" />
 
 </LinearLayout>

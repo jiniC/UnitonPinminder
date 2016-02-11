@@ -65,6 +65,9 @@ public class SplashActivity2 extends Activity {
         final int[] imageArray = { R.drawable.loading_app_1, 
         		R.drawable.loading_app_2,
         		R.drawable.loading_app_3,
+        		R.drawable.loading_app_1, 
+        		R.drawable.loading_app_2,
+        		R.drawable.loading_app_3
         };
         
         
@@ -100,13 +103,9 @@ public class SplashActivity2 extends Activity {
 	                    	
 	                    }
 	                    
-	                    finish();    // 액티비티 종료
+	                    finish(); 
                 	}
                     i = 0 ;
-                	
-                	
-//                	i--;
-                	
                 }
                 handler.postDelayed(this, 300);
             }
