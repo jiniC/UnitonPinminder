@@ -748,14 +748,15 @@ containing a value of this type.
         public static final int tutorial_01=0x7f02008b;
         public static final int tutorial_02=0x7f02008c;
         public static final int tutorial_03=0x7f02008d;
-        public static final int what_icon=0x7f02008e;
-        public static final int white_button=0x7f02008f;
-        public static final int white_section=0x7f020090;
-        public static final int writeicon1=0x7f020091;
-        public static final int writeicon2=0x7f020092;
-        public static final int writeicon3=0x7f020093;
-        public static final int writeicon4=0x7f020094;
-        public static final int writeicon5=0x7f020095;
+        public static final int tutorial_04=0x7f02008e;
+        public static final int what_icon=0x7f02008f;
+        public static final int white_button=0x7f020090;
+        public static final int white_section=0x7f020091;
+        public static final int writeicon1=0x7f020092;
+        public static final int writeicon2=0x7f020093;
+        public static final int writeicon3=0x7f020094;
+        public static final int writeicon4=0x7f020095;
+        public static final int writeicon5=0x7f020096;
     }
     public static final class id {
         public static final int SingleProfile=0x7f0a0061;
