@@ -9,7 +9,7 @@
         android:id="@+id/iv_four" 
         android:layout_width="fill_parent"
     	android:layout_height="fill_parent"
-    	android:background="@drawable/loading_plus"
+    	android:background="@drawable/tutorial_04"
         />
     
     <Button 

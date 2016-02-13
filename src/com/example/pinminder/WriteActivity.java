@@ -389,16 +389,16 @@ public class WriteActivity extends SampleActivityBase
 				}
 			}
 		});
-
 		
 		regionBtn.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				mAutocompleteView.setText("");
 			}
 		});
+		
 		
 		// MapFragment in ScrollView
 		mainScrollView = (ScrollView) findViewById(R.id.mainScrollView);

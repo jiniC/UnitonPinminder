@@ -46,8 +46,6 @@ public class ViewPagerActivity extends Activity {
             mPager.setCurrentItem(2);
         }else if(type==3){
             mPager.setCurrentItem(3);
-        }else if(type==4){
-            mPager.setCurrentItem(4);
         }
     }
      
@@ -84,7 +82,7 @@ public class ViewPagerActivity extends Activity {
          
         @Override
         public int getCount() {
-            return 5;
+            return 4;
         }
  
         @Override
@@ -107,10 +105,6 @@ public class ViewPagerActivity extends Activity {
                 v = mInflater.inflate(R.layout.four, null);
                 v.findViewById(R.id.iv_four); 
                 v.findViewById(R.id.btn_click_4).setOnClickListener(mPagerListener);
-            }else if(position == 4){
-                v = mInflater.inflate(R.layout.five, null);
-                v.findViewById(R.id.iv_five); 
-                v.findViewById(R.id.btn_click_5).setOnClickListener(mPagerListener);
                 v.setOnClickListener(new OnClickListener() {
                
                @Override
