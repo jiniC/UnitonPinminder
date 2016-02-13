@@ -373,16 +373,16 @@ public class WriteActivity extends SampleActivityBase
 					r.startAnimation(slideUp_animation);
 					
 					/*변경하고 싶은 레이아웃의 파라미터 값을 가져 옴*/
-					LinearLayout.LayoutParams rControl = (LinearLayout.LayoutParams) r.getLayoutParams();			 
+					//LinearLayout.LayoutParams rControl = (LinearLayout.LayoutParams) r.getLayoutParams();			 
 					/*해당 margin값 변경*/
-					rControl.height=0;
-					r.setLayoutParams(rControl);
+					//rControl.height=0;
+					r.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0));
 
 					memoBtn.setImageResource(R.drawable.icon_02);
 					memoid = 1;
 				} else {
 					r.startAnimation(animation);
-					r.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+					r.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 
 					memoBtn.setImageResource(R.drawable.icon_01);
 					memoid = 0;

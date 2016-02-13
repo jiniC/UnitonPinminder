@@ -1,8 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#ffffff"
-    android:orientation="vertical" >
+    android:background="#ffffff" >
 
     <ScrollView
         android:id="@+id/mainScrollView"
@@ -11,39 +10,39 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="210px"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="93px"
-                android:layout_marginRight="103px" >
+                android:layout_marginBottom="17dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="17dp"
+                android:layout_weight="1" >
 
                 <EditText
                     android:id="@+id/todoEt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:singleLine="true"
-                    android:layout_weight="1"
                     android:background="#00000000"
-                    android:ems="16"
-                    android:hint="할 일을 적어주세요" />
+                    android:ems="17"
+                    android:hint="할 일을 적어주세요"
+                    android:singleLine="true" />
 
                 <ImageButton
                     android:id="@+id/cancelBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
                     android:background="#00000000"
-                    android:visibility="invisible"
-                    android:src="@drawable/grayicon" />
-            </RelativeLayout>
+                    android:src="@drawable/grayicon"
+                    android:visibility="invisible" />
+            </LinearLayout>
 
             <View
                 android:layout_width="fill_parent"
@@ -54,64 +53,63 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="17dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="17dp"
+                android:layout_weight="1" >
+
+                <AutoCompleteTextView
+                    android:id="@+id/autocomplete_places"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#00000000"
+                    android:ems="17"
+                    android:hint="지역을 입력해 주세요"
+                    android:singleLine="true"
+                    android:textColor="@android:color/primary_text_light" />
+
+                <ImageButton
+                    android:id="@+id/regionBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="#00000000"
+                    android:src="@drawable/grayicon"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
                 android:orientation="vertical" >
 
-                <RelativeLayout
+                <fragment
+                    android:id="@+id/map"
+                    android:name="com.google.android.gms.maps.MapFragment"
                     android:layout_width="match_parent"
-                    android:layout_height="210px"
-                    android:layout_marginLeft="93px"
-                    android:layout_marginRight="103px" >
+                    android:layout_height="match_parent" />
 
-                    <ImageButton
-                        android:id="@+id/regionBtn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:background="#00000000"
-                        android:visibility="invisible"
-                        android:src="@drawable/grayicon" />
-
-                    <AutoCompleteTextView
-                        android:id="@+id/autocomplete_places"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:singleLine="true"
-                        android:background="#00000000"
-                        android:ems="16"
-                        android:hint="지역을 입력해 주세요"
-                        android:maxLines="1"
-                        android:textColor="@android:color/primary_text_light" />
-                </RelativeLayout>
-
-                <RelativeLayout
+                <ImageView
+                    android:id="@+id/transparent_image"
                     android:layout_width="match_parent"
-                    android:layout_height="1100px"
-                    android:orientation="vertical" >
-
-                    <fragment
-                        android:id="@+id/map"
-                        android:name="com.google.android.gms.maps.MapFragment"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                    <ImageView
-                        android:id="@+id/transparent_image"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@android:color/transparent" />
-                </RelativeLayout>
-            </LinearLayout>
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent" />
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="93px"
-                android:layout_marginRight="103px"
-                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="17dp"
+                android:layout_weight="1"
                 android:orientation="vertical" >
 
                 <TextView
@@ -124,8 +122,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="93px"
-                android:layout_marginRight="103px"
+                android:layout_marginBottom="7dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_weight="1"
                 android:gravity="center" >
 
                 <ImageButton
@@ -176,28 +176,30 @@
                 android:layout_marginRight="6dip"
                 android:background="#dddddd" />
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="210px"
-                android:layout_marginLeft="93px"
-                android:layout_marginRight="103px" >
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="17dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="17dp"
+                android:layout_weight="1" >
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_weight="3"
                     android:text="50m 이내에 접근시 알람받기" />
 
                 <ImageButton
                     android:id="@+id/alarmBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
                     android:background="#00000000"
                     android:src="@drawable/check_none_select04" />
-            </RelativeLayout>
+            </LinearLayout>
 
             <View
                 android:layout_width="fill_parent"
@@ -206,72 +208,85 @@
                 android:layout_marginRight="6dip"
                 android:background="#dddddd" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="203px"
-                android:layout_marginLeft="93px"
-                android:layout_marginRight="103px" >
-
-                <ImageButton
-                    android:id="@+id/memoBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:background="#00000000"
-                    android:src="@drawable/icon_01" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:text="메모" />
-            </RelativeLayout>
-
             <LinearLayout
-                android:id="@+id/r"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/blue_section" >
-
-                <EditText
-                    android:id="@+id/memoEt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="20"
-                    android:maxLines="4"
-                    android:scrollbars="vertical"
-                    android:layout_gravity="center"
-                    android:layout_margin="15dp"
-                    android:background="#00000000"
-                    android:textColor="#ffffff" >
-                </EditText>
-            </LinearLayout>
-
-            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true" >
+                android:layout_gravity="center"
+                android:layout_marginBottom="25dp"
+                android:layout_marginTop="17dp"
+                android:orientation="vertical" >
 
-                <Button
-                    android:id="@+id/deleteBtn"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#ffffff"
-                    android:text="삭제" />
+                    android:layout_marginBottom="17dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp" >
 
-                <Button
-                    android:id="@+id/okBtn"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="3"
+                        android:text="메모" />
+
+                    <ImageButton
+                        android:id="@+id/memoBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00000000"
+                        android:src="@drawable/icon_01" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/r"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:background="#ffffff"
-                    android:text="확인" />
-            </RelativeLayout>
+                    android:background="@drawable/blue_section" >
+
+                    <EditText
+                        android:id="@+id/memoEt"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_margin="15dp"
+                        android:background="#00000000"
+                        android:ems="20"
+                        android:maxLines="4"
+                        android:scrollbars="vertical"
+                        android:textColor="#ffffff" >
+                    </EditText>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="#ffffff" />
+
         </LinearLayout>
     </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#ffffff" >
+
+        <Button
+            android:id="@+id/deleteBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:text="삭제" />
+
+        <Button
+            android:id="@+id/okBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="#ffffff"
+            android:text="확인" />
+    </RelativeLayout>
 
 </RelativeLayout>

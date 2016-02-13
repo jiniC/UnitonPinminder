@@ -772,7 +772,7 @@ containing a value of this type.
         public static final int android_pay_light=0x7f0a0020;
         public static final int android_pay_light_with_border=0x7f0a0021;
         public static final int auto=0x7f0a0004;
-        public static final int autocomplete_places=0x7f0a0054;
+        public static final int autocomplete_places=0x7f0a0053;
         public static final int book_now=0x7f0a0018;
         public static final int bottom=0x7f0a0075;
         public static final int btnShowLocation=0x7f0a002b;
@@ -874,7 +874,7 @@ containing a value of this type.
         public static final int pushButton=0x7f0a0037;
         public static final int push_btn=0x7f0a002c;
         public static final int r=0x7f0a005d;
-        public static final int regionBtn=0x7f0a0053;
+        public static final int regionBtn=0x7f0a0054;
         public static final int sandbox=0x7f0a0011;
         public static final int satellite=0x7f0a000c;
         public static final int selectionDetails=0x7f0a0015;
