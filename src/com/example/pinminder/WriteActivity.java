@@ -75,19 +75,16 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
-
-
-
 public class WriteActivity extends SampleActivityBase
-		implements OnClickListener, OnMapClickListener,GoogleApiClient.OnConnectionFailedListener, AnimationListener {
+		implements OnClickListener, OnMapClickListener, GoogleApiClient.OnConnectionFailedListener, AnimationListener {
 
 	private ImageButton cancelBtn, regionBtn, cat1, cat2, cat3, cat4, cat5, alarmBtn, memoBtn;
 	Button deleteBtn, okBtn;
 	private EditText todoEt, memoEt;
 	LinearLayout r;
-	
+
 	ScrollView mainScrollView;
-	ImageView transparentImageView; 
+	ImageView transparentImageView;
 
 	private String zone, todo, location, memo, category;
 	private double lat, lon;
@@ -97,14 +94,14 @@ public class WriteActivity extends SampleActivityBase
 	private int memoid = 0;
 
 	Marker mark;
-	
+
 	int code;
 	String todoDB;
 	int idDB;
 	MyDB db;
-	
+
 	Animation animation, slideUp_animation;
-	
+
 	/**
 	 * GoogleApiClient wraps our service connection to Google Play Services and
 	 * provides access to the user's sign in state as well as the Google's APIs.
@@ -124,8 +121,6 @@ public class WriteActivity extends SampleActivityBase
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		
 
 		// Construct a GoogleApiClient for the {@link Places#GEO_DATA_API} using
 		// AutoManage
@@ -140,32 +135,39 @@ public class WriteActivity extends SampleActivityBase
 		setContentView(R.layout.activity_write);
 
 		Intent intent = getIntent();
-    	code = intent.getIntExtra("code", 0);
-    	todoDB = intent.getStringExtra("todo");
-    	idDB = intent.getIntExtra("id", -1);
-    	
-/*		final ActionBar actionBar = getActionBar();
-		actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#5fc4d9")));
-		ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,ActionBar.LayoutParams.WRAP_CONTENT, Gravity.CENTER );		
+		code = intent.getIntExtra("code", 0);
+		todoDB = intent.getStringExtra("todo");
+		idDB = intent.getIntExtra("id", -1);
 
-		actionBar.setIcon(R.drawable.logo3);
-		actionBar.setDisplayShowTitleEnabled(false);*/
-    	LayoutInflater inflater = (LayoutInflater)getActionBar().getThemedContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-    	View view = inflater.inflate(R.layout.actionbar, null);
-    	ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,ActionBar.LayoutParams.WRAP_CONTENT, Gravity.CENTER );
-    	getActionBar().setDisplayShowTitleEnabled(false);
-    	getActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent))); 
-    	getActionBar().setDisplayShowCustomEnabled(true);
-    	//getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
-    	getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.top_navi));
-    	getActionBar().setCustomView(view, params);
-    	
+		/*
+		 * final ActionBar actionBar = getActionBar();
+		 * actionBar.setBackgroundDrawable(new
+		 * ColorDrawable(Color.parseColor("#5fc4d9"))); ActionBar.LayoutParams
+		 * params = new
+		 * ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,ActionBar.
+		 * LayoutParams.WRAP_CONTENT, Gravity.CENTER );
+		 * 
+		 * actionBar.setIcon(R.drawable.logo3);
+		 * actionBar.setDisplayShowTitleEnabled(false);
+		 */
+		LayoutInflater inflater = (LayoutInflater) getActionBar().getThemedContext()
+				.getSystemService(LAYOUT_INFLATER_SERVICE);
+		View view = inflater.inflate(R.layout.actionbar, null);
+		ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,
+				ActionBar.LayoutParams.WRAP_CONTENT, Gravity.CENTER);
+		getActionBar().setDisplayShowTitleEnabled(false);
+		getActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+		getActionBar().setDisplayShowCustomEnabled(true);
+		// getActionBar().setBackgroundDrawable(new
+		// ColorDrawable(Color.parseColor("#ffffff")));
+		getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.top_navi));
+		getActionBar().setCustomView(view, params);
+
 		db = new MyDB(getApplicationContext());
 
 		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
 		map.moveCamera(CameraUpdateFactory.newLatLngZoom(SEOUL, 10));
 		map.animateCamera(CameraUpdateFactory.zoomTo(10), 1000, null);
-
 
 		// Retrieve the AutoCompleteTextView that will display Place
 		// suggestions.
@@ -206,74 +208,74 @@ public class WriteActivity extends SampleActivityBase
 		cat3.setOnClickListener(this);
 		cat4.setOnClickListener(this);
 		cat5.setOnClickListener(this);
-		
+
 		// 맵 클릭리스너
 		map.setOnMapClickListener(this);
-		
-		animation = AnimationUtils.loadAnimation(this,R.anim.slide_down);
-		slideUp_animation = AnimationUtils.loadAnimation(this,R.anim.slide_up);
+
+		animation = AnimationUtils.loadAnimation(this, R.anim.slide_down);
+		slideUp_animation = AnimationUtils.loadAnimation(this, R.anim.slide_up);
 		// set animation listener
 		animation.setAnimationListener(this);
 		slideUp_animation.setAnimationListener(this);
-		
+
 		// 버튼 이름 설정
-		if(code == 0){ // code=0 : 처음 등록할 때
+		if (code == 0) { // code=0 : 처음 등록할 때
 			okBtn.setText("확인");
 			deleteBtn.setText("취소");
-			
-		}else{ // 수정할 때
+
+		} else { // 수정할 때
 			okBtn.setText(""); // 수정 글씨 없앰
 			okBtn.setEnabled(false);
 			deleteBtn.setText("삭제");
-			
+
 			BitmapDescriptor b = null;
 			Dream dream = db.getDreamTodo(todoDB);
-			
+
 			LatLng moveLatLng = new LatLng(dream.getLat(), dream.getLon());
 			lat = dream.getLat();
 			lon = dream.getLon();
-			
+
 			map.moveCamera(CameraUpdateFactory.newLatLngZoom(moveLatLng, 15));
 			map.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
-			
+
 			todoEt.setText(dream.getTodo().toString());
 			mAutocompleteView.setText(dream.getLocation().toString());
-			
+
 			String c = dream.getCategory().toString();
 			category = c;
-			if(c.equals("음식")) {
+			if (c.equals("음식")) {
 				cat1.setImageResource(R.drawable.writeicon1);
 				b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon1);
 			} else
 				cat1.setImageResource(R.drawable.inactive1);
-			
-			if(c.equals("관람")) {
+
+			if (c.equals("관람")) {
 				cat1.setImageResource(R.drawable.writeicon2);
 				b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon2);
 			} else
 				cat1.setImageResource(R.drawable.inactive2);
-			
-			if(c.equals("활동")) {
+
+			if (c.equals("활동")) {
 				b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon3);
 				cat1.setImageResource(R.drawable.writeicon3);
 			} else
 				cat1.setImageResource(R.drawable.inactive3);
-			
-			if(c.equals("할 것")) {
+
+			if (c.equals("할 것")) {
 				b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon4);
 				cat1.setImageResource(R.drawable.writeicon4);
 			} else
 				cat1.setImageResource(R.drawable.inactive4);
-			
-			if(c.equals("기타")) {
+
+			if (c.equals("기타")) {
 				b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon5);
 				cat1.setImageResource(R.drawable.writeicon5);
 			} else
 				cat1.setImageResource(R.drawable.inactive5);
-				
-			if(b != null)
+
+			if (b != null)
 				mark = map.addMarker(new MarkerOptions().position(moveLatLng).icon(b));
-			
+
 			if (dream.getNoti() == 1) {
 				alarmBtn.setImageResource(R.drawable.check_none_select05);
 			} else {
@@ -288,35 +290,34 @@ public class WriteActivity extends SampleActivityBase
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				// 버튼 색 바꾸기
-				
+
 				okBtn.setBackgroundColor(Color.parseColor("#ededed"));
 				todo = todoEt.getText().toString();
 				memo = memoEt.getText().toString();
 				location = mAutocompleteView.getText().toString();
-				String x="";
-				String todo_s="";
-				String location_s="";
-				String category_s="";
-				
-				if(todo.getBytes().length <= 0) {
-					todo_s="'할 일' ";
+				String x = "";
+				String todo_s = "";
+				String location_s = "";
+				String category_s = "";
+
+				if (todo.getBytes().length <= 0) {
+					todo_s = "'할 일' ";
 				}
-				if(location.getBytes().length <= 0) {
-					location_s="'지역' ";
+				if (location.getBytes().length <= 0) {
+					location_s = "'지역' ";
 				}
-				if(category.getBytes().length <= 0) {
-					category_s="'카테고리' ";
+				if (category.getBytes().length <= 0) {
+					category_s = "'카테고리' ";
 				}
-				
-				if(todo.getBytes().length <= 0||location.getBytes().length <= 0||category.getBytes().length <= 0)
-				{
-					Toast.makeText(getApplicationContext(),todo_s+location_s+category_s+"을(를) 입력해 주세요.", Toast.LENGTH_LONG).show();
+
+				if (todo.getBytes().length <= 0 || location.getBytes().length <= 0 || category.getBytes().length <= 0) {
+					Toast.makeText(getApplicationContext(), todo_s + location_s + category_s + "을(를) 입력해 주세요.",
+							Toast.LENGTH_LONG).show();
 					okBtn.setBackgroundColor(Color.parseColor("#ffffff"));
-				}
-				else{
+				} else {
 					okBtn.setBackgroundColor(Color.parseColor("#ededed"));
-					if(code == 0){ // code=0 : 처음 등록할 때
-						Dream d = new Dream(0, zone, todo, lat, lon, location, memo, category, 0, noti,1);
+					if (code == 0) { // code=0 : 처음 등록할 때
+						Dream d = new Dream(0, zone, todo, lat, lon, location, memo, category, 0, noti, 1);
 						db.addDream(d);
 					}
 					finish();
@@ -325,22 +326,22 @@ public class WriteActivity extends SampleActivityBase
 		});
 
 		deleteBtn.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				deleteBtn.setBackgroundColor(Color.parseColor("#ededed"));
-				
-				if(code == 0){
+
+				if (code == 0) {
 					finish();
-				}else{
+				} else {
 					Dream dream = db.getDreamTodo(todoDB);
 					db.deleteDream(dream);
 					finish();
 				}
 			}
 		});
-		
+
 		alarmBtn.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -371,25 +372,38 @@ public class WriteActivity extends SampleActivityBase
 				// TODO Auto-generated method stub
 				if (memoid == 0) {
 					r.startAnimation(slideUp_animation);
-					
-					/*변경하고 싶은 레이아웃의 파라미터 값을 가져 옴*/
-					//LinearLayout.LayoutParams rControl = (LinearLayout.LayoutParams) r.getLayoutParams();			 
-					/*해당 margin값 변경*/
-					//rControl.height=0;
+
+					/* 변경하고 싶은 레이아웃의 파라미터 값을 가져 옴 */
+					// LinearLayout.LayoutParams rControl =
+					// (LinearLayout.LayoutParams) r.getLayoutParams();
+					/* 해당 margin값 변경 */
+					// rControl.height=0;
 					r.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0));
 
 					memoBtn.setImageResource(R.drawable.icon_02);
 					memoid = 1;
 				} else {
 					r.startAnimation(animation);
-					r.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+					r.setLayoutParams(
+							new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 
 					memoBtn.setImageResource(R.drawable.icon_01);
 					memoid = 0;
 				}
 			}
 		});
-		
+
+		if (memoEt.isFocused()) {
+
+			mainScrollView.post(new Runnable() {
+				@Override
+				public void run() {
+					mainScrollView.fullScroll(View.FOCUS_DOWN);
+				}
+
+			});
+		}
+
 		regionBtn.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -398,90 +412,89 @@ public class WriteActivity extends SampleActivityBase
 				mAutocompleteView.setText("");
 			}
 		});
-		
-		
+
 		// MapFragment in ScrollView
 		mainScrollView = (ScrollView) findViewById(R.id.mainScrollView);
-		
+
 		memoEt.setOnTouchListener(new OnTouchListener() {
-			
+
 			@Override
 			public boolean onTouch(View view, MotionEvent event) {
-			// TODO Auto-generated method stub
-	            view.getParent().requestDisallowInterceptTouchEvent(true);
-	            switch (event.getAction()&MotionEvent.ACTION_MASK){
-	            case MotionEvent.ACTION_UP:
-	                view.getParent().requestDisallowInterceptTouchEvent(false);
-	                break;
-	            }
-		        
-		        return false;
+				// TODO Auto-generated method stub
+				view.getParent().requestDisallowInterceptTouchEvent(true);
+				switch (event.getAction() & MotionEvent.ACTION_MASK) {
+				case MotionEvent.ACTION_UP:
+					view.getParent().requestDisallowInterceptTouchEvent(false);
+					break;
+				}
+
+				return false;
 			}
 		});
-		
+
 		transparentImageView = (ImageView) findViewById(R.id.transparent_image);
 		transparentImageView.setOnTouchListener(new View.OnTouchListener() {
 
-		    @Override
-		    public boolean onTouch(View v, MotionEvent event) {
-		        int action = event.getAction();
-		        switch (action) {
-		           case MotionEvent.ACTION_DOWN:
-		                // Disallow ScrollView to intercept touch events.
-		                mainScrollView.requestDisallowInterceptTouchEvent(true);
-		                // Disable touch on transparent view
-		                return false;
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				int action = event.getAction();
+				switch (action) {
+				case MotionEvent.ACTION_DOWN:
+					// Disallow ScrollView to intercept touch events.
+					mainScrollView.requestDisallowInterceptTouchEvent(true);
+					// Disable touch on transparent view
+					return false;
 
-		           case MotionEvent.ACTION_UP:
-		                // Allow ScrollView to intercept touch events.
-		                mainScrollView.requestDisallowInterceptTouchEvent(false);
-		                return true;
+				case MotionEvent.ACTION_UP:
+					// Allow ScrollView to intercept touch events.
+					mainScrollView.requestDisallowInterceptTouchEvent(false);
+					return true;
 
-		           case MotionEvent.ACTION_MOVE:
-		                mainScrollView.requestDisallowInterceptTouchEvent(true);
-		                return false;
+				case MotionEvent.ACTION_MOVE:
+					mainScrollView.requestDisallowInterceptTouchEvent(true);
+					return false;
 
-		           default: 
-		                return true;
-		        }   
-		    }
+				default:
+					return true;
+				}
+			}
 		});
-		
+
 		// EditText Event
 		// EditText 값 변경 이벤트 탐지
-		TextWatcher watcher = new TextWatcher(){
-		    @Override
-		    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-		         //텍스트의 길이가 변경되었을 경우 발생할 이벤트를 작성.
-		    }
-		    @Override
-		    public void onTextChanged(CharSequence s, int start, int before, int count) {
-		         //텍스트가 변경될때마다 발생할 이벤트를 작성.
-		         if(todoEt.getText().length()>0)
-		        	 cancelBtn.setVisibility(View.VISIBLE);
-		         else
-		        	 cancelBtn.setVisibility(View.INVISIBLE);
-		         
-		         if(mAutocompleteView.getText().toString().length()>0)
-		        	 regionBtn.setVisibility(View.VISIBLE);
-		         else
-		        	 regionBtn.setVisibility(View.INVISIBLE);
-		    }
+		TextWatcher watcher = new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+				// 텍스트의 길이가 변경되었을 경우 발생할 이벤트를 작성.
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				// 텍스트가 변경될때마다 발생할 이벤트를 작성.
+				if (todoEt.getText().length() > 0)
+					cancelBtn.setVisibility(View.VISIBLE);
+				else
+					cancelBtn.setVisibility(View.INVISIBLE);
+
+				if (mAutocompleteView.getText().toString().length() > 0)
+					regionBtn.setVisibility(View.VISIBLE);
+				else
+					regionBtn.setVisibility(View.INVISIBLE);
+			}
 
 			@Override
 			public void afterTextChanged(Editable arg0) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		};
-		 
+
 		// 호출
 		todoEt.addTextChangedListener(watcher);
 		mAutocompleteView.addTextChangedListener(watcher);
-		
-		
-		//공유하기가 됬을때 읽는곳!!
-		
+
+		// 공유하기가 됬을때 읽는곳!!
+
 		Intent intent2 = getIntent();
 		String action = intent2.getAction();
 		String type = intent2.getType();
@@ -489,20 +502,20 @@ public class WriteActivity extends SampleActivityBase
 		// 인텐트 정보가 있는 경우 실행
 		if (Intent.ACTION_SEND.equals(action) && type != null) {
 			if ("text/plain".equals(type)) {
-				String sharedText = intent2.getStringExtra(Intent.EXTRA_TEXT); // 가져온 인텐트의 텍스트 정보
+				String sharedText = intent2.getStringExtra(Intent.EXTRA_TEXT); // 가져온
+																				// 인텐트의
+																				// 텍스트
+																				// 정보
 
-				if(isVaildUrl(sharedText) == true){
-					new ContentUrlTask(sharedText).execute(null,null,null);
-				}
-				else{
+				if (isVaildUrl(sharedText) == true) {
+					new ContentUrlTask(sharedText).execute(null, null, null);
+				} else {
 					memoEt.setText(sharedText);
 				}
 			}
-			
-			
+
 		}
-		
-		
+
 	}
 
 	/**
@@ -551,55 +564,55 @@ public class WriteActivity extends SampleActivityBase
 				places.release();
 				return;
 			}
-			
-			InputMethodManager imm= (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+
+			InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
 			imm.hideSoftInputFromWindow(regionBtn.getWindowToken(), 0);
-			
+
 			// Get the Place object from the buffer.
 			final Place place = places.get(0);
 
 			// Format details of the place for display and show it in a
-			//location = place.getAddress().toString();
+			// location = place.getAddress().toString();
 			location = mAutocompleteView.getText().toString();
-			try{
+			try {
 				String[] split = location.split(" ");
-	            zone = split[2].toString();
-	            Log.i(zone,"hyunhye1");
-	         }
-	         catch(Exception e){
-	            zone = "대한민국";
-	         }
-			Log.i(zone,"hyunhye");
-			
+				zone = split[2].toString();
+				Log.i(zone, "hyunhye1");
+			} catch (Exception e) {
+				zone = "대한민국";
+			}
+			Log.i(zone, "hyunhye");
+
 			String latLng = place.getLatLng().toString();
 			String[] split = latLng.split(",");
 			lat = Float.parseFloat(split[0].substring(10, split[0].length()));
 			lon = Float.parseFloat(split[1].substring(0, split[1].length() - 1));
 
 			BitmapDescriptor b;
-			if(category.equals(CommonValue.writeCategorys[0])){
+			if (category.equals(CommonValue.writeCategorys[0])) {
 				b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon1);
-				mark = map.addMarker(new MarkerOptions().position(place.getLatLng()).title(place.getAddress().toString()).icon(b));
-			}
-			else if(category.equals("관람")){
+				mark = map.addMarker(
+						new MarkerOptions().position(place.getLatLng()).title(place.getAddress().toString()).icon(b));
+			} else if (category.equals("관람")) {
 				b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon2);
-				mark = map.addMarker(new MarkerOptions().position(place.getLatLng()).title(place.getAddress().toString()).icon(b));
-			}
-			else if(category.equals("활동")){
+				mark = map.addMarker(
+						new MarkerOptions().position(place.getLatLng()).title(place.getAddress().toString()).icon(b));
+			} else if (category.equals("활동")) {
 				b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon3);
-				mark = map.addMarker(new MarkerOptions().position(place.getLatLng()).title(place.getAddress().toString()).icon(b));
-			}
-			else if(category.equals("할 것")){
+				mark = map.addMarker(
+						new MarkerOptions().position(place.getLatLng()).title(place.getAddress().toString()).icon(b));
+			} else if (category.equals("할 것")) {
 				b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon4);
-				mark = map.addMarker(new MarkerOptions().position(place.getLatLng()).title(place.getAddress().toString()).icon(b));
-			}
-			else if(category.equals("기타")){
+				mark = map.addMarker(
+						new MarkerOptions().position(place.getLatLng()).title(place.getAddress().toString()).icon(b));
+			} else if (category.equals("기타")) {
 				b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon5);
-				mark = map.addMarker(new MarkerOptions().position(place.getLatLng()).title(place.getAddress().toString()).icon(b));
-			}
-			else if(category.equals("")){
-				mark = map.addMarker(new MarkerOptions().position(place.getLatLng()).title(place.getAddress().toString()));
+				mark = map.addMarker(
+						new MarkerOptions().position(place.getLatLng()).title(place.getAddress().toString()).icon(b));
+			} else if (category.equals("")) {
+				mark = map.addMarker(
+						new MarkerOptions().position(place.getLatLng()).title(place.getAddress().toString()));
 			}
 			map.moveCamera(CameraUpdateFactory.newLatLngZoom(place.getLatLng(), 15));
 			map.animateCamera(CameraUpdateFactory.zoomTo(18), 1000, null);
@@ -807,41 +820,36 @@ public class WriteActivity extends SampleActivityBase
 
 		return super.onCreateOptionsMenu(menu);
 	}
-	
+
 	@Override
 	public void onMapClick(LatLng point) {
 		// TODO Auto-generated method stub
 		map.clear();
 		lat = point.latitude;
 		lon = point.longitude;
-		//map.addMarker(new MarkerOptions().position(point).title(point.toString()));
-		
+		// map.addMarker(new
+		// MarkerOptions().position(point).title(point.toString()));
+
 		BitmapDescriptor b;
-		if(category.equals("음식")){
+		if (category.equals("음식")) {
 			b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon1);
 			mark = map.addMarker(new MarkerOptions().position(point).title(point.toString()).icon(b));
-		}
-		else if(category.equals("관람")){
+		} else if (category.equals("관람")) {
 			b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon2);
 			mark = map.addMarker(new MarkerOptions().position(point).title(point.toString()).icon(b));
-		}
-		else if(category.equals("활동")){
+		} else if (category.equals("활동")) {
 			b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon3);
 			mark = map.addMarker(new MarkerOptions().position(point).title(point.toString()).icon(b));
-		}
-		else if(category.equals("할 것")){
+		} else if (category.equals("할 것")) {
 			b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon4);
 			mark = map.addMarker(new MarkerOptions().position(point).title(point.toString()).icon(b));
-		}
-		else if(category.equals("기타")){
+		} else if (category.equals("기타")) {
 			b = BitmapDescriptorFactory.fromResource(R.drawable.mapicon5);
 			mark = map.addMarker(new MarkerOptions().position(point).title(point.toString()).icon(b));
-		}
-		else if(category.equals("")){
+		} else if (category.equals("")) {
 			mark = map.addMarker(new MarkerOptions().position(point).title(point.toString()));
 		}
-		
-		
+
 	}
 
 	/**
@@ -852,46 +860,39 @@ public class WriteActivity extends SampleActivityBase
 		// Take appropriate action for each action item click
 		switch (item.getItemId()) {
 		case R.id.top_confirm:
-			
+
 			okBtn.setBackgroundColor(Color.parseColor("#ededed"));
 			todo = todoEt.getText().toString();
 			memo = memoEt.getText().toString();
 			location = mAutocompleteView.getText().toString();
-			String todo_s="";
-			String location_s="";
-			String category_s="";
-			if(todo.getBytes().length <= 0)
-			{
-				todo_s="'할 일' ";
+			String todo_s = "";
+			String location_s = "";
+			String category_s = "";
+			if (todo.getBytes().length <= 0) {
+				todo_s = "'할 일' ";
 			}
-			if(location.getBytes().length <= 0)
-			{
-				location_s="'지역' ";
+			if (location.getBytes().length <= 0) {
+				location_s = "'지역' ";
 			}
-			if(category.getBytes().length <= 0)
-			{
-				category_s="'카테고리' ";
+			if (category.getBytes().length <= 0) {
+				category_s = "'카테고리' ";
 			}
-			
-			if(todo.getBytes().length <= 0||location.getBytes().length <= 0||category.getBytes().length <= 0)
-			{
-				Toast.makeText(getApplicationContext(),todo_s+location_s+category_s+"을(를) 입력해 주세요.", Toast.LENGTH_LONG).show();
-			}
-			else{
-				Dream d = new Dream(idDB, zone, todo, lat, lon, location, memo, category, 0, noti,1);
+
+			if (todo.getBytes().length <= 0 || location.getBytes().length <= 0 || category.getBytes().length <= 0) {
+				Toast.makeText(getApplicationContext(), todo_s + location_s + category_s + "을(를) 입력해 주세요.",
+						Toast.LENGTH_LONG).show();
+			} else {
+				Dream d = new Dream(idDB, zone, todo, lat, lon, location, memo, category, 0, noti, 1);
 				Log.d(category, "cat");
-				if(code==0)
-				{
+				if (code == 0) {
 					db.addDream(d);
-				}
-				else 
-				{
+				} else {
 					db.updateDream(d);
-					
+
 				}
 				finish();
 			}
-			
+
 			// search action
 			return true;
 		case R.id.action_location_found:
@@ -907,53 +908,43 @@ public class WriteActivity extends SampleActivityBase
 	@Override
 	public void onAnimationEnd(Animation animation) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onAnimationRepeat(Animation animation) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onAnimationStart(Animation animation) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	// url check
 	public boolean isVaildUrl(String url) {
-		String reg = "^"
-				+
+		String reg = "^" +
 				// protocol identifier
-				"(?:(?:https?|ftp)://)"
-				+
+				"(?:(?:https?|ftp)://)" +
 				// user:pass authentication
-				"(?:\\S+(?::\\S*)?@)?"
-				+ "(?:"
-				+
+				"(?:\\S+(?::\\S*)?@)?" + "(?:" +
 				// IP address exclusion
 				// private & local networks
-				"(?!(?:10|127)(?:\\.\\d{1,3}){3})"
-				+ "(?!(?:169\\.254|192\\.168)(?:\\.\\d{1,3}){2})"
-				+ "(?!172\\.(?:1[6-9]|2\\d|3[0-1])(?:\\.\\d{1,3}){2})"
-				+
+		"(?!(?:10|127)(?:\\.\\d{1,3}){3})" + "(?!(?:169\\.254|192\\.168)(?:\\.\\d{1,3}){2})"
+				+ "(?!172\\.(?:1[6-9]|2\\d|3[0-1])(?:\\.\\d{1,3}){2})" +
 				// IP address dotted notation octets
 				// excludes loopback network 0.0.0.0
 				// excludes reserved space >= 224.0.0.0
 				// excludes network & broacast addresses
 				// (first & last IP address of each class)
-				"(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])"
-				+ "(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}"
-				+ "(?:\\.(?:[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))" + "|"
-				+
+		"(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])" + "(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}"
+				+ "(?:\\.(?:[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))" + "|" +
 				// host name
-				"(?:(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)"
-				+
+				"(?:(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)" +
 				// domain name
-				"(?:\\.(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)*"
-				+
+				"(?:\\.(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)*" +
 				// TLD identifier
 				"(?:\\.(?:[a-z\\u00a1-\\uffff]{2,}))" + ")" +
 				// port number
@@ -963,17 +954,17 @@ public class WriteActivity extends SampleActivityBase
 
 		return url.matches(reg);
 	}
-	
-	
+
 	private class ContentUrlTask extends AsyncTask<Void, Void, Void> {
 
 		Document doc = null;
 		Elements newsHeadlines;
 		String url;
-		
+
 		public ContentUrlTask(String url) {
 			this.url = url;
 		}
+
 		@Override
 		protected Void doInBackground(Void... params) {
 			try {
@@ -983,19 +974,18 @@ public class WriteActivity extends SampleActivityBase
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 			return null;
 		}
-		
+
 		@Override
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
 			todoEt.setText(newsHeadlines.get(0).text());
 			memoEt.setText(url);
-			
+
 		}
 
 	}
-	
 
 }
