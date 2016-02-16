@@ -156,6 +156,17 @@ public class WriteActivity extends SampleActivityBase
 		LayoutInflater inflater = (LayoutInflater) getActionBar().getThemedContext()
 				.getSystemService(LAYOUT_INFLATER_SERVICE);
 		View view = inflater.inflate(R.layout.actionbar, null);
+		
+		ImageView write_logo = (ImageView)view.findViewById(R.id.write_logo);
+		write_logo.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				finish();
+			}
+		});
+		
 		ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,
 				ActionBar.LayoutParams.WRAP_CONTENT, Gravity.CENTER);
 		getActionBar().setDisplayShowTitleEnabled(false);
@@ -338,9 +349,9 @@ public class WriteActivity extends SampleActivityBase
 				if (code == 0) {
 					showDialog();
 				} else {
-					Dream dream = db.getDreamTodo(todoDB);
-					db.deleteDream(dream);
-					showDialog();
+					showDeleteDialog();
+					//Dream dream = db.getDreamTodo(todoDB);
+					//db.deleteDream(dream);
 				}
 			}
 		});
@@ -1033,7 +1044,7 @@ public class WriteActivity extends SampleActivityBase
 					}
 				});
 
-		builder.setPositiveButton("昏力", new DialogInterface.OnClickListener() {
+		builder.setPositiveButton("秒家", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				finish();
@@ -1043,5 +1054,33 @@ public class WriteActivity extends SampleActivityBase
 		builder.create();
 		builder.show();
 	}
+	public void showDeleteDialog(){
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		
+		LayoutInflater inflater = getLayoutInflater();
 
+		final View view = inflater.inflate(R.layout.activity_delete_dialog,null);
+
+		builder.setView(view);
+
+		builder.setNegativeButton("秒家",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						finish();
+					}
+				});
+
+		builder.setPositiveButton("昏力", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				Dream dream = db.getDreamTodo(todoDB);
+				db.deleteDream(dream);
+				finish();
+			}
+		});
+
+		builder.create();
+		builder.show();
+	}
 }
