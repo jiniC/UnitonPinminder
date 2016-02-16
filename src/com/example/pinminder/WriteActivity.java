@@ -383,10 +383,12 @@ public class WriteActivity extends SampleActivityBase
 					memoBtn.setImageResource(R.drawable.icon_02);
 					memoid = 1;
 				} else {
-					r.startAnimation(animation);
-					r.setLayoutParams(
-							new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+					// r.startAnimation(animation);
+					// r.setLayoutParams(
+					// new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,
+					// LayoutParams.WRAP_CONTENT));
 
+					startAnimation();
 					memoBtn.setImageResource(R.drawable.icon_01);
 					memoid = 0;
 				}
@@ -516,6 +518,25 @@ public class WriteActivity extends SampleActivityBase
 
 		}
 
+	}
+
+	private void startAnimation() {
+
+		r.startAnimation(animation);
+		r.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+
+		scrolldown();
+
+	}
+
+	private void scrolldown() {
+		mainScrollView.post(new Runnable() {
+			@Override
+			public void run() {
+				mainScrollView.fullScroll(View.FOCUS_DOWN);
+			}
+
+		});
 	}
 
 	/**
