@@ -43,9 +43,11 @@ import android.app.ActionBar;
 import android.app.ActionBar.LayoutParams;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -67,6 +69,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -333,11 +336,11 @@ public class WriteActivity extends SampleActivityBase
 				deleteBtn.setBackgroundColor(Color.parseColor("#ededed"));
 
 				if (code == 0) {
-					finish();
+					showDialog();
 				} else {
 					Dream dream = db.getDreamTodo(todoDB);
 					db.deleteDream(dream);
-					finish();
+					showDialog();
 				}
 			}
 		});
@@ -1007,6 +1010,38 @@ public class WriteActivity extends SampleActivityBase
 
 		}
 
+	}
+	
+	@Override
+    public void onBackPressed() {
+		showDialog();
+    }
+	
+	public void showDialog(){
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		
+		LayoutInflater inflater = getLayoutInflater();
+
+		final View view = inflater.inflate(R.layout.activity_backpress_dialog,null);
+
+		builder.setView(view);
+
+		builder.setNegativeButton("유지",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+					}
+				});
+
+		builder.setPositiveButton("삭제", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				finish();
+			}
+		});
+
+		builder.create();
+		builder.show();
 	}
 
 }
