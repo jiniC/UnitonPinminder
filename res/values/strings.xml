@@ -19,5 +19,6 @@
     <string name="menu_settings10">NotificationReceiverActivity</string>
     <string name="menu_settings11">NotificationReceiverActivity</string>
     <string name="title_activity_android_gpstracking">AndroidGPSTrackingActivity</string>
+    <string name="title_activity_made">MadeActivity</string>
 
 </resources>

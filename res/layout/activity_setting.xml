@@ -42,25 +42,6 @@
                 android:text="TextView" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="2dp" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:text="최신 버전" />
-
-            <TextView
-                android:id="@+id/tv_newestVersion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#ff0000"
-                android:text="TextView" />
-        </LinearLayout>
     </LinearLayout>
 
     <View
@@ -186,6 +167,46 @@
             android:layout_toRightOf="@+id/iv_movie"
             android:text="핀마인더 소개 영상 보러가기" />
     </RelativeLayout>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.1dp"
+        android:background="#000000" />
+
+    <RelativeLayout
+        android:id="@+id/layout_made"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp" >
+
+        <ImageView
+            android:id="@+id/iv_made"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/setting4" />
+
+        <ImageButton
+            android:id="@+id/madeBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="#00000000"
+            android:src="@drawable/next" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@+id/iv_made"
+            android:text="만든이들" />
+    </RelativeLayout>
 
     <View
         android:layout_width="fill_parent"
@@ -207,7 +228,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:background="#00000000"
-            android:src="@drawable/setting4" />
+            android:src="@drawable/setting5" />
 
         <TextView
             android:layout_width="wrap_content"
