@@ -13,9 +13,12 @@ PinMinder는 내주변의 서울 관광명소나, 축제 등의 정보를 알려
 
 ### 핀등록 화면
 <img src="https://github.com/jiniC/UnitonPinminder/blob/master/ScreenShot/%ED%95%80%EB%93%B1%EB%A1%9D.png" width="200">
+
 ### 핀보기 화면
 <img src="https://github.com/jiniC/UnitonPinminder/blob/master/ScreenShot/%ED%95%80%EB%B3%B4%EA%B8%B0.png" width="200">
+
 ### 핀분류 화면
 <img src="https://github.com/jiniC/UnitonPinminder/blob/master/ScreenShot/%ED%95%80%EB%B6%84%EB%A5%98.png" width="200">
+
 ### 설정
 <img src="https://github.com/jiniC/UnitonPinminder/blob/master/ScreenShot/%EC%84%A4%EC%A0%95.png" width="200">
